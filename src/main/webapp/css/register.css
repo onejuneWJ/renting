@@ -1,0 +1,366 @@
+body, html {
+    width: 100%;
+    height: 100%
+}
+
+body {
+    margin: 0
+}
+
+.clear {
+    display: block;
+    width: 0;
+    height: 0;
+    clear: both;
+    *display: none
+}
+
+.popup {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, .3);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#4C000000, endColorstr=#4C000000);
+    margin: 0;
+    overflow-y: scroll
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #fff inset
+}
+
+.pop_mask {
+    position: relative;
+    width: 476px;
+    padding-bottom: 10px;
+    margin-top: 44px;
+    margin-left: 50%;
+    left: -238px;
+    background: #fff;
+    border-radius: 2px;
+    background: #fff;
+    box-shadow: 0 2px 6px 2px rgba(0, 0, 0, .24)
+}
+
+.links {
+    position: absolute;
+    width: 100%;
+    top: -28px
+}
+
+.links a {
+    color: #f6f6f6;
+    font: 12px/1.2 "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", arial, Tahoma, SimSun, sans-serif;
+    text-decoration: none
+}
+
+.links_botton {
+    position: absolute;
+    width: 76%;
+    margin-left: 12%;
+    bottom: -46px
+}
+
+.links_botton a {
+    color: #f6f6f6;
+    font: 12px/1.2 "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", arial, Tahoma, SimSun, sans-serif;
+    text-decoration: none;
+    float: left;
+    width: 33%;
+    text-align: center
+}
+
+.back {
+    float: left
+}
+
+.register {
+    float: right
+}
+
+.pop_head {
+    height: 36px;
+    padding-top: 42px;
+    padding-bottom: 20px;
+    width: 100%;
+    position: relative;
+    text-align: center
+}
+
+.qrcode {
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    float: left;
+    margin: 0 12px
+}
+
+.change_qrcode_logo {
+    height: 100%
+}
+
+.item {
+    width: 350px;
+    margin: 20px auto;
+    position: relative
+}
+
+.item input {
+    width: 100%;
+    height: 42px;
+    box-sizing: border-box;
+    outline: 0;
+    border: 2px solid #ebebeb;
+    text-indent: 15px;
+    font-size: 14px;
+    line-height: 42px;
+    *margin-left: -15px
+}
+
+.item .btn {
+    width: 100%;
+    height: 42px;
+    outline: 0;
+    border: 0;
+    background: #ff552e;
+    color: #fff;
+    cursor: pointer
+}
+
+.placeholder {
+    color: #ccc
+}
+
+::-ms-input-placeholder {
+    color: #ccc
+}
+
+::-webkit-input-placeholder {
+    color: #ccc
+}
+
+.validcode, .validcode_account {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    width: 72px;
+    height: 26px
+}
+
+.msg {
+    text-align: center;
+    width: 350px;
+    margin: 0 auto;
+    margin-top: 10px;
+    position: relative;
+    top: 4px;
+    display: none
+}
+
+.msg span {
+    width: 330px;
+    text-align: left;
+    color: #ff552e;
+    font-size: 12px;
+    line-height: 12px;
+    line-height: 14px \9;
+    height: 14px \9;
+    position: relative;
+    padding-left: 20px;
+    float: left
+}
+
+.msg span:before {
+    content: '';
+    before: before;
+    width: 14px;
+    height: 14px;
+    width: 18px \9;
+    height: 18px \9;
+    background: url(//img.58cdn.com.cn/ui6/my/images/erroricon.png) no-repeat;
+    background-image: url(//static.58.com/git/teg-app-fe/passport-pc/img/copy@2x.png) \9;
+    background-size: cover;
+    position: absolute;
+    left: 0;
+    top: -2px
+}
+
+.getvoicecode_msg .getvoicecode_msgtext:before {
+    content: '';
+    before: before;
+    display: none
+}
+
+.forgetpwd a {
+    text-decoration: none;
+    color: #ff552e;
+    font-size: 12px;
+    float: right;
+    position: relative;
+    top: -8px
+}
+
+.protocol {
+    font-size: 14px;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #999
+}
+
+.protocol a {
+    color: #ff553e;
+    text-decoration: none
+}
+
+.getcode {
+    position: absolute;
+    top: 8px;
+    *top: 11px;
+    right: 8px;
+    height: 26px;
+    color: #999;
+    font-size: 12px;
+    line-height: 26px;
+    background: #eee;
+    border-radius: 2px;
+    padding: 0 10px;
+    cursor: pointer
+}
+
+.qrcodelogin {
+    text-align: center
+}
+
+.qrcodelogin_p {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+    margin: 28px 0;
+    line-height: 22px;
+    height: 22px
+}
+
+.img_block {
+    display: inline-block;
+    height: 210px
+}
+
+.qrcodelogin_img {
+    border: 1px solid #eee;
+    padding: 15px;
+    width: 182px;
+    height: 182px;
+    float: right;
+    box-sizing: border-box
+}
+
+.tips_img {
+    width: 208px;
+    height: 202px;
+    float: right;
+    background-image: url(//img.58cdn.com.cn/passportnew/img/pc_fllogin_sprite.png);
+    background-position: -238px -53px;
+    margin: 0 -45px 0 15px;
+    display: none
+}
+
+.tips_download {
+    margin-top: 23px;
+    margin-bottom: 0;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    line-height: 17px;
+    height: 17px
+}
+
+.tips_download a {
+    color: #f4691c;
+    text-decoration: none
+}
+
+.qq, .sina, .wechat {
+    cursor: pointer
+}
+
+.account_item_pic, .phonenum_item_pic {
+    display: none
+}
+
+.phonenumlogin_item_phone {
+    text-align: justify
+}
+
+.phone_msg {
+    float: left;
+    width: 57%;
+    *width: 56%
+}
+
+.getvoicecode_msg {
+    float: right;
+    width: 43%
+}
+
+.getvoicecode_msg span::after {
+    content: '';
+    display: none
+}
+
+.phone_msg .phone_msgtext {
+    width: auto
+}
+
+.getvoicecode_msg .getvoicecode_msgtext {
+    width: auto;
+    padding: 0;
+    float: right;
+    color: #333
+}
+
+.getvoicecode_msg .getvoicecode_msgtext i {
+    font-style: normal;
+    color: #ff552e;
+    cursor: pointer
+}
+
+.validcode {
+    cursor: pointer
+}
+
+#riskmsg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .3);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#4C000000, endColorstr=#4C000000);
+    display: none
+}
+
+#riskmsg div {
+    margin: 180px auto;
+    width: 400px;
+    height: 205px;
+    border: 1px solid #999;
+    background: #fff;
+    text-align: center;
+    color: #736e6e
+}
+
+#riskmsg p {
+    margin: 40px 40px;
+    font-size: 14px;
+    text-align: left
+}
+
+#riskmsg span {
+    padding: 5px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #ff552e;
+    color: #f9eded
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="utf-8"/>
+    <title>万家</title>
+    <link rel="shortcut icon" href="images/favicon.ico"/>
+    <link rel="bookmark" href="images/favicon.ico"/>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <!--高德定位-->
+    <script type="text/javascript"
+            src="https://webapi.amap.com/maps?v=1.4.15&key=779df40e3dc27215fd27a80bb9766217&plugin=AMap.CitySearch"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //获取用户所在城市信息
+            function showCityInfo() {
+                //实例化城市查询类
+                var citysearch = new AMap.CitySearch();
+                //自动获取用户IP，返回当前城市
+                citysearch.getLocalCity(function (status, result) {
+                    if (status === 'complete' && result.info === 'OK') {
+                        if (result && result.city && result.bounds) {
+                            var cityinfo = result.city;
+                            var provinceInfo = result.province;
+                            $.ajax({
+                                url: "http://localhost:8080/renting/city",
+                                type: "post",
+                                data: {cityName: cityinfo, provinceName: provinceInfo},
+                                success: function () {
+                                    location.href="http://localhost:8080/renting/index.htm";
+                                }
+                            });
+                        }
+                    } else {
+
+                    }
+                });
+            }
+
+            showCityInfo();
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

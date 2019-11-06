@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="images/favicon.ico"/>
+    <link rel="bookmark" href="images/favicon.ico"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>注册会员-万家</title>
+    <link rel="stylesheet" href="css/register.css">
+    <script src="js/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="layui/css/layui.css">
+    <script type="text/javascript" src="layui/layui.js"></script>
+    <script src="js/register.js"></script>
+   </head>
+<body>
+<img src="//img.58cdn.com.cn/ui6/my/images/reg-bg.png" id="bg"
+     style="position: absolute;width: 100%;height: 100%;top: 0;left: 0;">
+<div class="popup">
+    <div class="pop_mask">
+        <div class="links">
+            <a class="back style1" id="style1" href="index.html">返回首页</a>
+            <a class="register" href="user_login.html">已有账号？去登录</a>
+        </div>
+        <!--logo-->
+        <div class="pop_head">
+            <img class="change_qrcode_logo" src="images/title.png" alt="">
+        </div>
+        <div class="phonenumlogin">
+            <div class="item phonenumlogin_item_phone">
+                <input type="text" name="phone" id="phone" placeholder="手机号" maxlength="11"
+                       style="border: 2px solid rgb(235, 235, 235);">
+                <div class="phone_msg msg" style="display: none;">
+                    <span class="phone_msgtext">请输入手机号</span>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="item">
+                <input type="text" name="username" id="username" placeholder="账户名" maxlength="20" autocomplete="off">
+                <div class="username_msg msg"><span class="username_msgtext">您还未输入账户名</span>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="item">
+                <input type="password" name="password" id="password" placeholder="设置密码" autocomplete="new-password"
+                       maxlength="16">
+                <div class="password_msg msg"><span class="password_msgtext">您还未输入密码</span>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="item">
+                <input type="password" name="confirmpassword" id="confirmpassword" placeholder="确认密码"
+                       autocomplete="new-password" maxlength="16">
+                <div class="confirmpassword_msg msg"><span class="confirmpassword_msgtext">请再次输入密码</span>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="protocol">注册即同意<a href="#">《万家租房使用协议》</a>&amp;<a href="#">《隐私政策》</a></div>
+                <button id="btn_phonenum" class="btn">注册</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

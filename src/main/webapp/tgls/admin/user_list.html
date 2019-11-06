@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <!-- Google Chrome Frame也可以让IE用上Chrome的引擎: -->
+    <meta name="renderer" content="webkit">
+    <!--国产浏览器高速模式-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="穷在闹市"/>
+    <!-- 作者 -->
+    <meta name="revised" content="穷在闹市.v3, 2019/05/01"/>
+    <!-- 定义页面的最新版本 -->
+    <meta name="description" content="网站简介"/>
+    <!-- 网站简介 -->
+    <meta name="keywords" content="搜索关键字，以半角英文逗号隔开"/>
+    <title>穷在闹市出品</title>
+
+    <!-- 公共样式 开始 -->
+    <link rel="stylesheet" type="text/css" href="../../css/base.css">
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont.css">
+    <script type="text/javascript" src="../../framework/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../layui/css/layui.css">
+    <script type="text/javascript" src="../../layui/layui.js"></script>
+    <!-- 滚动条插件 -->
+    <link rel="stylesheet" type="text/css" href="../../css/jquery.mCustomScrollbar.css">
+    <script src="../../framework/jquery-ui-1.10.4.min.js"></script>
+    <script src="../../framework/jquery.mousewheel.min.js"></script>
+    <script src="../../framework/jquery.mCustomScrollbar.min.js"></script>
+    <script src="../../framework/cframe.js"></script><!-- 仅供所有子页面使用 -->
+    <!-- 公共样式 结束 -->
+
+    <style>
+        .layui-table img {
+            max-width: none;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div>
+    <div class="layui-tab layui-tab-card" lay-filter="house_tab" id="house_tab" lay-allowClose="true">
+        <ul class="layui-tab-title">
+            <li class="layui-this">用户列表</li>
+        </ul>
+        <div class="layui-tab-content">
+            <!--列表tab开始-->
+            <div class="layui-tab-item layui-show">
+                <div class="console">
+
+                </div>
+                <table class="layui-table" id="house_table" lay-filter="test"></table>
+
+            </div>
+            <!--列表tab结束-->
+
+        </div>
+    </div>
+
+
+</div>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script>
+
+</script>
+<script>
+    layui.use('element', function () {
+
+    });
+    layui.use(['upload', 'form'], function () {
+        var form = layui.form;
+        var upload = layui.upload;
+        var layer = layui.layer;
+        //监听提交
+        form.on('submit(submitBut)', function (data) {
+            return false;
+        });
+        form.verify({
+            //数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
+            ZHCheck: [
+                /^[\u0391-\uFFE5]+$/
+                , '只允许输入中文'
+            ]
+        });
+        //拖拽上传
+        upload.render({
+            elem: '#goodsPic',
+            url: '/upload/',
+            done: function (res) {
+                console.log(res)
+            }
+        });
+    });
+    layui.use('table', function () {
+        var table = layui.table;
+        var laypager = layui.layPage;
+        //第一个实例
+        table.render({
+            elem: '#house_table'
+            , height: 450
+            , url: 'http://localhost:8080/renting/test/list' //数据接口
+            , page: true
+            , cols: [[ //表头
+                {field: 'id', title: 'ID', width: 80, sort: true, fixed: 'left'}
+                , {field: 'batch', title: '批次', width: 120}
+                , {field: 'templateCode', title: '模板编码', width: 180}
+                , {field: 'dataStatus', title: '数据状态', width: 100}
+                , {field: 'sheetIndex', title: '页码', width: 80}
+                , {field: 'errorMsg', title: '错误信息', width: 180}
+                , {field: 'data', title: '数据', width: 180}
+                , {fixed: 'right', width: 150, align: 'center', toolbar: '#barDemo'}
+            ]]
+            , text: {
+                none: "暂无数据"
+            }
+
+        });
+
+        table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            console.log(data);
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+            var id = data.id;
+            switch (layEvent) {
+                case 'del':
+
+                    layer.confirm('真的删除行么', function (index) {
+
+                        //向服务端发送删除指令
+                        $.ajax({
+                            url: "http://localhost:8080/renting/test/" + id,
+                            type: "delete",
+                            success: function (data) {
+                                if (data.msg == "success") {
+                                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                                    layer.close(index);
+                                } else {
+                                    layer.msg("删除失败");
+                                }
+                            }
+                        })
+                    });
+                    break;
+                case 'edit':
+                    layer.msg(data.toString());
+                    //同步更新缓存对应的值
+                    obj.update({
+                        username: '123'
+                        , title: 'xxx'
+                    });
+                    break;
+            }
+
+        });
+    });
+</script>
+</body>
+
+</html>
