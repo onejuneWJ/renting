@@ -12,6 +12,8 @@
         <plugin interceptor="com.github.pagehelper.PageInterceptor">
             <property name="helperDialect" value="mysql"/>
             <property name="reasonable" value="true"/>
+            <property name="rowBoundsWithCount" value="true"/>
+            <property name="PageRowBounds" value="true"/>
         </plugin>
     </plugins>
 

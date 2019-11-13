@@ -128,36 +128,15 @@
         <div class="items ">
             <span class="item-title">租金：</span>
             <span class="elems-l" id="rental-query">
-                <a href="${pageContext.request.contextPath}/house/${sessionScope.CITY.id}/${sessionScope.LOCATION.id}"
-                   class="selected-item" rel="nofollow">全部</a>
-
-                 <a href="${pageContext.request.contextPath}/house/${sessionScope.CITY.id}/${sessionScope.LOCATION.id}/zj/"
-                    rel="nofollow"></a>
-
-
+                //租金范围
             </span>
         </div>
 
         <!--  房屋类型 begin-->
         <div class="items">
             <span class="item-title">房型：</span>
-            <span class="elems-l">
-                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/" class="selected-item" rel="nofollow">全部</a>
-                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/fx1/" rel="nofollow">一室</a>
-                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/fx2/" rel="nofollow">二室</a>
-                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/fx3/" rel="nofollow">三室</a>
-                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/fx4/" rel="nofollow">四室</a>
-                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/fx5/" rel="nofollow">五室及以上</a>
-            </span>
-        </div>
-        <!--出租方式-->
-        <div class="items">
-            <span class="item-title">类型：</span>
-            <span class="elems-l">
-                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/" class="selected-item"
-                   rel="nofollow">全部</a>
-                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/x1/" rel="nofollow">整租</a>
-                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/x2/" rel="nofollow">合租</a>
+            <span class="elems-l" id="houseTypes-query">
+                //房型
             </span>
         </div>
 
@@ -165,77 +144,19 @@
         <div class="search_bottom clearfix">
             <div id="condmenu">
                 <ul class="condul clearfix">
-                    <li class="condlist_tip"><span>更多筛选：</span></li>
+                    <li class="condlist_tip"><span>朝向：</span></li>
                     <li class="condibox">
                         <a href="javascript:void(0);">
                             <span class="select_item">
-                                <span class="txt" id="condhouseage_txt_id">房屋类型</span>
+                                <span class="txt" id="condhouse_orient_txt_id">
+                                    ${sessionScope.CURRENT_TOWARDS.name==null?"全部":sessionScope.CURRENT_TOWARDS.name}
+                                </span>
                                 <span class="icon">&nbsp;</span>
                             </span>
                         </a>
-                        <ul style="display: none;">
-                            <li class="selected">
-                                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/" rel="nofollow">全部</a>
-                            </li>
-                            <li>
-                                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/lx8/" rel="nofollow">普通住宅</a>
-                            </li>
-                            <li>
-                                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/lx1/" rel="nofollow">公寓</a>
-                            </li>
-                            <li>
-                                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/lx4/" rel="nofollow">别墅</a>
-                            </li>
-                            <li>
-                                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/lx9/" rel="nofollow">平房</a>
-                            </li>
-                            <li>
-                                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/lx6/" rel="nofollow">酒店公寓</a>
-                            </li>
-                            <li>
-                                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/lx10/" rel="nofollow">商住两用</a>
-                            </li>
-                            <li>
-                                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/lx5/" rel="nofollow">其他</a>
-                            </li>
-                        </ul>
-                    </li>
+                        <ul id="towards-query" style="display: none;">
 
-                    <li class="condibox">
-                        <a href="javascript:void(0);">
-                            <span class="select_item">
-                                <span class="txt" id="condhouse_orient_txt_id">朝向</span>
-                                <span class="icon">&nbsp;</span>
-                            </span>
-                        </a>
-                        <ul style="display: none;">
-                            <li class="selected">
-                                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/" rel="nofollow">全部</a>
-                            </li>
-                            <li>
-                                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/tw1/" rel="nofollow">朝南</a>
-                            </li>
-                            <li>
-                                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/tw3/" rel="nofollow">朝北</a>
-                            </li>
-                            <li>
-                                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/tw4/" rel="nofollow">南北</a>
-                            </li>
-                            <li>
-                                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/tw5/" rel="nofollow">东西</a>
-                            </li>
                         </ul>
-                    </li>
-
-                    <li id="" class="filter_check">
-                        <input type="checkbox" href="javascript:" id="filter_is_school_input"
-                               onclick="location.href='https://cd.zu.anjuke.com/fangyuan/wuhou/mt1/'">
-                        <label for="filter_is_school_input">近地铁</label>
-                    </li>
-                    <li id="" class="filter_check">
-                        <input type="checkbox" href="javascript:" id="filter_is_school_input"
-                               onclick="location.href='https://cd.zu.anjuke.com/fangyuan/wuhou/dtf1/'">
-                        <label for="filter_is_school_input">电梯房</label>
                     </li>
                 </ul>
             </div>
@@ -897,6 +818,7 @@
             type: "GET",
             success: function (data) {
                 var json = JSON.parse(data);
+
                 //区域查询条件
                 const locations = json.locations;
                 console.log(locations);
@@ -917,23 +839,55 @@
                 }
                 locationHtml += "</div>";
                 $("#location-query").html(locationHtml);
+
                 // 租金查询条件
                 const rentals = json.rentals;
                 var rentalsHtml = "<a href='${pageContext.request.contextPath}/house/zj-1'";
-
                 if ('' === '${sessionScope.CURRENT_RENTAL}') {
                     rentalsHtml += "class='selected-item'";
                 }
                 rentalsHtml += " rel=\"nofollow\">全部</a>";
                 for (let i = 0; i < rentals.length; i++) {
-
                     rentalsHtml += "<a href='${pageContext.request.contextPath}/house/zj" + i + "' ";
-                    if (rentals[i] === '${sessionScope.CURRENT_RENTAL}') {
+                    if (rentals[i].name === '${sessionScope.CURRENT_RENTAL.name}') {
                         rentalsHtml += "class='selected-item'";
                     }
-                    rentalsHtml += ">" + rentals[i] + "</a>";
+                    rentalsHtml += ">" + rentals[i].name + "</a>";
                 }
                 $("#rental-query").html(rentalsHtml);
+
+                //房型查询条件
+                const houseTypes = json.houseTypes;
+                var houseTypesHtml = "<a href='${pageContext.request.contextPath}/house/fx-1'";
+                if ('' === '${sessionScope.CURRENT_HOUSE_TYPE}') {
+                    houseTypesHtml += "class='selected-item'";
+                }
+                houseTypesHtml += " rel=\"nofollow\">全部</a>";
+                for (let i = 0; i < houseTypes.length; i++) {
+                    houseTypesHtml += "<a href='${pageContext.request.contextPath}/house/fx" + i + "' ";
+                    if (houseTypes[i].name === '${sessionScope.CURRENT_HOUSE_TYPE.name}') {
+                        houseTypesHtml += "class='selected-item'";
+                    }
+                    houseTypesHtml += ">" + houseTypes[i].name + "</a>";
+                }
+                $("#houseTypes-query").html(houseTypesHtml);
+
+                //朝向搜索
+                const towards = json.towards;
+                var towardsHtml = "<li ";
+                if ('' === '${sessionScope.CURRENT_TOWARDS}') {
+                    towardsHtml += "class='selected'";
+                }
+                towardsHtml += "><a href='${pageContext.request.contextPath}/house/tw-1' rel=\"nofollow\">全部</a></li>";
+                for (let i = 0; i < towards.length; i++) {
+                    towardsHtml += "<li";
+                    if (towards[i].name === '${sessionScope.CURRENT_TOWARDS.name}') {
+                        towardsHtml += " class='selected'";
+                    }
+                    towardsHtml += "><a href='${pageContext.request.contextPath}/house/tw" + i + "' ";
+                    towardsHtml += "rel='nofollow'>" + towards[i].name + "</a></li>";
+                }
+                $("#towards-query").html(towardsHtml);
             }
         });
     })

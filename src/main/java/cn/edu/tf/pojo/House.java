@@ -97,6 +97,9 @@ public class House implements Serializable {
      */
     private Long contactInformationId;
 
+
+
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {

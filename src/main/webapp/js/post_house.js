@@ -164,13 +164,13 @@ $(document).ready(function () {
     });
 
     //checkbox
-    $("div.checkbox_wrap").delegate("div.checkbox","mouseover",function () {
+    $("div.checkbox_wrap").delegate("div.checkbox", "mouseover", function () {
         $(this).addClass('hover');
     });
-    $("div.checkbox_wrap").delegate("div.checkbox","mouseleave",function () {
+    $("div.checkbox_wrap").delegate("div.checkbox", "mouseleave", function () {
         $(this).removeClass('hover')
     });
-    $("div.checkbox_wrap").delegate("div.checkbox","click",function () {
+    $("div.checkbox_wrap").delegate("div.checkbox", "click", function () {
         if ($(this).attr('class').match('focus') == null) {
             $(this).addClass('focus');
         } else {
@@ -178,7 +178,7 @@ $(document).ready(function () {
         }
     });
     //全选
-    $("div.checkbox_wrap").delegate("div.select_all","click",function () {
+    $("div.checkbox_wrap").delegate("div.select_all", "click", function () {
         var str = $(this).children('span').text();
         if (str == "全选") {
             $(this).siblings().addClass('focus');
@@ -189,13 +189,13 @@ $(document).ready(function () {
         }
     });
 
-    //图片上传
-    $("div.upload_wrap").find("input[type='file']").change(function () {
-        $.post({
-            url: "localhost:8080/renting/house/img",
-            data: {}
-        });
-    });
+    // //图片上传
+    // $("div.upload_wrap").find("input[type='file']").change(function () {
+    //     $.post({
+    //         url: "localhost:8080/renting/house/img",
+    //         data: {}
+    //     });
+    // });
 
     //表单提交
     $("div.submit_wrap").children().click(function () {
@@ -211,11 +211,11 @@ $(document).ready(function () {
         });
         if (flag && checkPhone($("div[name='phone']").children('input'))) {
             var form = $("#postForm");
-            var data={};
+            var data = {};
             var formData = new FormData(form[0]);
             form.find('.input_text_wrap').each(function () {
                 var key = $(this).attr("name");
-                data[key]=$(this).children('input').val();
+                data[key] = $(this).children('input').val();
             });
             form.find('.textarea_wrap').each(function () {
                 var key = $(this).attr("name");
@@ -224,12 +224,12 @@ $(document).ready(function () {
             });
             form.find('.checkbox_wrap').each(function () {
                 var key = $(this).attr("name");
-                var arr=[];
+                var arr = [];
                 $(this).children(".checkbox.focus").each(function () {
                     var value = $(this).attr('data-value');
                     arr.push(value)
                 });
-                data[key]=arr
+                data[key] = arr
             });
             form.find('.radio_wrap').each(function () {
                 var key = $(this).attr("name");
@@ -259,36 +259,6 @@ $(document).ready(function () {
             });
         }
 
-    });
-
-    //图片上传
-    $('#img').change(function (event) {
-        $(".add_img_small").addClass('show');
-        $(".upload_wrap").css({display: 'none'});
-
-        var input = $(this);
-        var reader = new FileReader();
-        reader.readAsDataURL(input[0].files[0]);
-        reader.onload = (function (e) {
-            var li = document.createElement('li');
-            li.setAttribute('class', 'img_box');
-            li.setAttribute('data-index', '1');
-            li.setAttribute('draggable', 'true');
-            li.innerHTML = '<img src="' + e.target.result + '">\n' +
-                '<div class="img_cover"></div>\n' +
-                '<div class="delete" onclick="deleteImg(this)"></div>';
-            $(".img_list").append(li);
-            //上传图片
-            layui.use(['layer'], function () {
-
-                var index = layer.load(2);
-                //$.ajax();
-                layer.close(index);
-                //上传成功之后，清除input里的数据
-                event.target.value = null;
-            });
-
-        });
     });
     //点击添加图片
     $(".add_img_small").click(function () {

@@ -75,12 +75,12 @@
                 var form = layui.form;
                 form.verify({
                     username: function (value, item) { //value：表单的值、item：表单的DOM对象
-                        if (value == null || value == "") {
+                        if (value == null || value === "") {
                             return '请输入您的用户名！';
                         }
                     },
                     password: function (value, item) {
-                        if (value == null || value == "") {
+                        if (value == null || value === "") {
                             return '请输入您的账户密码！';
                         }
                     }
@@ -93,7 +93,7 @@
                         type:'POST',
                         contentType:"application/json",
                         success:function (re) {
-                            if(re.msg=="success"){
+                            if(re.msg==="success"){
                                 location.href="index.htm";
                             }else {
                                 layer.msg("用户名或密码错误");

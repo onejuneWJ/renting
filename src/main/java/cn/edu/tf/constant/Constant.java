@@ -1,8 +1,5 @@
 package cn.edu.tf.constant;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author : 王俊
  * @date : 2019/9/29 9:42
@@ -10,40 +7,156 @@ import java.util.List;
 public class Constant {
     public static String SUCCESS = "success";
 
-    interface Rental {
-        String QZ1 = "500元以下";
-        String QZ2 = "500-800元";
-        String QZ3 = "800-1000元";
-        String QZ4 = "1000-1500元";
-        String QZ5 = "1500-2000元";
-        String QZ6 = "2000-3000元";
-        String QZ7 = "3000-5000元";
-        String QZ8 = "5000-8000元";
-        String QZ9 = "8000元以上";
+    /**
+     *
+     */
+    public enum Color {
+        RED("红色", 1),
+        GREEN("绿色", 2),
+        BLANK("白色", 3),
+        YELLOW("黄色", 4);
+        // 成员变量
+        private String name;
+        private int index;
+
+        // 构造方法
+        Color(String name, int index) {
+            this.name = name;
+            this.index = index;
+        }
+
+        // 普通方法
+        public static String getName(int index) {
+            for (Color c : Color.values()) {
+                if (c.getIndex() == index) {
+                    return c.name;
+                }
+            }
+            return null;
+        }
+
+        // get set 方法
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public void setIndex(int index) {
+            this.index = index;
+        }
     }
-    interface HouseType{
-        String FX1="一室";
-        String FX2="二室";
-        String FX3="三室";
-        String FX4="四室";
-        String FX5="五室及以上";
+
+
+    public enum Rentals {
+        /**
+         * 租金范围
+         */
+        QZ1("500元以下", 0, null, 500D),
+        QZ2("500-800元", 1, 500D, 800D),
+        QZ3("800-1000元", 2, 800d, 100d),
+        QZ4("1000-1500元", 3, 1000D, 1500D),
+        QZ5("1500-2000元", 4, 1500D, 2000D),
+        QZ6("2000-3000元", 5, 2000D, 3000D),
+        QZ7("3000-5000元", 6, 3000D, 5000D),
+        QZ8("5000-8000元", 7, 5000D, 8000D),
+        QZ9("8000元以上", 8, 8000D, null);
+
+        private String name;
+        private int index;
+        private Double queryStart;
+        private Double queryEnd;
+
+        Rentals(String name, int index, Double queryStart, Double queryEnd) {
+            this.name = name;
+            this.index = index;
+            this.queryStart = queryStart;
+            this.queryEnd = queryEnd;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public void setIndex(int index) {
+            this.index = index;
+        }
+
+        public Double getQueryStart() {
+            return queryStart;
+        }
+
+        public void setQueryStart(Double queryStart) {
+            this.queryStart = queryStart;
+        }
+
+        public Double getQueryEnd() {
+            return queryEnd;
+        }
+
+        public void setQueryEnd(Double queryEnd) {
+            this.queryEnd = queryEnd;
+        }
     }
-    public static List<String> RENTAL_KEY_LIST=new ArrayList<>();
-    public static List<String> HOUSE_TYPE_KEY_LIST=new ArrayList<>();
-    static {
-        RENTAL_KEY_LIST.add(Rental.QZ1);
-        RENTAL_KEY_LIST.add(Rental.QZ2);
-        RENTAL_KEY_LIST.add(Rental.QZ3);
-        RENTAL_KEY_LIST.add(Rental.QZ4);
-        RENTAL_KEY_LIST.add(Rental.QZ5);
-        RENTAL_KEY_LIST.add(Rental.QZ6);
-        RENTAL_KEY_LIST.add(Rental.QZ7);
-        RENTAL_KEY_LIST.add(Rental.QZ8);
-        RENTAL_KEY_LIST.add(Rental.QZ9);
-        HOUSE_TYPE_KEY_LIST.add(HouseType.FX1);
-        HOUSE_TYPE_KEY_LIST.add(HouseType.FX2);
-        HOUSE_TYPE_KEY_LIST.add(HouseType.FX3);
-        HOUSE_TYPE_KEY_LIST.add(HouseType.FX4);
-        HOUSE_TYPE_KEY_LIST.add(HouseType.FX5);
+
+    public enum HouseType {
+        /**
+         * 房型枚举常量
+         */
+        FX1("一室", 0, 1),
+        FX2("二室", 1, 2),
+        FX3("三室", 2, 3),
+        FX4("四室", 3, 4),
+        FX5("五室及以上", 4, 5);
+
+        private String name;
+        private int index;
+        private Integer num;
+
+        HouseType(String name, int index, Integer num) {
+            this.name = name;
+            this.index = index;
+            this.num = num;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public void setIndex(int index) {
+            this.index = index;
+        }
+
+        public Integer getNum() {
+            return num;
+        }
+
+        public void setNum(Integer num) {
+            this.num = num;
+        }
     }
+
+
 }

@@ -4,7 +4,6 @@ import cn.edu.tf.constant.Constant;
 import cn.edu.tf.dao.TowardsDao;
 import cn.edu.tf.pojo.City;
 import cn.edu.tf.pojo.Location;
-import cn.edu.tf.pojo.Towards;
 import cn.edu.tf.service.LocationService;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -42,28 +41,28 @@ public class IndexController {
      */
     @GetMapping("/index.htm")
     public String index(HttpSession session, Model model) {
-        City city= (City)session.getAttribute("CITY");
+        City city = (City)session.getAttribute("CITY");
         int cityId = city != null ? city.getId() : 110100;
-        List<Location> locationList=locationService.selectByCityId(cityId);
+        List<Location> locationList = locationService.selectByCityId(cityId);
 
         return "index";
     }
 
     @GetMapping("/query-data")
     @ResponseBody
-    public String queryData(HttpSession session){
-        JSONObject jsonObject=new JSONObject();
-        City city= (City)session.getAttribute("CITY");
+    public String queryData(HttpSession session) {
+        JSONObject jsonObject = new JSONObject();
+        City city = (City)session.getAttribute("CITY");
         int cityId = city != null ? city.getId() : 110100;
-        List<Location> locationList=locationService.selectByCityId(cityId);
+        List<Location> locationList = locationService.selectByCityId(cityId);
         jsonObject.put("locations", locationList);
-        jsonObject.put("rentals", Constant.RENTAL_KEY_LIST);
-        jsonObject.put("houseTypes",Constant.HOUSE_TYPE_KEY_LIST);
-        List<Towards> towardsList = towardsDao.selectByExample(null);
-        jsonObject.put("towards",towardsList);
+        jsonObject.put("rentals", Constant.Rentals.values());
+        jsonObject.put("houseTypes", Constant.HouseType.values());
+        jsonObject.put("towards", towardsDao.selectByExample(null));
 
         return jsonObject.toString();
     }
+
     /**
      * 获取多个session中的值
      *

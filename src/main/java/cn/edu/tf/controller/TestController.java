@@ -3,6 +3,7 @@ package cn.edu.tf.controller;
 import cn.edu.tf.dao.CityDao;
 import cn.edu.tf.dao.ProvinceDao;
 import cn.edu.tf.dto.ResponseData;
+import cn.edu.tf.pojo.City;
 import cn.edu.tf.pojo.TestData;
 import cn.edu.tf.service.TestDataService;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,17 +34,14 @@ public class TestController {
         this.provinceDao = provinceDao;
         this.cityDao = cityDao;
     }
-
     @RequestMapping("/list")
-    public ResponseData list(Integer page, Integer limit) {
-        ResponseData<TestData> responseData = new ResponseData<>();
-        List<TestData> list = testDataService.pageList(page, limit);
-        Long count = testDataService.count();
-        responseData.setData(list);
-        responseData.setCount(count);
-        return responseData;
+    public ResponseData<List<TestData>> testList(Integer page, Integer limit){
+        return ResponseData.pageOk(testDataService.pageList(page,limit));
     }
-
+    @RequestMapping("/cities")
+    public ResponseData<List<City>> cities(){
+        return ResponseData.ok(cityDao.selectByExample(null),"success");
+    }
     @DeleteMapping("/{id}")
     public ResponseData delete(@PathVariable int id) {
         ResponseData<TestData> responseData = new ResponseData<>();

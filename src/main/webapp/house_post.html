@@ -10,7 +10,6 @@
     <link rel="stylesheet" type="text/css" href="css/post_house.css">
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="layui/layui.js"></script>
-
     <script type="text/javascript" src="js/post_house.js"></script>
 </head>
 
@@ -54,7 +53,7 @@
                                                disableautocomplete="true" maxlength="50" placeholder="请选择小区"
                                                style="width: 522px;">
                                         <div class="tooltip" style=" z-index:9998;display:none;width:538px">
-                                            <ul class="autoCompleteul"></ul>
+                                            <ul class="autoComplete-ul"></ul>
                                         </div>
                                     </div>
                                 </div>
@@ -92,7 +91,8 @@
                             <div class="rows_wrap clearfix custom_name">
                                 <div class="rows_content">
                                     <div class="tip"></div>
-                                    <div class="input_text_wrap clearfix" name="currentFloor" style="position: relative;">
+                                    <div class="input_text_wrap clearfix" name="currentFloor"
+                                         style="position: relative;">
                                         <span>第</span>
                                         <input type="text" tabindex="7" id="Floor" maxlength="2" style="width: 74px;">
                                         <span>层</span>
@@ -137,7 +137,8 @@
                                 <div class="rows_content">
                                     <div class="tip"></div>
                                     <div class="input_text_wrap clearfix" name="rental" style="position: relative;">
-                                        <input type="inputText" tabindex="13" id="rental" style="width: 68px;"><span>元/月</span>
+                                        <input type="inputText" tabindex="13" id="rental"
+                                               style="width: 68px;"><span>元/月</span>
                                     </div>
                                     <div class="selectordef" name="paymentId" style="z-index: 1486; width: 120px;"
                                          tabindex="14" nameid="1594">
@@ -232,7 +233,8 @@
                                                         <div class="localUpload">
                                                             <div class="imgUpload" id="imgUpload">
                                                                 <div class="html5">
-                                                                    <input id="img" type="file" multiple="multiple">
+                                                                    <input name="img" id="img" type="file"
+                                                                           multiple="multiple">
                                                                 </div>
                                                             </div>
                                                             <div class="maxlength_cover"></div>
@@ -247,6 +249,43 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <script type="text/javascript">
+                                            layui.use(['layer', 'upload'], function () {
+                                                var upload = layui.upload;
+                                                var layer = layui.layer;
+                                                var loading;
+                                                upload.render({
+                                                    elem: '#img',
+                                                    url: 'http://localhost:8080/renting/house/upload',
+                                                    multiple: true,
+                                                    before: function (obj) {
+                                                        loading = layer.load(2);
+                                                        //预读本地文件示例，不支持ie8
+                                                        obj.preview(function (index, file, result) {
+
+                                                        });
+                                                    },
+                                                    done: function (res) {
+                                                        //上传完毕
+                                                        layer.close(loading);
+                                                        var li = document.createElement('li');
+                                                        $(".add_img_small").addClass('show');
+                                                        $(".upload_wrap").css({display: 'none'});
+                                                        li.setAttribute('class', 'img_box');
+                                                        li.setAttribute('data-index', res.data.id);
+                                                        li.setAttribute('draggable', 'true');
+                                                        li.innerHTML = '<img src="/upload/images/' + res.data.imgName + '">' +
+                                                            '<div class="img_cover"></div>' +
+                                                            '<div class="delete" onclick="deleteImg(this)"></div>';
+                                                        $(".img_list").append(li);
+                                                    },
+                                                    error: function (index, upload) {
+                                                        //当上传失败时，你可以生成一个“重新上传”的按钮，点击该按钮时，执行 upload() 方法即可实现重新上传
+                                                        layer.close(loading);
+                                                    }
+                                                });
+                                            })
+                                        </script>
                                     </div>
                                 </div>
                                 <div class="rows_title"><span><span class="rows_title_star">*</span>上传图片</span></div>

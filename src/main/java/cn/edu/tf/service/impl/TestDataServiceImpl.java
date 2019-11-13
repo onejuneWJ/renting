@@ -4,11 +4,11 @@ import cn.edu.tf.dao.TestDataDao;
 import cn.edu.tf.pojo.TestData;
 import cn.edu.tf.pojo.TestDataExample;
 import cn.edu.tf.service.TestDataService;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @Author: 王俊
@@ -20,12 +20,11 @@ public class TestDataServiceImpl implements TestDataService {
     private TestDataDao testDataDao;
 
     @Override
-    public List<TestData> pageList(Integer page, Integer size) {
-        if (page != null && size != null) {
-            PageHelper.startPage(page, size);
-        }
-        List<TestData> list = testDataDao.selectByExample(new TestDataExample());
-        return list;
+    public PageInfo<TestData> pageList(Integer page, Integer size) {
+
+        return PageHelper.startPage(page, size, true)
+            .doSelectPageInfo(() -> testDataDao.selectByExample(new TestDataExample()));
+
     }
 
     @Override

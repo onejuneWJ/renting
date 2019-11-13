@@ -53,8 +53,8 @@ public class LocationController {
      * @return
      */
     @GetMapping("/location")
-    public ResponseData<Location> getLocation(HttpSession session) {
-        ResponseData<Location> responseData = new ResponseData<>();
+    public ResponseData<List<Location>> getLocation(HttpSession session) {
+        ResponseData<List<Location>> responseData = new ResponseData<>();
         LocationExample locationExample = new LocationExample();
         locationExample.createCriteria().andCityIdEqualTo(1);
         List<Location> locationList=locationDao.selectByExample(locationExample);

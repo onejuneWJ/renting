@@ -22,6 +22,11 @@ public class Img implements Serializable {
      */
     private Long boxId;
 
+    /**
+     * 图片名称
+     */
+    private String imgName;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -48,6 +53,14 @@ public class Img implements Serializable {
         this.boxId = boxId;
     }
 
+    public String getImgName() {
+        return imgName;
+    }
+
+    public void setImgName(String imgName) {
+        this.imgName = imgName;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -62,7 +75,8 @@ public class Img implements Serializable {
         Img other = (Img) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()))
-            && (this.getBoxId() == null ? other.getBoxId() == null : this.getBoxId().equals(other.getBoxId()));
+            && (this.getBoxId() == null ? other.getBoxId() == null : this.getBoxId().equals(other.getBoxId()))
+            && (this.getImgName() == null ? other.getImgName() == null : this.getImgName().equals(other.getImgName()));
     }
 
     @Override
@@ -72,6 +86,7 @@ public class Img implements Serializable {
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
         result = prime * result + ((getBoxId() == null) ? 0 : getBoxId().hashCode());
+        result = prime * result + ((getImgName() == null) ? 0 : getImgName().hashCode());
         return result;
     }
 
@@ -84,6 +99,7 @@ public class Img implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", url=").append(url);
         sb.append(", boxId=").append(boxId);
+        sb.append(", imgName=").append(imgName);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
