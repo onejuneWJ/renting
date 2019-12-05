@@ -6,7 +6,7 @@ package cn.edu.tf.constant;
  **/
 public class Constant {
     public static String SUCCESS = "success";
-
+    public static String FAILED="failed";
     /**
      *
      */

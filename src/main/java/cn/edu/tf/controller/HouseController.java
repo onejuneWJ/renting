@@ -6,8 +6,6 @@ import cn.edu.tf.dto.ResponseData;
 import cn.edu.tf.pojo.*;
 import cn.edu.tf.service.HouseService;
 import cn.edu.tf.service.ImgService;
-import cn.edu.tf.utils.StringUtil;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -131,11 +129,16 @@ public class HouseController {
      */
     @PostMapping()
     @ResponseBody
-    public String addHouse(@RequestBody String body) {
+    public ResponseData<?> addHouse(@RequestBody String body, HttpSession session) {
+        User user = (User)session.getAttribute("CURRENT_USER");
+        if (null == user) {
+            return null;
+        }
         JSONObject jsonObject = new JSONObject(body);
-        JSONArray rentalIncludes = jsonObject.getJSONArray("rentalInclude");
-        StringUtil.arrayToString((String[])rentalIncludes.toList().toArray());
-        return body;
+        House house = new House();
+
+        house.setRentalInclude(jsonObject.getJSONArray("rentalInclude").toList().toString());
+        return ResponseData.ok("", Constant.SUCCESS);
     }
 
     /**

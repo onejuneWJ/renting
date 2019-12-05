@@ -48,12 +48,15 @@
                             <div class="rows_wrap clearfix custom_name">
                                 <div class="rows_content">
                                     <div class="tip"></div>
-                                    <div class="input_text_wrap" name="plotId" style="position: relative;">
+                                    <input id="plotId" type="hidden" name="plotId">
+                                    <div class="input_text_wrap" name="plotName" style="position: relative;">
                                         <input type="autoCompleteXiaoqu" tabindex="1" id="xiaoqu" autocomplete="off"
                                                disableautocomplete="true" maxlength="50" placeholder="请选择小区"
                                                style="width: 522px;">
-                                        <div class="tooltip" style=" z-index:9998;display:none;width:538px">
-                                            <ul class="autoComplete-ul"></ul>
+                                        <div id="autoComplete-div" class="tooltip" style=" z-index:9998;display:none;width:538px">
+                                            <ul class="autoComplete-ul">
+
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>

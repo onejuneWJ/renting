@@ -23,7 +23,7 @@ public class Test {
 
     @org.junit.Test
     public void test() {
-        String filePath = "C:/Users/onejune/Desktop/city_code.json";
+        String filePath = "C:/Users/onejune/Desktop/img/city_code.json";
         String txtStr = reader(filePath);
         if (txtStr != null) {
             System.out.println(txtStr);

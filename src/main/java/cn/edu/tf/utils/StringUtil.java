@@ -42,7 +42,8 @@ public class StringUtil {
      * @return 转换后的数组
      */
     public static String[] stringToArray(String str){
-        return str.substring(1,str.lastIndexOf(']')).split(",");
+        String s=str.replace(" ","");
+        return s.substring(1,s.lastIndexOf(']')).split(",");
     }
 
     /**
@@ -51,10 +52,10 @@ public class StringUtil {
      * @param arr 需要转换的数组
      * @return 转换后的字符串
      */
-    public static String arrayToString(String [] arr){
+    public static String arrayToString(Object [] arr){
         StringBuilder sb=new StringBuilder();
         sb.append('[');
-        for (String s:arr) {
+        for (Object s:arr) {
             sb.append(s).append(",");
         }
         sb.deleteCharAt(sb.length()-1);

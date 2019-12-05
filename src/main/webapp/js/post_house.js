@@ -189,13 +189,45 @@ $(document).ready(function () {
         }
     });
 
-    // //图片上传
-    // $("div.upload_wrap").find("input[type='file']").change(function () {
-    //     $.post({
-    //         url: "localhost:8080/renting/house/img",
-    //         data: {}
-    //     });
-    // });
+    $("ul.autoComplete-ul").delegate("li", "mouseover", function () {
+        $(this).addClass('over');
+    });
+    $("ul.autoComplete-ul").delegate("li", "mouseleave", function () {
+        $(this).removeClass('over');
+    });
+    $("ul.autoComplete-ul").delegate("li", "click", function () {
+        var plotId=$(this).attr("plotId");
+        var plotName=$(this).attr("plotName");
+        $("#xiaoqu").val(plotName);
+        $("#plotId").val(plotId);
+        $("#autoComplete-div").css({display: "none"});
+    });
+    document.getElementById("xiaoqu").oninput = (e) => {
+        var plotName = e.target.value;
+        $.ajax({
+            url: "http://localhost:8080/renting/plot/autocomplete?plotName=" + plotName,
+            type: "GET",
+            success: function (res) {
+                if (res) {
+                    var plots = res.data;
+                    if (plots.length > 0) {
+                        var html = "";
+                        for (var i = 0; i < plots.length; i++) {
+                            html += "<li plotId='" + plots[i].id +"' plotName='" + plots[i].plotName + "' class=''>"
+                                + plots[i].plotName +
+                                "<cite>" + plots[i].address + "</cite>" + "</li>";
+                        }
+                        $(".autoComplete-ul").html(html);
+                        $("#autoComplete-div").css({display: "block"});
+                    } else {
+                        $("#autoComplete-div").css({display: "none"});
+                    }
+                } else {
+                    $("#autoComplete-div").css({display: "none"});
+                }
+            }
+        });
+    };
 
     //表单提交
     $("div.submit_wrap").children().click(function () {
@@ -240,6 +272,7 @@ $(document).ready(function () {
                 var key = $(this).attr("name");
                 data[key] = $(this).find('li.s').attr('val');
             });
+            data["plotId"]=$("#plotId").val();
             $.ajax({
                 url: "http://localhost:8080/renting/house",
                 type: "POST",
@@ -281,7 +314,7 @@ function deleteImg(d) {
 }
 
 function checkInput(s) {
-    if (s.val() == "") {
+    if (s.val() === "" || s.val().trim() === '') {
         s.parent().removeClass('focus');
         s.parent().addClass('error');
         var title = s.parents('div.rows_wrap').children('div.rows_title').children().text();
@@ -293,7 +326,7 @@ function checkInput(s) {
     } else {
         var flag = true;
         s.parent().siblings().each(function () {
-            if ($(this).children('input').val() == "") {
+            if ($(this).children('input').val() === "" || s.val().trim() === '') {
                 $(this).removeClass('focus');
                 $(this).addClass('error');
                 var title = s.parents('div.rows_wrap').children('div.rows_title').children().text();
