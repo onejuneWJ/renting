@@ -198,7 +198,7 @@ public class HouseController {
 
     @RequestMapping("/upload")
     @ResponseBody
-    public ResponseData<?> upload(@RequestParam("img") MultipartFile multipartFile) {
+    public ResponseData<?> upload(@RequestParam("img") MultipartFile multipartFile, HttpSession session) {
         if (multipartFile.isEmpty()) {
             return new ResponseData<>(ResponseData.CODE_ERROR, "文件不存在", null);
         }
@@ -210,9 +210,10 @@ public class HouseController {
             multipartFile.transferTo(file);
             img.setUrl(path);
             img.setImgName(fileName);
-            img = imgService.createImg(img);
+            img = imgService.createImg(img, session);
         } catch (IOException e) {
             e.printStackTrace();
+            return new ResponseData<>(ResponseData.CODE_ERROR, "上传文件失败", null);
         }
         return ResponseData.ok(img);
     }

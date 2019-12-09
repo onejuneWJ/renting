@@ -202,8 +202,10 @@ $(document).ready(function () {
         $("#plotId").val(plotId);
         $("#autoComplete-div").css({display: "none"});
     });
+
+    //自动补全小区
     document.getElementById("xiaoqu").oninput = (e) => {
-        var plotName = e.target.value;
+        var plotName = -e.target.value;
         $.ajax({
             url: "http://localhost:8080/renting/plot/autocomplete?plotName=" + plotName,
             type: "GET",
@@ -227,8 +229,7 @@ $(document).ready(function () {
                 }
             }
         });
-    };
-
+    }
     //表单提交
     $("div.submit_wrap").children().click(function () {
         //校验标识符
