@@ -205,7 +205,7 @@ $(document).ready(function () {
 
     //自动补全小区
     document.getElementById("xiaoqu").oninput = (e) => {
-        var plotName = -e.target.value;
+        var plotName = e.target.value;
         $.ajax({
             url: "http://localhost:8080/renting/plot/autocomplete?plotName=" + plotName,
             type: "GET",
@@ -281,10 +281,12 @@ $(document).ready(function () {
                 contentType: false,
                 processData: false,
                 success: function (data) {
-                    if (data === "success") {
-                        location.href = "user_login.html";
-                    } else {
-                        alert(data);
+                    if(data.msg==='success'){
+                        console.log(data);
+                        alert("发布成功");
+                        window.location.reload();
+                    }else {
+                        alert(data.msg);
                     }
                 },
                 error: function () {

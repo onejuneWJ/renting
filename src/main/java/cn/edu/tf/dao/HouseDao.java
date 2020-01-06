@@ -27,4 +27,6 @@ public interface HouseDao {
     int updateByPrimaryKeySelective(House record);
 
     int updateByPrimaryKey(House record);
+
+    List<House> selectByCity(Integer cityId);
 }

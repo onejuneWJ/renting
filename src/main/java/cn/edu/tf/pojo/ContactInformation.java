@@ -20,7 +20,7 @@ public class ContactInformation implements Serializable {
     /**
      * 性别（1：男，0女）
      */
-    private Boolean gender;
+    private Integer gender;
 
     /**
      * 电话
@@ -55,11 +55,11 @@ public class ContactInformation implements Serializable {
         this.name = name;
     }
 
-    public Boolean getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(Boolean gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 

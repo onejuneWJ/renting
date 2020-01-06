@@ -3,7 +3,9 @@ package cn.edu.tf.controller;
 import cn.edu.tf.constant.Constant;
 import cn.edu.tf.dao.TowardsDao;
 import cn.edu.tf.pojo.City;
+import cn.edu.tf.pojo.House;
 import cn.edu.tf.pojo.Location;
+import cn.edu.tf.service.HouseService;
 import cn.edu.tf.service.LocationService;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -27,10 +29,12 @@ public class IndexController {
 
     private LocationService locationService;
     private TowardsDao towardsDao;
+    private HouseService houseService;
 
-    public IndexController(LocationService locationService, TowardsDao towardsDao) {
+    public IndexController(LocationService locationService, TowardsDao towardsDao, HouseService houseService) {
         this.locationService = locationService;
         this.towardsDao = towardsDao;
+        this.houseService = houseService;
     }
 
 
@@ -40,11 +44,11 @@ public class IndexController {
      * @return 主页
      */
     @GetMapping("/index.htm")
-    public String index(HttpSession session, Model model) {
+    public String index(HttpSession session, Model model, Integer page, Integer limit) {
         City city = (City)session.getAttribute("CITY");
         int cityId = city != null ? city.getId() : 110100;
-        List<Location> locationList = locationService.selectByCityId(cityId);
-
+        List<House> houseList=houseService.selectByCity(city, page, limit);
+        model.addAttribute("houseList",houseList);
         return "index";
     }
 
@@ -80,4 +84,8 @@ public class IndexController {
         return map;
     }
 
+    @GetMapping("/postHouse")
+    public String postHouse(){
+        return "house_post";
+    }
 }

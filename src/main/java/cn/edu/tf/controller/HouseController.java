@@ -34,8 +34,9 @@ public class HouseController {
     private RequiresDao requiresDao;
     private LocationDao locationDao;
     private ImgService imgService;
+    private ContactInformationDao contactInformationDao;
 
-    public HouseController(HouseDao houseDao, TowardsDao towardsDao, RentalIncludeDao rentalIncludeDao, PaymentDao paymentDao, HouseIncludeDao houseIncludeDao, HouseService houseService, RequiresDao requiresDao, LocationDao locationDao, ImgService imgService) {
+    public HouseController(HouseDao houseDao, TowardsDao towardsDao, RentalIncludeDao rentalIncludeDao, PaymentDao paymentDao, HouseIncludeDao houseIncludeDao, HouseService houseService, RequiresDao requiresDao, LocationDao locationDao, ImgService imgService, ContactInformationDao contactInformationDao) {
         this.houseDao = houseDao;
         this.towardsDao = towardsDao;
         this.rentalIncludeDao = rentalIncludeDao;
@@ -45,13 +46,15 @@ public class HouseController {
         this.requiresDao = requiresDao;
         this.locationDao = locationDao;
         this.imgService = imgService;
+        this.contactInformationDao = contactInformationDao;
     }
 
     /**
      * 查询城市所有房源
      */
     @GetMapping("/")
-    public String cityHouse(HttpSession session) {
+    public String cityHouse(HttpSession session, Integer page, Integer limit) {
+        //
         session.setAttribute("CURRENT_LOCATION", null);
         //从session中查询当前城市
         City city = (City)session.getAttribute("city");
@@ -67,7 +70,7 @@ public class HouseController {
      * @param locationId 区域id
      */
     @GetMapping("/{cityId}/{locationId}")
-    public String locationHouse(@PathVariable int cityId, @PathVariable int locationId, HttpSession session) {
+    public String locationHouse(@PathVariable int cityId, @PathVariable int locationId, HttpSession session, Integer page, Integer limit) {
         Location location = locationDao.selectByPrimaryKey(locationId);
         session.setAttribute("CURRENT_LOCATION", location);
         return "index";
@@ -79,7 +82,7 @@ public class HouseController {
      * @param index 租金范围
      */
     @GetMapping("/zj{index}")
-    public String houseWithZj(@PathVariable int index, HttpSession session, Model model) {
+    public String houseWithZj(@PathVariable int index, HttpSession session, Model model, Integer page, Integer limit) {
         List<House> houseList = houseService.selectByCondition(index, session);
         if (index == -1) {
             // 查询所有租金范围
@@ -98,7 +101,7 @@ public class HouseController {
      * @param index 房型范围
      */
     @GetMapping("/fx{index}")
-    public String houseWithFx(@PathVariable int index, HttpSession session) {
+    public String houseWithFx(@PathVariable int index, HttpSession session, Integer page, Integer limit) {
         if (index == -1) {
             // 查询所有房型范围
             session.setAttribute("CURRENT_HOUSE_TYPE", null);
@@ -110,7 +113,7 @@ public class HouseController {
     }
 
     @GetMapping("/tw{index}")
-    public String houseWithTw(@PathVariable int index, HttpSession session) {
+    public String houseWithTw(@PathVariable int index, HttpSession session, Integer page, Integer limit) {
         if (index == -1) {
             // 查询所有朝向范围
             session.setAttribute("CURRENT_TOWARDS", null);
@@ -132,13 +135,39 @@ public class HouseController {
     public ResponseData<?> addHouse(@RequestBody String body, HttpSession session) {
         User user = (User)session.getAttribute("CURRENT_USER");
         if (null == user) {
-            return null;
+            return new ResponseData<>(ResponseData.CODE_ERROR,"请先登录再发布房源",null);
         }
         JSONObject jsonObject = new JSONObject(body);
         House house = new House();
-
+        house.setUserId(user.getId());
+        house.setPlotId(jsonObject.getLong("plotId"));
+        house.setHuxingShi(jsonObject.getInt("huxingShi"));
+        house.setHuxingTing(jsonObject.getInt("huxingTing"));
+        house.setHuxingWei(jsonObject.getInt("huxingWei"));
+        house.setArea(jsonObject.getInt("area"));
+        house.setCurrentFloor(jsonObject.getInt("currentFloor"));
+        house.setTotalFloor(jsonObject.getInt("totalFloor"));
+        house.setRental(jsonObject.getDouble("rental"));
         house.setRentalInclude(jsonObject.getJSONArray("rentalInclude").toList().toString());
-        return ResponseData.ok("", Constant.SUCCESS);
+        house.setHouseInclude(jsonObject.getJSONArray("houseInclude").toList().toString());
+        house.setRequire(jsonObject.getJSONArray("require").toList().toString());
+        house.setPaymentId(jsonObject.getInt("paymentId"));
+        house.setTowardsId(jsonObject.getInt("towardsId"));
+        house.setDescription(jsonObject.getString("description"));
+
+        ContactInformation contactInformation=new ContactInformation();
+        contactInformation.setName(jsonObject.getString("name"));
+        contactInformation.setPhone(jsonObject.getString("phone"));
+        contactInformation.setGender(jsonObject.getInt("gender"));
+        contactInformation.setReceiveTimeStart(jsonObject.getString("receiveTimeStart"));
+        contactInformation.setReceiveTimeEnd(jsonObject.getString("receiveTimeEnd"));
+        contactInformationDao.insertSelective(contactInformation);
+        house.setContactInformationId(contactInformation.getId());
+
+        Long imgBoxId = (Long) session.getAttribute("IMG_BOX_ID");
+        house.setImgBoxId(imgBoxId);
+        houseDao.insertSelective(house);
+        return ResponseData.ok(house, Constant.SUCCESS);
     }
 
     /**

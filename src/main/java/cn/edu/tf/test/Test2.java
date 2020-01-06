@@ -15,7 +15,7 @@ public class Test2 {
     public void selectZXS() {
         ContactInformation contactInformation = new ContactInformation();
         contactInformation.setName("王俊");
-        contactInformation.setGender(true);
+        contactInformation.setGender(1);
         contactInformation.setPhone("18227010296");
         contactInformation.setReceiveTimeStart("10:00");
         contactInformation.setReceiveTimeEnd("21:00");

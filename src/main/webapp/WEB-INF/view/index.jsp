@@ -106,7 +106,7 @@
             <a href="" class="current">区域找房</a>
         </li>
         <li>
-            <a href="${pageContext.request.contextPath}/house_post.html" target="_blank">我要出租</a>
+            <a href="${pageContext.request.contextPath}/postHouse" target="_blank">我要出租</a>
         </li>
     </ul>
 </div>
@@ -769,38 +769,25 @@
 
         </div>
 
-        <!--右侧广告栏-->
-        <div class="adver-content">
-            <div id="IFX_p3001" class="advBox" style="display:none;"></div>
-
-            <div id="IFX_p950" class="advBox" style="">
-                <div style="width:200px;height:200px;border:none;padding:0px;margin:0px;overflow:hidden;position: relative;">
-                    <a target="_blank"
-                       href="https://ifx.anjuke.com/cr?c=15&amp;u=http%3A%2F%2Fshanghai.anjuke.com%2Fask%2F%3Ffrom%3Dnavigation&amp;p=950&amp;as=2152766232"><img
-                            style="width:200px;height:200px;border:none;"
-                            src="https://pic6.ajkimg.com/mat/f1e81f2a177ffbfd3fd2cb4c8f5bd58f?imageMogr2/format/jpg/thumbnail/200x200"></a><span
-                        style="position: absolute;right: 11px;bottom: 0;color: white;">广告</span></div>
-            </div>
-
-
-            <!--百度广告-->
-            <!--<div class="advBox" id="baidu_adv"></div>-->
-            <!-- 58联盟广告页 -->
-            <div class="luna-58-wrap">
-                <iframe class="luna-58ifm"
-                        src="https://luna.58.com/show/ads?n=b-33276477696777-ps-f-anjukepc&amp;c=zufangpc&amp;qq-pf-to=pcqq.discussion"
-                        width="240" height="240" scrolling="no" frameborder="0"></iframe>
-            </div>
-        </div>
-
         <!--翻页-->
         <div class="page-content" id="page-content"></div>
         <script>
             layui.use('laypage', function () {
                 var layPage = layui.laypage;
                 layPage.render({
-                    elem: 'page-content' //注意，这里的 test1 是 ID，不用加 # 号
-                    , count: 50 //数据总数，从服务端得到
+                    elem: 'page-content', //注意，这里的 test1 是 ID，不用加 # 号,
+                    count: 500, //数据总数，从服务端得到
+                    layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+                    jump: function (obj, first) {
+                        if (!first) {
+                            const url = document.documentURI;
+                            $.ajax({
+                                url: url,
+
+                            });
+
+                        }
+                    }
                 });
             })
         </script>
@@ -812,7 +799,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         // 获取显示区域列表、租金、等条件
-        console.log("sss");
         $.ajax({
             url: "${pageContext.request.contextPath}/query-data",
             type: "GET",
@@ -821,7 +807,6 @@
 
                 //区域查询条件
                 const locations = json.locations;
-                console.log(locations);
                 var locationHtml = "<a href='javascript:void(0)' title=\"区域租房\" class=\"selected-item\">区域</a>\n" +
                     "<div class=\"sub-items sub-level1\">\n" +
                     "<em class=\"arrow-wrap \"><em class=\"arrow\"></em></em>\n" +
@@ -888,6 +873,14 @@
                     towardsHtml += "rel='nofollow'>" + towards[i].name + "</a></li>";
                 }
                 $("#towards-query").html(towardsHtml);
+            }
+        });
+        // 根据默认条件查询房源信息
+        $.ajax({
+            url: "",
+            type: "",
+            success: function (res) {
+
             }
         });
     })

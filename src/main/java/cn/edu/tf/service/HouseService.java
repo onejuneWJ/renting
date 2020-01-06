@@ -1,5 +1,6 @@
 package cn.edu.tf.service;
 
+import cn.edu.tf.pojo.City;
 import cn.edu.tf.pojo.House;
 
 import javax.servlet.http.HttpSession;
@@ -16,4 +17,6 @@ public interface HouseService {
     String add(House house);
 
     List<House> selectByCondition(int index, HttpSession session);
+    
+    List<House> selectByCity(City city, Integer page, Integer limit);
 }
