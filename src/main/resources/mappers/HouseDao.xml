@@ -255,35 +255,56 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </select>
-
-    <select id="selectByCity" resultType="cn.edu.tf.dto.HouseDTO">
+    <resultMap id="houseResultMap" type="cn.edu.tf.dto.HouseDTO">
+        <result property="id" column="id"/>
+        <result property="huxingShi" column="huxing_shi"/>
+        <result property="huxingTing" column="huxing_ting"/>
+        <result property="huxingWei" column="huxing_wei"/>
+        <result property="area" column="area"/>
+        <result property="currentFloor" column="current_floor"/>
+        <result property="totalFloor" column="total_floor"/>
+        <result property="rental" column="rental"/>
+        <result property="rentalInclude" column="rental_include"/>
+        <result property="houseInclude" column="house_include"/>
+        <result property="require" column="require"/>
+        <result property="description" column="description"/>
+        <result property="imgBoxId" column="img_box_id"/>
+        <result property="plotName" column="plot_name"/>
+        <result property="address" column="address"/>
+        <result property="username" column="username"/>
+        <result property="nickname" column="nickname"/>
+        <result property="email" column="email"/>
+        <result property="avatar" column="avatar"/>
+        <result property="payment" column="payment"/>
+        <result property="towards" column="towards"/>
+        <result property="contactName" column="contact_name"/>
+        <result property="contactGender" column="contact_gender"/>
+        <result property="contactPhone" column="contact_phone"/>
+        <result property="receiveTimeStart" column="receive_time_start"/>
+        <result property="receiveTimeEnd" column="receive_time_end"/>
+        <collection property="imgList" ofType="cn.edu.tf.pojo.Img">
+            <result property="imgName" column="img_name"/>
+            <result property="url" column="url"/>
+        </collection>
+    </resultMap>
+    <select id="selectByCity" resultMap="houseResultMap">
         select
         house.id,
-        house.user_id,
-        house.plot_id,
         house.huxing_shi,
         house.huxing_ting,
         house.huxing_wei,
         house.area,
         house.current_floor,
         house.total_floor,
-        house.towards_id,
         house.rental,
-        house.payment_id,
         house.rental_include,
         house.house_include,
         house.`require`,
         house.description,
         house.img_box_id,
-        house.contact_information_id,
-        plot.id,
         plot.plot_name,
-        plot.location_id,
         plot.address,
-        u.phone,
-        u.user_type,
         u.username,
-        u.password,
         u.nickname,
         u.email,
         u.avatar,
@@ -294,6 +315,7 @@
         ci.phone contact_phone,
         ci.receive_time_start,
         ci.receive_time_end,
+        img.id,
         img.img_name,
         img.url
         from house

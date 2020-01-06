@@ -1,9 +1,10 @@
 package cn.edu.tf.controller;
 
 import cn.edu.tf.constant.Constant;
+import cn.edu.tf.dao.HouseDao;
 import cn.edu.tf.dao.TowardsDao;
+import cn.edu.tf.dto.HouseDTO;
 import cn.edu.tf.pojo.City;
-import cn.edu.tf.pojo.House;
 import cn.edu.tf.pojo.Location;
 import cn.edu.tf.service.HouseService;
 import cn.edu.tf.service.LocationService;
@@ -30,11 +31,13 @@ public class IndexController {
     private LocationService locationService;
     private TowardsDao towardsDao;
     private HouseService houseService;
+    private HouseDao houseDao;
 
-    public IndexController(LocationService locationService, TowardsDao towardsDao, HouseService houseService) {
+    public IndexController(LocationService locationService, TowardsDao towardsDao, HouseService houseService, HouseDao houseDao) {
         this.locationService = locationService;
         this.towardsDao = towardsDao;
         this.houseService = houseService;
+        this.houseDao = houseDao;
     }
 
 
@@ -47,8 +50,11 @@ public class IndexController {
     public String index(HttpSession session, Model model, Integer page, Integer limit) {
         City city = (City)session.getAttribute("CITY");
         int cityId = city != null ? city.getId() : 110100;
-        List<House> houseList=houseService.selectByCity(city, page, limit);
+        List<HouseDTO> houseList=houseService.selectByCity(cityId, page==null?0:page, limit==null?20:limit);
         model.addAttribute("houseList",houseList);
+        model.addAttribute("count", houseDao.countByExample(null));
+        model.addAttribute("page",page);
+        model.addAttribute("limit",limit);
         return "index";
     }
 

@@ -2,6 +2,7 @@ package cn.edu.tf.controller;
 
 import cn.edu.tf.constant.Constant;
 import cn.edu.tf.dao.*;
+import cn.edu.tf.dto.HouseDTO;
 import cn.edu.tf.dto.ResponseData;
 import cn.edu.tf.pojo.*;
 import cn.edu.tf.service.HouseService;
@@ -83,7 +84,7 @@ public class HouseController {
      */
     @GetMapping("/zj{index}")
     public String houseWithZj(@PathVariable int index, HttpSession session, Model model, Integer page, Integer limit) {
-        List<House> houseList = houseService.selectByCondition(index, session);
+        List<HouseDTO> houseList = houseService.selectByCondition(index, session);
         if (index == -1) {
             // 查询所有租金范围
             session.setAttribute("CURRENT_RENTAL", null);

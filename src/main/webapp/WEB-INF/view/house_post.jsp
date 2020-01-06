@@ -19,6 +19,9 @@
 <div class="topbar ">
     <div class="header-center clearfix">
         <ul class="nav-site clearfix">
+            <li class="first">
+                <a href="${pageContext.request.contextPath}/index.htm">首页</a>
+            </li>
         </ul>
         <div id="userbox" class="user">
             <div class="userlogin userblock">

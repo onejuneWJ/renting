@@ -1,10 +1,13 @@
 package cn.edu.tf.test;
 
-import cn.edu.tf.dao.ContactInformationDao;
-import cn.edu.tf.pojo.ContactInformation;
+import cn.edu.tf.dao.HouseDao;
+import cn.edu.tf.dao.HouseIncludeDao;
+import cn.edu.tf.dto.HouseDTO;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.util.List;
 
 /**
  * @author : 王俊
@@ -13,16 +16,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Test2 {
     @Test
     public void selectZXS() {
-        ContactInformation contactInformation = new ContactInformation();
-        contactInformation.setName("王俊");
-        contactInformation.setGender(1);
-        contactInformation.setPhone("18227010296");
-        contactInformation.setReceiveTimeStart("10:00");
-        contactInformation.setReceiveTimeEnd("21:00");
-
         String xml = "applicationContext.xml";
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext(xml);
-        ContactInformationDao contactInformationDao = applicationContext.getBean(ContactInformationDao.class);
-        contactInformationDao.insert(contactInformation);
+        HouseDao houseDao=applicationContext.getBean(HouseDao.class);
+        HouseIncludeDao houseIncludeDao=applicationContext.getBean(HouseIncludeDao.class);
+        List<HouseDTO> houseList=houseDao.selectByCity(440300);
+        System.out.println(houseList);
+
+        System.out.println(houseList);
     }
 }

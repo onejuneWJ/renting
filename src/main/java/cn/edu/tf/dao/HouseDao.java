@@ -1,9 +1,11 @@
 package cn.edu.tf.dao;
 
+import cn.edu.tf.dto.HouseDTO;
 import cn.edu.tf.pojo.House;
 import cn.edu.tf.pojo.HouseExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface HouseDao {
     long countByExample(HouseExample example);
@@ -28,5 +30,5 @@ public interface HouseDao {
 
     int updateByPrimaryKey(House record);
 
-    List<House> selectByCity(Integer cityId);
+    List<HouseDTO> selectByCity(Integer cityId);
 }

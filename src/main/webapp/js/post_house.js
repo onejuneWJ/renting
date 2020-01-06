@@ -34,7 +34,7 @@ $(document).ready(function () {
             success: function (data) {
                 var payment = data.data;
                 if (payment != null) {
-                    var h = "<li val=\"\" class=\"s\">请选择付款方式</li>";
+                    var h = "<li val=\"0\" class=\"s\">请选择付款方式</li>";
                     for (i = 0; i < payment.length; i++) {
                         h += "<li val=\"" + payment[i].id + "\" >" + payment[i].name + "</li>";
                     }
@@ -196,11 +196,16 @@ $(document).ready(function () {
         $(this).removeClass('over');
     });
     $("ul.autoComplete-ul").delegate("li", "click", function () {
-        var plotId=$(this).attr("plotId");
-        var plotName=$(this).attr("plotName");
+        var plotId = $(this).attr("plotId");
+        var plotName = $(this).attr("plotName");
         $("#xiaoqu").val(plotName);
         $("#plotId").val(plotId);
         $("#autoComplete-div").css({display: "none"});
+    });
+    $("#xiaoqu").blur(function () {
+        if($("#plotId").val()===""){
+            $("#xiaoqu").val("");
+        }
     });
 
     //自动补全小区
@@ -215,21 +220,26 @@ $(document).ready(function () {
                     if (plots.length > 0) {
                         var html = "";
                         for (var i = 0; i < plots.length; i++) {
-                            html += "<li plotId='" + plots[i].id +"' plotName='" + plots[i].plotName + "' class=''>"
+                            html += "<li plotId='" + plots[i].id + "' plotName='" + plots[i].plotName + "' class=''>"
                                 + plots[i].plotName +
                                 "<cite>" + plots[i].address + "</cite>" + "</li>";
                         }
                         $(".autoComplete-ul").html(html);
                         $("#autoComplete-div").css({display: "block"});
                     } else {
-                        $("#autoComplete-div").css({display: "none"});
+
+                        $("#plotId").val("");
+                        $(".autoComplete-ul").html("<li plotId='' plotName='' class=''>"
+                            + "没有找到该小区" + "</li>");
+                        $("#autoComplete-div").css({display: "block"});
                     }
                 } else {
+                    $("#plotId").val("");
                     $("#autoComplete-div").css({display: "none"});
                 }
             }
         });
-    }
+    };
     //表单提交
     $("div.submit_wrap").children().click(function () {
         //校验标识符
@@ -273,7 +283,7 @@ $(document).ready(function () {
                 var key = $(this).attr("name");
                 data[key] = $(this).find('li.s').attr('val');
             });
-            data["plotId"]=$("#plotId").val();
+            data["plotId"] = $("#plotId").val();
             $.ajax({
                 url: "http://localhost:8080/renting/house",
                 type: "POST",
