@@ -1,5 +1,7 @@
 package cn.edu.tf.utils;
 
+import org.springframework.util.StringUtils;
+
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -42,6 +44,9 @@ public class StringUtil {
      * @return 转换后的数组
      */
     public static String[] stringToArray(String str){
+        if(StringUtils.isEmpty(str)){
+            return new String[]{};
+        }
         String s=str.replace(" ","");
         return s.substring(1,s.lastIndexOf(']')).split(",");
     }

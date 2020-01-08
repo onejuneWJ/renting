@@ -24,32 +24,32 @@
     <script type="text/javascript"
             src="https://webapi.amap.com/maps?v=1.4.15&key=779df40e3dc27215fd27a80bb9766217&plugin=AMap.CitySearch"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
-            //获取用户所在城市信息
-            function showCityInfo() {
-                //实例化城市查询类
-                var citysearch = new AMap.CitySearch();
-                //自动获取用户IP，返回当前城市
-                citysearch.getLocalCity(function (status, result) {
-                    if (status === 'complete' && result.info === 'OK') {
-                        if (result && result.city && result.bounds) {
-                            var cityinfo = result.city;
-                            var provinceInfo = result.province;
-                            $("#city_name")[0].innerText = cityinfo;
-                            $.ajax({
-                                url: "http://localhost:8080/renting/city",
-                                type: "post",
-                                data: {cityName: cityinfo, provinceName: provinceInfo}
-                            });
-                        }
-                    } else {
-
-                    }
-                });
-            }
-
-            showCityInfo();
-        });
+        // $(document).ready(function () {
+        //     //获取用户所在城市信息
+        //     function showCityInfo() {
+        //         //实例化城市查询类
+        //         var citysearch = new AMap.CitySearch();
+        //         //自动获取用户IP，返回当前城市
+        //         citysearch.getLocalCity(function (status, result) {
+        //             if (status === 'complete' && result.info === 'OK') {
+        //                 if (result && result.city && result.bounds) {
+        //                     var cityinfo = result.city;
+        //                     var provinceInfo = result.province;
+        //                     $("#city_name")[0].innerText = cityinfo;
+        //                     $.ajax({
+        //                         url: "http://localhost:8080/renting/city",
+        //                         type: "post",
+        //                         data: {cityName: cityinfo, provinceName: provinceInfo}
+        //                     });
+        //                 }
+        //             } else {
+        //
+        //             }
+        //         });
+        //     }
+        //
+        //     showCityInfo();
+        // });
     </script>
 
 </head>
@@ -179,19 +179,49 @@
             <!--我们的开始，是很长的电影-->
             <!--标签-->
             <div class="zu-tab">
-                <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/" class="curTab">房源列表</a>
+                <a href="" class="curTab">房源列表</a>
             </div>
             <!--排序-->
             <div class="zu-sort">
-                <span class="tit">为您找到<em>武侯</em>附近租房</span>
+                <span class="tit">为您找到<em>${count==null?0:count}</em>条房源租房</span>
                 <div class="sort-cond">
                     <span>排序 ：</span>
-                    <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/" class="light">默认</a>
-                    <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/px7/ " class="">租金
-                        <i class="icon icon-arrup"></i>
+                    <a id="orderDefault" href="javascript:void(0)" class="${(sortFlag!="1"&&sortFlag!="2")?"light":""}">默认</a>
+                    <a id="orderRental" href="javascript:void(0)" class="${sortFlag=="1"?"light":""}">租金
+                        <c:if test="${sortFlag=='1'}">
+                            <c:if test="${rentalSort=='ASC'}">
+                                <i class="icon icon-arrup-org"></i>
+                            </c:if>
+                            <c:if test="${rentalSort=='DESC'}">
+                                <i class="icon icon-arrdown-org"></i>
+                            </c:if>
+                        </c:if>
+                        <c:if test="${sortFlag!='1'}">
+                            <c:if test="${rentalSort==null||rentalSort=='ASC'}">
+                                <i class="icon icon-arrup"></i>
+                            </c:if>
+                            <c:if test="${rentalSort=='DESC'}">
+                                <i class="icon icon-arrdown"></i>
+                            </c:if>
+                        </c:if>
                     </a>
-                    <a href="https://cd.zu.anjuke.com/fangyuan/wuhou/px3/ " class="">最新
-                        <i class="icon icon-arrdown"></i>
+                    <a id="orderTime" href="javascript:void(0)" class="${sortFlag=="2"?"light":""}">最新
+                        <c:if test="${sortFlag=='2'}">
+                            <c:if test="${timeSort=='ASC'}">
+                                <i class="icon icon-arrup-org"></i>
+                            </c:if>
+                            <c:if test="${timeSort=='DESC'}">
+                                <i class="icon icon-arrdown-org"></i>
+                            </c:if>
+                        </c:if>
+                        <c:if test="${sortFlag!='2'}">
+                            <c:if test="${timeSort==null||timeSort=='ASC'}">
+                                <i class="icon icon-arrup"></i>
+                            </c:if>
+                            <c:if test="${timeSort=='DESC'}">
+                                <i class="icon icon-arrdown"></i>
+                            </c:if>
+                        </c:if>
                     </a>
                     <!--icon-arrup-org icon-arrdown-org为高亮箭头-->
                 </div>
@@ -223,12 +253,16 @@
 
                         </h3>
                         <p class="details-item tag">
-                            <b class="strongbox" style="font-weight: normal;">${house.huxingShi}</b>室<b class="strongbox"
-                                                                                       style="font-weight: normal;">${house.huxingTing}</b>厅<span>|</span><b
-                                class="strongbox" style="font-weight: normal;">${house.area}</b>平米<span>|</span>${house.currentFloor}层(共${house.totalFloor}层) <i
-                                class="iconfont jjr-icon"></i>${house.contactName} </p>
+                            <b class="strongbox" style="font-weight: normal;">${house.huxingShi}</b>室<b
+                                class="strongbox"
+                                style="font-weight: normal;">${house.huxingTing}</b>厅<span>|</span><b
+                                class="strongbox"
+                                style="font-weight: normal;">${house.area}</b>平米<span>|</span>${house.currentFloor}层(共${house.totalFloor}层)
+                            <i
+                                    class="iconfont jjr-icon"></i>${house.contactName} </p>
                         <address class="details-item">
-                            <a target="_blank" href="https://chengdu.anjuke.com/community/view/857965">${house.plotName}</a>&nbsp;&nbsp;
+                            <a target="_blank"
+                               href="https://chengdu.anjuke.com/community/view/857965">${house.plotName}</a>&nbsp;&nbsp;
                                 ${house.address}
                         </address>
                         <p class="details-item bot-tag">
@@ -251,18 +285,28 @@
                 var layPage = layui.laypage;
                 layPage.render({
                     elem: 'page-content', //注意，这里的 test1 是 ID，不用加 # 号,
-                    count: ${count}, //数据总数，从服务端得到
+                    count: ${count==null?0:count}, //数据总数，从服务端得到
                     layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
-                    limit: '${limit}'===''?20:'${limit}',
-                    curr: '${page}'===''?1:'${page}',
+                    limit: ${limit==null?20:limit},
+                    curr: ${page==null?1:page},
                     jump: function (obj, first) {
                         console.log(obj);
                         if (!first) {
-                            var uri=document.documentURI;
+                            var uri = document.documentURI;
                             if (uri.includes("?")) {
-                                location.href = uri.substr(0, uri.lastIndexOf('?')) + "?page=" + obj.curr + "&limit=" + obj.limit;
+                                location.href = uri.substr(0, uri.lastIndexOf('?')) +
+                                    "?page=" + obj.curr +
+                                    "&limit=" + obj.limit+
+                                "&rentalSort=" + '${rentalSort}'
+                                + "&timeSort=" + '${timeSort}'
+                                + "&sortFlag="+ '${sortFlag}';
                             } else {
-                                location.href = uri + "?page=" + obj.curr + "&limit=" + obj.limit;
+                                location.href = uri +
+                                    "?page=" + obj.curr +
+                                    "&limit=" + obj.limit+
+                                    "&rentalSort=" + '${rentalSort}'
+                                    + "&timeSort=" + '${timeSort}'
+                                    + "&sortFlag="+ '${sortFlag}';
                             }
                         }
                     }
@@ -359,6 +403,58 @@
             type: "",
             success: function (res) {
 
+            }
+        });
+        $("#orderDefault").click(function () {
+            let uri = document.documentURI;
+            if (uri.includes("?")) {
+                location.href = uri.substr(0, uri.lastIndexOf('?'))
+                    + "?page=" + '${page}'
+                    + "&limit=" + '${limit}'
+                    + "&sortFlag=0";
+            } else {
+                location.href = '';
+            }
+
+        });
+        $("#orderRental").click(function () {
+            let uri = document.documentURI;
+            if (uri.includes("?")) {
+                location.href = uri.substr(0, uri.lastIndexOf('?'))
+                    + "?t=t"
+                    + "&page=" + '${page}'
+                    + "&limit=" + '${limit}'
+                    + "&rentalSort=" + '${rentalSort==null?"ASC":rentalSort=="ASC"?"DESC":"ASC"}'
+                    + "&timeSort=" + '${timeSort}'
+                    + "&sortFlag=1";
+            } else {
+                location.href = uri
+                    + "?t=t"
+                    + "page=" + '${page}'
+                    + "&limit=" + '${limit}'
+                    + "&rentalSort=" + '${rentalSort==null?"ASC":rentalSort=="ASC"?"DESC":"ASC"}'
+                    + "&timeSort=" + '${timeSort}'
+                    + "&sortFlag=1";
+            }
+        });
+        $("#orderTime").click(function () {
+            let uri = document.documentURI;
+            if (uri.includes("?")) {
+                location.href = uri.substr(0, uri.lastIndexOf('?'))
+                    + "?t=t"
+                    + "&page=" + '${page}'
+                    + "&limit=" + '${limit}'
+                    + "&rentalSort=" + '${rentalSort}'
+                    + "&timeSort=" + '${timeSort==null?"ASC":timeSort=="ASC"?"DESC":"ASC"}'
+                    + "&sortFlag=2";
+            } else {
+                location.href = uri
+                    + "?t=t"
+                    + "page=" + '${page}'
+                    + "&limit=" + '${limit}'
+                    + "&rentalSort=" + '${rentalSort}'
+                    + "&timeSort=" + '${timeSort==null?"ASC":timeSort=="ASC"?"DESC":"ASC"}'
+                    + "&sortFlag=2";
             }
         });
     })

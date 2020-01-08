@@ -6,6 +6,7 @@
 
     <settings>
         <setting name="logImpl" value="LOG4J"/>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
     <plugins>
         <!-- com.github.pagehelper为PageHelper类所在包名 -->

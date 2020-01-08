@@ -1,6 +1,7 @@
 package cn.edu.tf.pojo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HouseExample {
@@ -1241,6 +1242,66 @@ public class HouseExample {
 
         public Criteria andContactInformationIdNotBetween(Long value1, Long value2) {
             addCriterion("contact_information_id not between", value1, value2, "contactInformationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostTimeIsNull() {
+            addCriterion("post_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostTimeIsNotNull() {
+            addCriterion("post_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostTimeEqualTo(Date value) {
+            addCriterion("post_time =", value, "postTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostTimeNotEqualTo(Date value) {
+            addCriterion("post_time <>", value, "postTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostTimeGreaterThan(Date value) {
+            addCriterion("post_time >", value, "postTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("post_time >=", value, "postTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostTimeLessThan(Date value) {
+            addCriterion("post_time <", value, "postTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostTimeLessThanOrEqualTo(Date value) {
+            addCriterion("post_time <=", value, "postTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostTimeIn(List<Date> values) {
+            addCriterion("post_time in", values, "postTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostTimeNotIn(List<Date> values) {
+            addCriterion("post_time not in", values, "postTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostTimeBetween(Date value1, Date value2) {
+            addCriterion("post_time between", value1, value2, "postTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPostTimeNotBetween(Date value1, Date value2) {
+            addCriterion("post_time not between", value1, value2, "postTime");
             return (Criteria) this;
         }
     }

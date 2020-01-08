@@ -1,7 +1,9 @@
 package cn.edu.tf.service;
 
 import cn.edu.tf.dto.HouseDTO;
+import cn.edu.tf.dto.PageRequest;
 import cn.edu.tf.pojo.House;
+import com.github.pagehelper.Page;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -17,6 +19,6 @@ public interface HouseService {
     String add(House house);
 
     List<HouseDTO> selectByCondition(int index, HttpSession session);
-    
-    List<HouseDTO> selectByCity(int cityId, Integer page, Integer limit);
+
+    Page<HouseDTO> selectByCity(int cityId, PageRequest pageRequest);
 }

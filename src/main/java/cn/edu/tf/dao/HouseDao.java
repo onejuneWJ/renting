@@ -30,5 +30,5 @@ public interface HouseDao {
 
     int updateByPrimaryKey(House record);
 
-    List<HouseDTO> selectByCity(Integer cityId);
+    List<HouseDTO> selectByCity(int cityId);
 }

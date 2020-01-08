@@ -4,10 +4,13 @@ import cn.edu.tf.constant.Constant;
 import cn.edu.tf.dao.HouseDao;
 import cn.edu.tf.dao.TowardsDao;
 import cn.edu.tf.dto.HouseDTO;
+import cn.edu.tf.dto.PageRequest;
 import cn.edu.tf.pojo.City;
 import cn.edu.tf.pojo.Location;
 import cn.edu.tf.service.HouseService;
 import cn.edu.tf.service.LocationService;
+import com.github.pagehelper.Page;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,14 +50,34 @@ public class IndexController {
      * @return 主页
      */
     @GetMapping("/index.htm")
-    public String index(HttpSession session, Model model, Integer page, Integer limit) {
+    public String index(HttpSession session, Model model, PageRequest pageRequest,
+                        String rentalSort, String timeSort, String sortFlag) {
+        if (!StringUtils.isEmpty(rentalSort)) {
+            PageRequest.Sort sort = new PageRequest.Sort();
+            sort.setClause("rental");
+            sort.setDirection(rentalSort);
+            pageRequest.getSortList().add(sort);
+            model.addAttribute("rentalSort", rentalSort);
+        } else{
+            model.addAttribute("rentalSort", null);
+        }
+        if (!StringUtils.isEmpty(timeSort)) {
+            PageRequest.Sort sort = new PageRequest.Sort();
+            sort.setClause("post_time");
+            sort.setDirection(timeSort);
+            pageRequest.getSortList().add(sort);
+            model.addAttribute("timeSort", timeSort);
+        } else {
+            model.addAttribute("timeSort", null);
+        }
         City city = (City)session.getAttribute("CITY");
         int cityId = city != null ? city.getId() : 110100;
-        List<HouseDTO> houseList=houseService.selectByCity(cityId, page==null?0:page, limit==null?20:limit);
-        model.addAttribute("houseList",houseList);
-        model.addAttribute("count", houseDao.countByExample(null));
-        model.addAttribute("page",page);
-        model.addAttribute("limit",limit);
+        Page<HouseDTO> houseList = houseService.selectByCity(cityId, pageRequest);
+        model.addAttribute("houseList", houseList);
+        model.addAttribute("count", houseList.getTotal());
+        model.addAttribute("page", pageRequest.getPage());
+        model.addAttribute("limit", pageRequest.getLimit());
+        model.addAttribute("sortFlag", sortFlag);
         return "index";
     }
 
@@ -91,7 +114,7 @@ public class IndexController {
     }
 
     @GetMapping("/postHouse")
-    public String postHouse(){
+    public String postHouse() {
         return "house_post";
     }
 }

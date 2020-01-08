@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -167,6 +168,7 @@ public class HouseController {
 
         Long imgBoxId = (Long) session.getAttribute("IMG_BOX_ID");
         house.setImgBoxId(imgBoxId);
+        house.setPostTime(new Date());
         houseDao.insertSelective(house);
         return ResponseData.ok(house, Constant.SUCCESS);
     }

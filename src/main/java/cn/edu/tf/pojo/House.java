@@ -1,6 +1,7 @@
 package cn.edu.tf.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * house
@@ -97,8 +98,10 @@ public class House implements Serializable {
      */
     private Long contactInformationId;
 
-
-
+    /**
+     * 发布时间
+     */
+    private Date postTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -246,6 +249,14 @@ public class House implements Serializable {
         this.contactInformationId = contactInformationId;
     }
 
+    public Date getPostTime() {
+        return postTime;
+    }
+
+    public void setPostTime(Date postTime) {
+        this.postTime = postTime;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -275,7 +286,8 @@ public class House implements Serializable {
             && (this.getRequire() == null ? other.getRequire() == null : this.getRequire().equals(other.getRequire()))
             && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
             && (this.getImgBoxId() == null ? other.getImgBoxId() == null : this.getImgBoxId().equals(other.getImgBoxId()))
-            && (this.getContactInformationId() == null ? other.getContactInformationId() == null : this.getContactInformationId().equals(other.getContactInformationId()));
+            && (this.getContactInformationId() == null ? other.getContactInformationId() == null : this.getContactInformationId().equals(other.getContactInformationId()))
+            && (this.getPostTime() == null ? other.getPostTime() == null : this.getPostTime().equals(other.getPostTime()));
     }
 
     @Override
@@ -300,6 +312,7 @@ public class House implements Serializable {
         result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
         result = prime * result + ((getImgBoxId() == null) ? 0 : getImgBoxId().hashCode());
         result = prime * result + ((getContactInformationId() == null) ? 0 : getContactInformationId().hashCode());
+        result = prime * result + ((getPostTime() == null) ? 0 : getPostTime().hashCode());
         return result;
     }
 
@@ -327,6 +340,7 @@ public class House implements Serializable {
         sb.append(", description=").append(description);
         sb.append(", imgBoxId=").append(imgBoxId);
         sb.append(", contactInformationId=").append(contactInformationId);
+        sb.append(", postTime=").append(postTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
