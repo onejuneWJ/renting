@@ -11,7 +11,11 @@ public class Constant {
     public interface status{
         String IN_RENT="IN_RENT";
     }
-
+    public interface QueryType{
+        String ZJ="ZJ";
+        String FX="FX";
+        String TW="TW";
+    }
     public enum Rentals {
         /**
          * 租金范围

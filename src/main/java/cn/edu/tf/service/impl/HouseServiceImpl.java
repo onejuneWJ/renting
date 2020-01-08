@@ -1,5 +1,6 @@
 package cn.edu.tf.service.impl;
 
+import cn.edu.tf.constant.Constant;
 import cn.edu.tf.dao.*;
 import cn.edu.tf.dto.HouseDTO;
 import cn.edu.tf.dto.PageRequest;
@@ -42,8 +43,28 @@ public class HouseServiceImpl implements HouseService {
     }
 
     @Override
-    public List<HouseDTO> selectByCondition(int index, HttpSession session) {
-        return null;
+    public Page<HouseDTO> selectByCondition(HttpSession session, PageRequest pageRequest) {
+        Location location = (Location)session.getAttribute("CURRENT_LOCATION");
+        City city = (City)session.getAttribute("CITY");
+        Constant.Rentals rentals = (Constant.Rentals)session.getAttribute("CURRENT_RENTAL");
+        Constant.HouseType houseType = (Constant.HouseType)session.getAttribute("CURRENT_HOUSE_TYPE");
+        Towards towards = (Towards)session.getAttribute("CURRENT_TOWARDS");
+        StringBuilder orderBy = new StringBuilder();
+        pageRequest.getSortList().forEach((sort -> {
+            orderBy.append(sort.getClause()).append(" ").append(sort.getDirection()).append(",");
+        }));
+        if (orderBy.lastIndexOf(",") > 0) {
+            orderBy.deleteCharAt(orderBy.lastIndexOf(","));
+        }
+        PageHelper.orderBy(orderBy.toString());
+        Page<HouseDTO> pageInfo = PageHelper.startPage(
+            ObjectUtils.defaultIfNull(pageRequest.getPage(), 1),
+            ObjectUtils.defaultIfNull(pageRequest.getLimit(), 20), true);
+        houseDao.selectByCondition(city, location, rentals, houseType, towards);
+
+        List<HouseDTO> houseList = pageInfo.getResult();
+        houseList.forEach(this::loadHouseInfo);
+        return pageInfo;
     }
 
     @Override
@@ -63,6 +84,32 @@ public class HouseServiceImpl implements HouseService {
         List<HouseDTO> houseList = pageInfo.getResult();
         houseList.forEach(this::loadHouseInfo);
         return pageInfo;
+    }
+
+    @Override
+    public Page<HouseDTO> selectByLocation(int locationId, PageRequest pageRequest) {
+        StringBuilder orderBy;
+        orderBy = new StringBuilder();
+        pageRequest.getSortList().forEach((sort -> {
+            orderBy.append(sort.getClause()).append(" ").append(sort.getDirection()).append(",");
+        }));
+        if (orderBy.lastIndexOf(",") > 0) {
+            orderBy.deleteCharAt(orderBy.lastIndexOf(","));
+        }
+        PageHelper.orderBy(orderBy.toString());
+        Page<HouseDTO> pageInfo = PageHelper.startPage(
+            ObjectUtils.defaultIfNull(pageRequest.getPage(), 1),
+            ObjectUtils.defaultIfNull(pageRequest.getLimit(), 20), true);
+        houseDao.selectByLocation(locationId);
+        List<HouseDTO> houseList = pageInfo.getResult();
+        houseList.forEach(this::loadHouseInfo);
+        return pageInfo;
+    }
+
+    @Override
+    public List<HouseDTO> selectByRental(int index, HttpSession session) {
+
+        return null;
     }
 
     private void loadHouseInfo(HouseDTO houseDTO) {

@@ -332,13 +332,13 @@
                 var locationHtml = "<a href='javascript:void(0)' title=\"区域租房\" class=\"selected-item\">区域</a>\n" +
                     "<div class=\"sub-items sub-level1\">\n" +
                     "<em class=\"arrow-wrap \"><em class=\"arrow\"></em></em>\n" +
-                    "<a href='${pageContext.request.contextPath}/house/' ";
+                    "<a href='${pageContext.request.contextPath}/house' ";
                 if ('' === '${sessionScope.CURRENT_LOCATION}') {
                     locationHtml += "class='selected-item'";
                 }
                 locationHtml += "title='全部租房'>全部</a>";
                 for (let i = 0; i < locations.length; i++) {
-                    locationHtml += "<a href='${pageContext.request.contextPath}/house/${sessionScope.CITY.id}/" + locations[i].id + "/ '";
+                    locationHtml += "<a href='${pageContext.request.contextPath}/house/${sessionScope.CITY.id}/" + locations[i].id + " '";
                     if (locations[i].id.toString() === '${sessionScope.CURRENT_LOCATION.id}') {
                         locationHtml += "class='selected-item'";
                     }
@@ -409,7 +409,7 @@
             let uri = document.documentURI;
             if (uri.includes("?")) {
                 location.href = uri.substr(0, uri.lastIndexOf('?'))
-                    + "?page=" + '${page}'
+                    + "?page=1"
                     + "&limit=" + '${limit}'
                     + "&sortFlag=0";
             } else {
@@ -422,7 +422,7 @@
             if (uri.includes("?")) {
                 location.href = uri.substr(0, uri.lastIndexOf('?'))
                     + "?t=t"
-                    + "&page=" + '${page}'
+                    + "&page=1"
                     + "&limit=" + '${limit}'
                     + "&rentalSort=" + '${rentalSort==null?"ASC":rentalSort=="ASC"?"DESC":"ASC"}'
                     + "&timeSort=" + '${timeSort}'
@@ -430,7 +430,7 @@
             } else {
                 location.href = uri
                     + "?t=t"
-                    + "page=" + '${page}'
+                    + "&page=1"
                     + "&limit=" + '${limit}'
                     + "&rentalSort=" + '${rentalSort==null?"ASC":rentalSort=="ASC"?"DESC":"ASC"}'
                     + "&timeSort=" + '${timeSort}'
@@ -442,7 +442,7 @@
             if (uri.includes("?")) {
                 location.href = uri.substr(0, uri.lastIndexOf('?'))
                     + "?t=t"
-                    + "&page=" + '${page}'
+                    + "&page=1"
                     + "&limit=" + '${limit}'
                     + "&rentalSort=" + '${rentalSort}'
                     + "&timeSort=" + '${timeSort==null?"ASC":timeSort=="ASC"?"DESC":"ASC"}'
@@ -450,7 +450,7 @@
             } else {
                 location.href = uri
                     + "?t=t"
-                    + "page=" + '${page}'
+                    + "&page=1"
                     + "&limit=" + '${limit}'
                     + "&rentalSort=" + '${rentalSort}'
                     + "&timeSort=" + '${timeSort==null?"ASC":timeSort=="ASC"?"DESC":"ASC"}'

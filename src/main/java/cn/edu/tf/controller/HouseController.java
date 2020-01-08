@@ -3,10 +3,13 @@ package cn.edu.tf.controller;
 import cn.edu.tf.constant.Constant;
 import cn.edu.tf.dao.*;
 import cn.edu.tf.dto.HouseDTO;
+import cn.edu.tf.dto.PageRequest;
 import cn.edu.tf.dto.ResponseData;
 import cn.edu.tf.pojo.*;
 import cn.edu.tf.service.HouseService;
 import cn.edu.tf.service.ImgService;
+import com.github.pagehelper.Page;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,15 +57,11 @@ public class HouseController {
     /**
      * 查询城市所有房源
      */
-    @GetMapping("/")
-    public String cityHouse(HttpSession session, Integer page, Integer limit) {
-        //
+    @GetMapping
+    public String cityHouse(HttpSession session) {
+        //清空session中的区域信息
         session.setAttribute("CURRENT_LOCATION", null);
-        //从session中查询当前城市
-        City city = (City)session.getAttribute("city");
-        int cityId = city != null ? city.getId() : 1;
-
-        return "index";
+        return "redirect:index.htm";
     }
 
     /**
@@ -72,9 +71,40 @@ public class HouseController {
      * @param locationId 区域id
      */
     @GetMapping("/{cityId}/{locationId}")
-    public String locationHouse(@PathVariable int cityId, @PathVariable int locationId, HttpSession session, Integer page, Integer limit) {
+    public String locationHouse(@PathVariable int cityId, @PathVariable int locationId,
+                                HttpSession session, Model model, PageRequest pageRequest,
+                                String rentalSort, String timeSort, String sortFlag) {
+
+        session.setAttribute("CURRENT_RENTAL", null);
+        session.setAttribute("CURRENT_HOUSE_TYPE", null);
+        session.setAttribute("CURRENT_TOWARDS", null);
+        if (!StringUtils.isEmpty(rentalSort)) {
+            PageRequest.Sort sort = new PageRequest.Sort();
+            sort.setClause("rental");
+            sort.setDirection(rentalSort);
+            pageRequest.getSortList().add(sort);
+            model.addAttribute("rentalSort", rentalSort);
+        } else{
+            model.addAttribute("rentalSort", null);
+        }
+        if (!StringUtils.isEmpty(timeSort)) {
+            PageRequest.Sort sort = new PageRequest.Sort();
+            sort.setClause("post_time");
+            sort.setDirection(timeSort);
+            pageRequest.getSortList().add(sort);
+            model.addAttribute("timeSort", timeSort);
+        } else {
+            model.addAttribute("timeSort", null);
+        }
         Location location = locationDao.selectByPrimaryKey(locationId);
         session.setAttribute("CURRENT_LOCATION", location);
+        Page<HouseDTO> houseList = houseService.selectByLocation(locationId, pageRequest);
+        model.addAttribute("houseList", houseList);
+        model.addAttribute("count", houseList.getTotal());
+        model.addAttribute("page", pageRequest.getPage());
+        model.addAttribute("limit", pageRequest.getLimit());
+        model.addAttribute("sortFlag", sortFlag);
+
         return "index";
     }
 
@@ -84,38 +114,112 @@ public class HouseController {
      * @param index 租金范围
      */
     @GetMapping("/zj{index}")
-    public String houseWithZj(@PathVariable int index, HttpSession session, Model model, Integer page, Integer limit) {
-        List<HouseDTO> houseList = houseService.selectByCondition(index, session);
+    public String houseWithZj(@PathVariable int index, HttpSession session,
+                              Model model, PageRequest pageRequest,
+                              String rentalSort, String timeSort, String sortFlag) {
+        if (!StringUtils.isEmpty(rentalSort)) {
+            PageRequest.Sort sort = new PageRequest.Sort();
+            sort.setClause("rental");
+            sort.setDirection(rentalSort);
+            pageRequest.getSortList().add(sort);
+            model.addAttribute("rentalSort", rentalSort);
+        } else{
+            model.addAttribute("rentalSort", null);
+        }
+        if (!StringUtils.isEmpty(timeSort)) {
+            PageRequest.Sort sort = new PageRequest.Sort();
+            sort.setClause("post_time");
+            sort.setDirection(timeSort);
+            pageRequest.getSortList().add(sort);
+            model.addAttribute("timeSort", timeSort);
+        } else {
+            model.addAttribute("timeSort", null);
+        }
         if (index == -1) {
-            // 查询所有租金范围
+            //清空session
             session.setAttribute("CURRENT_RENTAL", null);
         } else {
             Constant.Rentals r = Constant.Rentals.values()[index];
             session.setAttribute("CURRENT_RENTAL", r);
         }
+        Page<HouseDTO> houseList=houseService.selectByCondition(session, pageRequest);
         model.addAttribute("houseList", houseList);
+        model.addAttribute("count", houseList.getTotal());
+        model.addAttribute("page", pageRequest.getPage());
+        model.addAttribute("limit", pageRequest.getLimit());
+        model.addAttribute("sortFlag", sortFlag);
         return "index";
     }
 
     /**
-     * 根据房型条件查询房源
+     * 根据房型条件查询房源，室的数量
      *
      * @param index 房型范围
      */
     @GetMapping("/fx{index}")
-    public String houseWithFx(@PathVariable int index, HttpSession session, Integer page, Integer limit) {
+    public String houseWithFx(@PathVariable int index, HttpSession session,
+                              Model model, PageRequest pageRequest,
+                              String rentalSort, String timeSort, String sortFlag) {
+        if (!StringUtils.isEmpty(rentalSort)) {
+            PageRequest.Sort sort = new PageRequest.Sort();
+            sort.setClause("rental");
+            sort.setDirection(rentalSort);
+            pageRequest.getSortList().add(sort);
+            model.addAttribute("rentalSort", rentalSort);
+        } else{
+            model.addAttribute("rentalSort", null);
+        }
+        if (!StringUtils.isEmpty(timeSort)) {
+            PageRequest.Sort sort = new PageRequest.Sort();
+            sort.setClause("post_time");
+            sort.setDirection(timeSort);
+            pageRequest.getSortList().add(sort);
+            model.addAttribute("timeSort", timeSort);
+        } else {
+            model.addAttribute("timeSort", null);
+        }
         if (index == -1) {
-            // 查询所有房型范围
+            // 查询所有房型范围的房源
+            //清空session
             session.setAttribute("CURRENT_HOUSE_TYPE", null);
         } else {
             Constant.HouseType f = Constant.HouseType.values()[index];
             session.setAttribute("CURRENT_HOUSE_TYPE", f);
         }
+        Page<HouseDTO> houseList=houseService.selectByCondition(session, pageRequest);
+        model.addAttribute("houseList", houseList);
+        model.addAttribute("count", houseList.getTotal());
+        model.addAttribute("page", pageRequest.getPage());
+        model.addAttribute("limit", pageRequest.getLimit());
+        model.addAttribute("sortFlag", sortFlag);
         return "index";
     }
 
+    /**
+     * 根据朝向查询房源
+     */
     @GetMapping("/tw{index}")
-    public String houseWithTw(@PathVariable int index, HttpSession session, Integer page, Integer limit) {
+    public String houseWithTw(@PathVariable int index, HttpSession session,
+                              Model model, PageRequest pageRequest,
+                              String rentalSort, String timeSort, String sortFlag) {
+        if (!StringUtils.isEmpty(rentalSort)) {
+            PageRequest.Sort sort = new PageRequest.Sort();
+            sort.setClause("rental");
+            sort.setDirection(rentalSort);
+            pageRequest.getSortList().add(sort);
+            model.addAttribute("rentalSort", rentalSort);
+        } else{
+            model.addAttribute("rentalSort", null);
+        }
+        if (!StringUtils.isEmpty(timeSort)) {
+            PageRequest.Sort sort = new PageRequest.Sort();
+            sort.setClause("post_time");
+            sort.setDirection(timeSort);
+            pageRequest.getSortList().add(sort);
+            model.addAttribute("timeSort", timeSort);
+        } else {
+            model.addAttribute("timeSort", null);
+        }
         if (index == -1) {
             // 查询所有朝向范围
             session.setAttribute("CURRENT_TOWARDS", null);
@@ -123,6 +227,12 @@ public class HouseController {
             Towards towards = towardsDao.selectByExample(null).get(index);
             session.setAttribute("CURRENT_TOWARDS", towards);
         }
+        Page<HouseDTO> houseList=houseService.selectByCondition(session, pageRequest);
+        model.addAttribute("houseList", houseList);
+        model.addAttribute("count", houseList.getTotal());
+        model.addAttribute("page", pageRequest.getPage());
+        model.addAttribute("limit", pageRequest.getLimit());
+        model.addAttribute("sortFlag", sortFlag);
         return "index";
     }
 
@@ -137,7 +247,7 @@ public class HouseController {
     public ResponseData<?> addHouse(@RequestBody String body, HttpSession session) {
         User user = (User)session.getAttribute("CURRENT_USER");
         if (null == user) {
-            return new ResponseData<>(ResponseData.CODE_ERROR,"请先登录再发布房源",null);
+            return new ResponseData<>(ResponseData.CODE_ERROR, "请先登录再发布房源", null);
         }
         JSONObject jsonObject = new JSONObject(body);
         House house = new House();
@@ -157,7 +267,7 @@ public class HouseController {
         house.setTowardsId(jsonObject.getInt("towardsId"));
         house.setDescription(jsonObject.getString("description"));
 
-        ContactInformation contactInformation=new ContactInformation();
+        ContactInformation contactInformation = new ContactInformation();
         contactInformation.setName(jsonObject.getString("name"));
         contactInformation.setPhone(jsonObject.getString("phone"));
         contactInformation.setGender(jsonObject.getInt("gender"));
@@ -166,7 +276,7 @@ public class HouseController {
         contactInformationDao.insertSelective(contactInformation);
         house.setContactInformationId(contactInformation.getId());
 
-        Long imgBoxId = (Long) session.getAttribute("IMG_BOX_ID");
+        Long imgBoxId = (Long)session.getAttribute("IMG_BOX_ID");
         house.setImgBoxId(imgBoxId);
         house.setPostTime(new Date());
         houseDao.insertSelective(house);

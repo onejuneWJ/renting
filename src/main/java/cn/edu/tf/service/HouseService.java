@@ -18,7 +18,11 @@ public interface HouseService {
      */
     String add(House house);
 
-    List<HouseDTO> selectByCondition(int index, HttpSession session);
+    Page<HouseDTO> selectByCondition(HttpSession session, PageRequest pageRequest);
 
     Page<HouseDTO> selectByCity(int cityId, PageRequest pageRequest);
+
+    Page<HouseDTO> selectByLocation(int locationId, PageRequest pageRequest);
+
+    List<HouseDTO> selectByRental(int index, HttpSession session);
 }
