@@ -40,8 +40,9 @@ public class HouseController {
     private LocationDao locationDao;
     private ImgService imgService;
     private ContactInformationDao contactInformationDao;
+    private CityDao cityDao;
 
-    public HouseController(HouseDao houseDao, TowardsDao towardsDao, RentalIncludeDao rentalIncludeDao, PaymentDao paymentDao, HouseIncludeDao houseIncludeDao, HouseService houseService, RequiresDao requiresDao, LocationDao locationDao, ImgService imgService, ContactInformationDao contactInformationDao) {
+    public HouseController(HouseDao houseDao, TowardsDao towardsDao, RentalIncludeDao rentalIncludeDao, PaymentDao paymentDao, HouseIncludeDao houseIncludeDao, HouseService houseService, RequiresDao requiresDao, LocationDao locationDao, ImgService imgService, ContactInformationDao contactInformationDao, CityDao cityDao) {
         this.houseDao = houseDao;
         this.towardsDao = towardsDao;
         this.rentalIncludeDao = rentalIncludeDao;
@@ -52,16 +53,29 @@ public class HouseController {
         this.locationDao = locationDao;
         this.imgService = imgService;
         this.contactInformationDao = contactInformationDao;
+        this.cityDao = cityDao;
     }
 
     /**
-     * 查询城市所有房源
+     * 查询当前城市所有房源
      */
     @GetMapping
     public String cityHouse(HttpSession session) {
         //清空session中的区域信息
         session.setAttribute("CURRENT_LOCATION", null);
         return "redirect:index.htm";
+    }
+
+    /**
+     * 选择城市
+     */
+    @GetMapping("/{cityId}")
+    public String otherCity(@PathVariable int cityId, HttpSession session){
+        City city=cityDao.selectByPrimaryKey(cityId);
+        session.setAttribute("CITY", city);
+        //清空session中的区域信息
+        session.setAttribute("CURRENT_LOCATION", null);
+        return "redirect:../index.htm";
     }
 
     /**

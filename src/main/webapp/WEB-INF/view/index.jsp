@@ -87,18 +87,40 @@
 
     <div class="cityselect">
         <div id="switch_apf_id_5" class="city-view">
-            <span id="city_name">选择城市</span><i class="iconfont triangle-down"></i>
+            <c:if test="${sessionScope.CITY==null}">
+                <a id="cityLink" class="link"
+                   href="${pageContext.request.contextPath}/city_list.html"
+                   rel="nofollow">选择城市</a>
+            </c:if>
+
+            <c:if test="${sessionScope.CITY!=null}">
+                <span id="city_name">${sessionScope.CITY.name}</span>
+                <a id="cityLink" class="link"
+                   href="${pageContext.request.contextPath}/city_list.html"
+                   rel="nofollow">切换城市</a>
+            </c:if>
         </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#city_name").hover(function () {
+                    $("#city_list").css({display: "block"});
+                }, function () {
+                    $("#city_list").css({display: "none"});
+                });
+
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/city",
+                    type: "get",
+                    success: function (res) {
+                        if (res) {
+                            console.log(res)
+                        }
+                    }
+                });
+            });
+        </script>
     </div>
-    <form class="search-form" id="search-form" action="https://cd.zu.anjuke.com" method="GET">
 
-        <input type="text" name="kw" class="searchbar-rent" id="search-rent" placeholder="请输入小区名称、地址…"
-               autocomplete="off" maxlength="100" value="" style="color: rgb(153, 153, 153);">
-        <input type="submit" id="search-button" class="searchbar-button" hidefocus="true" value="搜索">
-        <i id="search-close" class="icon icon-close" data-tracker="delete-kw" style="display:none"></i>
-
-        <div class="auto-wrap"></div>
-    </form>
 </div>
 <div class="nav header-center clearfix">
     <ul>
@@ -296,17 +318,17 @@
                             if (uri.includes("?")) {
                                 location.href = uri.substr(0, uri.lastIndexOf('?')) +
                                     "?page=" + obj.curr +
-                                    "&limit=" + obj.limit+
-                                "&rentalSort=" + '${rentalSort}'
-                                + "&timeSort=" + '${timeSort}'
-                                + "&sortFlag="+ '${sortFlag}';
+                                    "&limit=" + obj.limit +
+                                    "&rentalSort=" + '${rentalSort}'
+                                    + "&timeSort=" + '${timeSort}'
+                                    + "&sortFlag=" + '${sortFlag}';
                             } else {
                                 location.href = uri +
                                     "?page=" + obj.curr +
-                                    "&limit=" + obj.limit+
+                                    "&limit=" + obj.limit +
                                     "&rentalSort=" + '${rentalSort}'
                                     + "&timeSort=" + '${timeSort}'
-                                    + "&sortFlag="+ '${sortFlag}';
+                                    + "&sortFlag=" + '${sortFlag}';
                             }
                         }
                     }
