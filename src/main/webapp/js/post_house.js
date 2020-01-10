@@ -203,7 +203,7 @@ $(document).ready(function () {
         $("#autoComplete-div").css({display: "none"});
     });
     $("#xiaoqu").blur(function () {
-        if($("#plotId").val()===""){
+        if ($("#plotId").val() === "") {
             $("#xiaoqu").val("");
         }
     });
@@ -252,7 +252,7 @@ $(document).ready(function () {
                 return false;
             }
         });
-        if (flag && checkPhone($("div[name='phone']").children('input'))) {
+        if (flag) {
             var form = $("#postForm");
             var data = {};
             var formData = new FormData(form[0]);
@@ -284,24 +284,32 @@ $(document).ready(function () {
                 data[key] = $(this).find('li.s').attr('val');
             });
             data["plotId"] = $("#plotId").val();
-            $.ajax({
-                url: "http://localhost:8080/renting/house",
-                type: "POST",
-                data: JSON.stringify(data),
-                contentType: false,
-                processData: false,
-                success: function (data) {
-                    if(data.msg==='success'){
-                        console.log(data);
-                        alert("发布成功");
-                        window.location.reload();
-                    }else {
-                        alert(data.msg);
+            layui.use('layer', function () {
+
+                $.ajax({
+                    url: "http://localhost:8080/renting/house",
+                    type: "POST",
+                    data: JSON.stringify(data),
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data.msg === 'success') {
+                            layer.msg("请求错误！",{
+                                icon: 1
+                            });
+                            window.location.reload();
+                        } else {
+                            layer.msg(data.msg,{
+                                icon: 0
+                            });
+                        }
+                    },
+                    error: function () {
+                        layer.msg("请求错误",{
+                            icon: 2
+                        });
                     }
-                },
-                error: function () {
-                    alert("请求错误");
-                }
+                });
             });
         }
 
@@ -363,17 +371,3 @@ function checkInput(s) {
     }
 }
 
-function checkPhone(s) {
-    var mobile = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
-    if (s.val().match(mobile)) {
-        return true;
-    } else {
-        s.parent().removeClass('focus');
-        s.parent().addClass('error');
-        s.parent().siblings('.tip').html('<i></i>' + '请输入正确的电话号码');
-        s.parent().siblings('.tip').removeClass('validate_success');
-        s.parent().siblings('.tip').addClass('validate_error');
-        s.parent().siblings('.tip').css({'left': '0px'});
-        return false;
-    }
-}

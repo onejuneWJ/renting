@@ -4,7 +4,10 @@ import cn.edu.tf.pojo.HouseInclude;
 import cn.edu.tf.pojo.Img;
 import cn.edu.tf.pojo.RentalInclude;
 import cn.edu.tf.pojo.Requires;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Date;
 import java.util.List;
 
 public class HouseDTO {
@@ -73,6 +76,15 @@ public class HouseDTO {
      */
     private Long imgBoxId;
 
+    @JsonFormat(pattern = "yyyy年MM月dd日")
+    @DateTimeFormat(pattern = "yyyy年MM月dd日")
+    private Date postTime;
+
+    /**
+     * 状态('N':未租,'Y':已租)
+     */
+    private String status;
+
     private List<Img> imgList;
 
     private String payment;
@@ -83,9 +95,7 @@ public class HouseDTO {
 
     private String address;
 
-    private String username;
-
-    private String nickname;
+    private Integer userId;
 
     private String email;
 
@@ -96,10 +106,6 @@ public class HouseDTO {
     private Integer contactGender;
 
     private String contactPhone;
-
-    private String receiveTimeStart;
-
-    private String receiveTimeEnd;
 
     public Long getId() {
         return id;
@@ -245,22 +251,6 @@ public class HouseDTO {
         this.address = address;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -301,22 +291,6 @@ public class HouseDTO {
         this.contactPhone = contactPhone;
     }
 
-    public String getReceiveTimeStart() {
-        return receiveTimeStart;
-    }
-
-    public void setReceiveTimeStart(String receiveTimeStart) {
-        this.receiveTimeStart = receiveTimeStart;
-    }
-
-    public String getReceiveTimeEnd() {
-        return receiveTimeEnd;
-    }
-
-    public void setReceiveTimeEnd(String receiveTimeEnd) {
-        this.receiveTimeEnd = receiveTimeEnd;
-    }
-
     public List<RentalInclude> getRentalIncludeList() {
         return rentalIncludeList;
     }
@@ -341,6 +315,30 @@ public class HouseDTO {
         this.requiresList = requiresList;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Date getPostTime() {
+        return postTime;
+    }
+
+    public void setPostTime(Date postTime) {
+        this.postTime = postTime;
+    }
+
     @Override
     public String toString() {
         return "HouseDTO{" +
@@ -360,20 +358,19 @@ public class HouseDTO {
             ", requiresList=" + requiresList +
             ", description='" + description + '\'' +
             ", imgBoxId=" + imgBoxId +
+            ", postTime=" + postTime +
+            ", status='" + status + '\'' +
             ", imgList=" + imgList +
             ", payment='" + payment + '\'' +
             ", towards='" + towards + '\'' +
             ", plotName='" + plotName + '\'' +
             ", address='" + address + '\'' +
-            ", username='" + username + '\'' +
-            ", nickname='" + nickname + '\'' +
+            ", userId=" + userId +
             ", email='" + email + '\'' +
             ", avatar='" + avatar + '\'' +
             ", contactName='" + contactName + '\'' +
             ", contactGender=" + contactGender +
             ", contactPhone='" + contactPhone + '\'' +
-            ", receiveTimeStart='" + receiveTimeStart + '\'' +
-            ", receiveTimeEnd='" + receiveTimeEnd + '\'' +
             '}';
     }
 }

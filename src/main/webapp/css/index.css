@@ -126,7 +126,7 @@
     height: 30px;
     float: left;
     margin: 4px 0 0;
-    background: url(//pages.anjukestatic.com/usersite/site/img/global/2/header/CommLogoV3.png) no-repeat
+    background: url(../images/title.png) no-repeat
 }
 
 .navhead .header-center .cityselect {

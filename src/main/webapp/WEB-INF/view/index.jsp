@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ch">
 <head>
@@ -20,38 +21,6 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/layui/layui.js"></script>
     <script src="${pageContext.request.contextPath}/js/index.js" type="text/javascript"></script>
-    <!--高德定位-->
-    <script type="text/javascript"
-            src="https://webapi.amap.com/maps?v=1.4.15&key=779df40e3dc27215fd27a80bb9766217&plugin=AMap.CitySearch"></script>
-    <script type="text/javascript">
-        // $(document).ready(function () {
-        //     //获取用户所在城市信息
-        //     function showCityInfo() {
-        //         //实例化城市查询类
-        //         var citysearch = new AMap.CitySearch();
-        //         //自动获取用户IP，返回当前城市
-        //         citysearch.getLocalCity(function (status, result) {
-        //             if (status === 'complete' && result.info === 'OK') {
-        //                 if (result && result.city && result.bounds) {
-        //                     var cityinfo = result.city;
-        //                     var provinceInfo = result.province;
-        //                     $("#city_name")[0].innerText = cityinfo;
-        //                     $.ajax({
-        //                         url: "http://localhost:8080/renting/city",
-        //                         type: "post",
-        //                         data: {cityName: cityinfo, provinceName: provinceInfo}
-        //                     });
-        //                 }
-        //             } else {
-        //
-        //             }
-        //         });
-        //     }
-        //
-        //     showCityInfo();
-        // });
-    </script>
-
 </head>
 
 <body>
@@ -106,16 +75,6 @@
                     $("#city_list").css({display: "block"});
                 }, function () {
                     $("#city_list").css({display: "none"});
-                });
-
-                $.ajax({
-                    url: "${pageContext.request.contextPath}/city",
-                    type: "get",
-                    success: function (res) {
-                        if (res) {
-                            console.log(res)
-                        }
-                    }
                 });
             });
         </script>
@@ -254,25 +213,20 @@
 
             <c:forEach items="${houseList}" var="house">
 
-                <div class="zu-itemmod"
-                     link="https://cd.zu.anjuke.com/fangyuan/1408627282?isauction=2&amp;shangquan_id=14609&amp;legoFeeUrl=https%3A%2F%2Flegoclick.58.com%2Fjump%3Ftarget%3DpZwY0ZnlsztdraOWUvYKuad-P1RbnyndraYkuy7hsHEvmvcVrHwhPBYkmycQrjmLPW6hujDKPH9kPWbdrEDKnHTOP1ckPHnQrHDQn10zrTDLnWTkTH0znjTKnikQnTDQnjb_nHNvnEDQPHmvn19YP1TOnWNvTHDYTNujsRKjsN72izLMGO4hBstVOlvUlmaFOmBgl2AClpAdTHDKnEDKsHDKTHDQPWEknjnLPHTdnHcQrjDzPj9KP9DKnE7Bry76myE1nBYknAEksHwWuWNVrjnvPzY3PHRWujR-uyc1nWmKnHDvPjTkn10dnjmzrHmQP1mvPEDQnHmYnjT1P1NkPHN3n1D3PHbzTEDKTEDKsEDKTy6YIZK1rBtfmvE8XMN8myOJIyV-shPfUiqhmyOMXgR6UBqLIy6fIit4uMFfUHdHuy7zmv6amgcKE19OPH7AnNnVEYcdraYdPjcYsHEQnYcVNd9krjcQnH91P1EdTHDQnB31ni3QPB3OP9DkTHTKTHD_nHcKXLYKnHTkn1mKnHTknHmvPEDOuHD3PyNvraYQuynzsHwhnWnVmynknBYzmvn3myDYnWu-uAmKTHEKTED1THDkrikQPHmQsjDYPWTOTHELPjN1nHnvuW-bnW6Wnym"
-                     _soj="Filter_14&amp;hfilter=filterlist">
-                    <a data-company="" class="img" _soj="Filter_14&amp;hfilter=filterlist" data-sign="true"
-                       href="https://cd.zu.anjuke.com/fangyuan/1408627282?isauction=2&amp;shangquan_id=14609&amp;legoFeeUrl=https%3A%2F%2Flegoclick.58.com%2Fjump%3Ftarget%3DpZwY0ZnlsztdraOWUvYKuad-P1RbnyndraYkuy7hsHEvmvcVrHwhPBYkmycQrjmLPW6hujDKPH9kPWbdrEDKnHTOP1ckPHnQrHDQn10zrTDLnWTkTH0znjTKnikQnTDQnjb_nHNvnEDQPHmvn19YP1TOnWNvTHDYTNujsRKjsN72izLMGO4hBstVOlvUlmaFOmBgl2AClpAdTHDKnEDKsHDKTHDQPWEknjnLPHTdnHcQrjDzPj9KP9DKnE7Bry76myE1nBYknAEksHwWuWNVrjnvPzY3PHRWujR-uyc1nWmKnHDvPjTkn10dnjmzrHmQP1mvPEDQnHmYnjT1P1NkPHN3n1D3PHbzTEDKTEDKsEDKTy6YIZK1rBtfmvE8XMN8myOJIyV-shPfUiqhmyOMXgR6UBqLIy6fIit4uMFfUHdHuy7zmv6amgcKE19OPH7AnNnVEYcdraYdPjcYsHEQnYcVNd9krjcQnH91P1EdTHDQnB31ni3QPB3OP9DkTHTKTHD_nHcKXLYKnHTkn1mKnHTknHmvPEDOuHD3PyNvraYQuynzsHwhnWnVmynknBYzmvn3myDYnWu-uAmKTHEKTED1THDkrikQPHmQsjDYPWTOTHELPjN1nHnvuW-bnW6Wnym"
-                       target="_blank" hidefocus="true">
+                <div class="zu-itemmod" link="${pageContext.request.contextPath}/house/to/${house.id}">
+                    <a data-company="" class="img" data-sign="true"
+                       href="${pageContext.request.contextPath}/house/to/${house.id}"
+                       target="_blank">
                         <img class="thumbnail"
-                             lazy_src="https://pic1.ajkimg.com/display/58ajk/99276f6eae7315b2405133537a5258af/240x180c.jpg"
                              src="/upload/images/${house.imgList.get(0).imgName}"
                              width="180" height="135">
                         <span class="many-icons iconfont"></span>
                     </a>
                     <div class="zu-info">
                         <h3>
-                            <a target="_blank" _soj="Filter_14&amp;hfilter=filterlist"
-                               href="https://cd.zu.anjuke.com/fangyuan/1408627282?isauction=2&amp;shangquan_id=14609&amp;legoFeeUrl=https%3A%2F%2Flegoclick.58.com%2Fjump%3Ftarget%3DpZwY0ZnlsztdraOWUvYKuad-P1RbnyndraYkuy7hsHEvmvcVrHwhPBYkmycQrjmLPW6hujDKPH9kPWbdrEDKnHTOP1ckPHnQrHDQn10zrTDLnWTkTH0znjTKnikQnTDQnjb_nHNvnEDQPHmvn19YP1TOnWNvTHDYTNujsRKjsN72izLMGO4hBstVOlvUlmaFOmBgl2AClpAdTHDKnEDKsHDKTHDQPWEknjnLPHTdnHcQrjDzPj9KP9DKnE7Bry76myE1nBYknAEksHwWuWNVrjnvPzY3PHRWujR-uyc1nWmKnHDvPjTkn10dnjmzrHmQP1mvPEDQnHmYnjT1P1NkPHN3n1D3PHbzTEDKTEDKsEDKTy6YIZK1rBtfmvE8XMN8myOJIyV-shPfUiqhmyOMXgR6UBqLIy6fIit4uMFfUHdHuy7zmv6amgcKE19OPH7AnNnVEYcdraYdPjcYsHEQnYcVNd9krjcQnH91P1EdTHDQnB31ni3QPB3OP9DkTHTKTHD_nHcKXLYKnHTkn1mKnHTknHmvPEDOuHD3PyNvraYQuynzsHwhnWnVmynknBYzmvn3myDYnWu-uAmKTHEKTED1THDkrikQPHmQsjDYPWTOTHELPjN1nHnvuW-bnW6Wnym"><b
-                                    class="strongbox">${house.description}</b>
+                            <a target="_blank" href="${pageContext.request.contextPath}/house/to/${house.id}">
+                                <b class="strongbox">${house.description}</b>
                             </a>
-
                         </h3>
                         <p class="details-item tag">
                             <b class="strongbox" style="font-weight: normal;">${house.huxingShi}</b>室<b
@@ -280,11 +234,9 @@
                                 style="font-weight: normal;">${house.huxingTing}</b>厅<span>|</span><b
                                 class="strongbox"
                                 style="font-weight: normal;">${house.area}</b>平米<span>|</span>${house.currentFloor}层(共${house.totalFloor}层)
-                            <i
-                                    class="iconfont jjr-icon"></i>${house.contactName} </p>
+                            <i class="iconfont jjr-icon"></i>${house.contactName} </p>
                         <address class="details-item">
-                            <a target="_blank"
-                               href="https://chengdu.anjuke.com/community/view/857965">${house.plotName}</a>&nbsp;&nbsp;
+                            <a href="#">${house.plotName}</a>&nbsp;&nbsp;
                                 ${house.address}
                         </address>
                         <p class="details-item bot-tag">
@@ -293,7 +245,7 @@
                     </div>
 
                     <div class="zu-side">
-                        <p><strong><b class="strongbox">${house.rental}</b></strong> 元/月</p>
+                        <p><strong><b class="strongbox"><fmt:formatNumber groupingUsed="false" value="${house.rental } " maxFractionDigits="0"/></b></strong> 元/月</p>
                     </div>
                 </div>
             </c:forEach>
@@ -419,14 +371,7 @@
                 $("#towards-query").html(towardsHtml);
             }
         });
-        // 根据默认条件查询房源信息
-        $.ajax({
-            url: "",
-            type: "",
-            success: function (res) {
 
-            }
-        });
         $("#orderDefault").click(function () {
             let uri = document.documentURI;
             if (uri.includes("?")) {
@@ -478,6 +423,11 @@
                     + "&timeSort=" + '${timeSort==null?"ASC":timeSort=="ASC"?"DESC":"ASC"}'
                     + "&sortFlag=2";
             }
+        });
+
+        $(".zu-itemmod").click(function () {
+
+            window.location.href=$(this).attr("link");
         });
     })
 </script>

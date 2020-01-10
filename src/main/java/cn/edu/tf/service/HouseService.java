@@ -6,7 +6,6 @@ import cn.edu.tf.pojo.House;
 import com.github.pagehelper.Page;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  * @author : 王俊
@@ -24,5 +23,6 @@ public interface HouseService {
 
     Page<HouseDTO> selectByLocation(int locationId, PageRequest pageRequest);
 
-    List<HouseDTO> selectByRental(int index, HttpSession session);
+
+    HouseDTO selectById(Integer houseId);
 }

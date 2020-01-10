@@ -34,5 +34,11 @@ public interface HouseDao {
 
     List<HouseDTO> selectByLocation(int locationId);
 
-    List<HouseDTO> selectByCondition(@Param("city") City city, @Param("location")Location location, @Param("rentals")Constant.Rentals rentals, @Param("houseType")Constant.HouseType houseType, @Param("towards")Towards towards);
+    List<HouseDTO> selectByCondition(@Param("city")City city,
+                                     @Param("location")Location location,
+                                     @Param("rentals")Constant.Rentals rentals,
+                                     @Param("houseType")Constant.HouseType houseType,
+                                     @Param("towards")Towards towards);
+
+    HouseDTO selectById(Integer houseId);
 }

@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author : 王俊
@@ -250,6 +251,13 @@ public class HouseController {
         return "index";
     }
 
+    @GetMapping("/to/{houseId}")
+    public String detail(@PathVariable Integer houseId,Model model){
+        HouseDTO house=houseService.selectById(houseId);
+        model.addAttribute("house",house);
+        return "house";
+    }
+
     /**
      * 添加房源
      *
@@ -281,19 +289,14 @@ public class HouseController {
         house.setTowardsId(jsonObject.getInt("towardsId"));
         house.setDescription(jsonObject.getString("description"));
 
-        ContactInformation contactInformation = new ContactInformation();
-        contactInformation.setName(jsonObject.getString("name"));
-        contactInformation.setPhone(jsonObject.getString("phone"));
-        contactInformation.setGender(jsonObject.getInt("gender"));
-        contactInformation.setReceiveTimeStart(jsonObject.getString("receiveTimeStart"));
-        contactInformation.setReceiveTimeEnd(jsonObject.getString("receiveTimeEnd"));
-        contactInformationDao.insertSelective(contactInformation);
-        house.setContactInformationId(contactInformation.getId());
-
         Long imgBoxId = (Long)session.getAttribute("IMG_BOX_ID");
+        if(Objects.isNull(imgBoxId)){
+            return new ResponseData<>(ResponseData.CODE_ERROR, "请上传至少一张房屋图片", null);
+        }
         house.setImgBoxId(imgBoxId);
         house.setPostTime(new Date());
         houseDao.insertSelective(house);
+        session.setAttribute("IMG_BOX_ID",null);
         return ResponseData.ok(house, Constant.SUCCESS);
     }
 

@@ -107,9 +107,10 @@ public class HouseServiceImpl implements HouseService {
     }
 
     @Override
-    public List<HouseDTO> selectByRental(int index, HttpSession session) {
-
-        return null;
+    public HouseDTO selectById(Integer houseId) {
+        HouseDTO houseDTO=houseDao.selectById(houseId);
+        loadHouseInfo(houseDTO);
+        return houseDTO;
     }
 
     private void loadHouseInfo(HouseDTO houseDTO) {

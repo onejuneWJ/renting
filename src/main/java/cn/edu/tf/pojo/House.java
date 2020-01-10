@@ -103,6 +103,11 @@ public class House implements Serializable {
      */
     private Date postTime;
 
+    /**
+     * 状态('N':未租,'Y':已租)
+     */
+    private String status;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -257,6 +262,14 @@ public class House implements Serializable {
         this.postTime = postTime;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -287,7 +300,8 @@ public class House implements Serializable {
             && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
             && (this.getImgBoxId() == null ? other.getImgBoxId() == null : this.getImgBoxId().equals(other.getImgBoxId()))
             && (this.getContactInformationId() == null ? other.getContactInformationId() == null : this.getContactInformationId().equals(other.getContactInformationId()))
-            && (this.getPostTime() == null ? other.getPostTime() == null : this.getPostTime().equals(other.getPostTime()));
+            && (this.getPostTime() == null ? other.getPostTime() == null : this.getPostTime().equals(other.getPostTime()))
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
     }
 
     @Override
@@ -313,6 +327,7 @@ public class House implements Serializable {
         result = prime * result + ((getImgBoxId() == null) ? 0 : getImgBoxId().hashCode());
         result = prime * result + ((getContactInformationId() == null) ? 0 : getContactInformationId().hashCode());
         result = prime * result + ((getPostTime() == null) ? 0 : getPostTime().hashCode());
+        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         return result;
     }
 
@@ -341,6 +356,7 @@ public class House implements Serializable {
         sb.append(", imgBoxId=").append(imgBoxId);
         sb.append(", contactInformationId=").append(contactInformationId);
         sb.append(", postTime=").append(postTime);
+        sb.append(", status=").append(status);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
