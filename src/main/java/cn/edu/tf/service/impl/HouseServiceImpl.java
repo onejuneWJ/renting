@@ -50,9 +50,7 @@ public class HouseServiceImpl implements HouseService {
         Constant.HouseType houseType = (Constant.HouseType)session.getAttribute("CURRENT_HOUSE_TYPE");
         Towards towards = (Towards)session.getAttribute("CURRENT_TOWARDS");
         StringBuilder orderBy = new StringBuilder();
-        pageRequest.getSortList().forEach((sort -> {
-            orderBy.append(sort.getClause()).append(" ").append(sort.getDirection()).append(",");
-        }));
+        pageRequest.getSortList().forEach((sort -> orderBy.append(sort.getClause()).append(" ").append(sort.getDirection()).append(",")));
         if (orderBy.lastIndexOf(",") > 0) {
             orderBy.deleteCharAt(orderBy.lastIndexOf(","));
         }
@@ -70,9 +68,7 @@ public class HouseServiceImpl implements HouseService {
     @Override
     public Page<HouseDTO> selectByCity(int cityId, PageRequest pageRequest) {
         StringBuilder orderBy = new StringBuilder();
-        pageRequest.getSortList().forEach((sort -> {
-            orderBy.append(sort.getClause()).append(" ").append(sort.getDirection()).append(",");
-        }));
+        pageRequest.getSortList().forEach((sort -> orderBy.append(sort.getClause()).append(" ").append(sort.getDirection()).append(",")));
         if (orderBy.lastIndexOf(",") > 0) {
             orderBy.deleteCharAt(orderBy.lastIndexOf(","));
         }
@@ -90,9 +86,7 @@ public class HouseServiceImpl implements HouseService {
     public Page<HouseDTO> selectByLocation(int locationId, PageRequest pageRequest) {
         StringBuilder orderBy;
         orderBy = new StringBuilder();
-        pageRequest.getSortList().forEach((sort -> {
-            orderBy.append(sort.getClause()).append(" ").append(sort.getDirection()).append(",");
-        }));
+        pageRequest.getSortList().forEach((sort -> orderBy.append(sort.getClause()).append(" ").append(sort.getDirection()).append(",")));
         if (orderBy.lastIndexOf(",") > 0) {
             orderBy.deleteCharAt(orderBy.lastIndexOf(","));
         }

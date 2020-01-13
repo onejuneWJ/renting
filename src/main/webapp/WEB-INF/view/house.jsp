@@ -9,25 +9,40 @@
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/favicon.ico"/>
     <link rel="bookmark" href="${pageContext.request.contextPath}/images/favicon.ico"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
+    <link rel="stylesheet" rev="stylesheet" href="${pageContext.request.contextPath}/css/house.css" type="text/css">
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/layui/layui.js"></script>
-    <link rel="stylesheet" rev="stylesheet" href="${pageContext.request.contextPath}/css/house.css" type="text/css">
 
 </head>
 <body>
 
-<div class="navhead">
-    <div class="header header-center clearfix">
-        <!-- LOGO -->
-        <a class="logo" href="${pageContext.request.contextPath}/index.htm" title="万家租房网">万家</a>
-        <!-- UserLogin Pc_Common_HeaderNavComponent-->
-        <div class="nav-right">
-            <div id="user_box" class="userbox">
-                <i class="icon icon-user"></i>
-                <a href="${pageContext.request.contextPath}/user_login.html"
-                   rel="nofollow">登录</a>
-                <a href="${pageContext.request.contextPath}/register.html" rel="nofollow">注册</a>
+<div class="topbar ">
+    <div class="header-center clearfix">
+        <ul class="nav-site clearfix">
+            <li class="first">
+                <a href="${pageContext.request.contextPath}/index.htm">首页</a>
+            </li>
+        </ul>
+        <div id="userbox" class="user">
+            <div class="userlogin userblock">
+                <i class="icon icon-people"></i>
+
+                <c:if test="${sessionScope.CURRENT_USER!= null}">
+                    <a class="link"
+                       href="${pageContext.request.contextPath}/user/self"
+                       rel="nofollow" title="个人中心">${sessionScope.CURRENT_USER.username}</a>
+                    <a id="logoutLink" style="display: none" class="link"
+                       href="${pageContext.request.contextPath}/user/logout">退出登录</a>
+                </c:if>
+                <!--未登录-->
+                <c:if test="${sessionScope.CURRENT_USER == null}">
+                    <a id="loginLink" class="link" href="${pageContext.request.contextPath}/user_login.html"
+                       rel="nofollow">登录</a>
+                    <a id="registerLink" class="link" href="${pageContext.request.contextPath}/register.html"
+                       rel="nofollow">注册</a>
+                </c:if>
             </div>
+
         </div>
     </div>
 </div>
@@ -50,9 +65,6 @@
         <span class="info-tag no-line"><em><b class="strongbox"
                                               style="font-weight: normal;">${house.area}</b></em>平方米</span>
         <ul class="title-label cf">
-            <%--            <c:forEach var="re" items="${house.requiresList}">--%>
-            <%--                <li class="title-label-item rent">${re.name}</li>--%>
-            <%--            </c:forEach>--%>
             <li class="title-label-item rent">${house.towards}</li>
         </ul>
     </div>
@@ -61,30 +73,6 @@
 
             <div class="switch_warpper">
                 <div class="switch_with_map">
-                    <%--                    <div class="inner_switcher" id="inner_switcher">--%>
-                    <%--                        <div class="switch_mask switch_left_mask" id="switch_left_mask" data-track="pc_fydy_switch_qh">--%>
-                    <%--                            <i class="switch_left_btn switch_btn iconfont" id="switch_left_btn"></i>--%>
-
-                    <%--                        </div>--%>
-                    <%--                        <div class="switch_mask switch_right_mask" id="switch_right_mask"--%>
-                    <%--                             data-track="pc_fydy_switch_qh">--%>
-                    <%--                            <i class="switch_right_btn switch_btn iconfont" id="switch_right_btn"></i>--%>
-
-                    <%--                        </div>--%>
-                    <%--                        <div class="switch_wrap" id="switch_wrap" style="left: -2905px;">--%>
-
-                    <%--                            <!--室内图-->--%>
-                    <%--                            <div class="switch_list" id="room_pic_wrap">--%>
-                    <%--                                <c:forEach items="${house.imgList}" var="img">--%>
-
-                    <%--                                    <div class="img_wrap">--%>
-                    <%--                                        <img src="/upload/images/${img.imgName}"--%>
-                    <%--                                             alt="" height="450">--%>
-                    <%--                                    </div>--%>
-                    <%--                                </c:forEach>--%>
-                    <%--                            </div>--%>
-                    <%--                        </div>--%>
-                    <%--                    </div>--%>
 
                     <div class="layui-carousel" id="house_imgs">
                         <div carousel-item="">

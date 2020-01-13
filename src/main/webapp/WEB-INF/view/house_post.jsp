@@ -8,8 +8,8 @@
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/favicon.ico"/>
     <link rel="bookmark" href="${pageContext.request.contextPath}/images/favicon.ico"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/layui/css/layui.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/index.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/post_house.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/index.css">
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/layui/layui.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/post_house.js"></script>
@@ -29,9 +29,9 @@
 
                 <c:if test="${sessionScope.CURRENT_USER!= null}">
                     <a class="link"
-                       href=""
-                       rel="nofollow" title="用户名">${sessionScope.CURRENT_USER.username}</a>
-                    <a id="logoutLink" style="display: none" class="link"
+                       href="${pageContext.request.contextPath}/user/self"
+                       rel="nofollow" title="个人中心">${sessionScope.CURRENT_USER.username}</a>
+                    <a id="logoutLink" class="link"
                        href="${pageContext.request.contextPath}/user/logout">退出登录</a>
                 </c:if>
                 <!--未登录-->

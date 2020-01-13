@@ -8,15 +8,7 @@
     <meta name="renderer" content="webkit">
     <!--国产浏览器高速模式-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="author" content="穷在闹市"/>
-    <!-- 作者 -->
-    <meta name="revised" content="穷在闹市.v3, 2019/05/01"/>
-    <!-- 定义页面的最新版本 -->
-    <meta name="description" content="网站简介"/>
-    <!-- 网站简介 -->
-    <meta name="keywords" content="搜索关键字，以半角英文逗号隔开"/>
-    <title>穷在闹市出品</title>
-
+    <meta name="author" content="万家"/>
     <!-- 公共样式 开始 -->
     <link rel="stylesheet" type="text/css" href="../../css/base.css">
     <link rel="stylesheet" type="text/css" href="../../css/iconfont.css">
@@ -50,7 +42,6 @@
             <!--列表tab开始-->
             <div class="layui-tab-item layui-show">
                 <div class="layui-btn-group">
-
                     <a class="layui-btn" onclick="add()">新增</a>
                 </div>
 
@@ -74,10 +65,8 @@
         var element = layui.element;
         element.tabDelete('house_tab', 'house_addTab');
         element.tabAdd('house_tab', {
-            title: '新增房源'
-            ,
-            content: '<iframe id="add_frame" width="100%" height="513px" src="house_add.html" scrolling="yes"></iframe>' //支持传入html
-            ,
+            title: '新增房源',
+            content: '<iframe id="add_frame" width="100%" height="513px" src="house_add.html" scrolling="yes"></iframe>', //支持传入html
             id: 'house_addTab'
         });
         element.tabChange('house_tab', 'house_addTab');

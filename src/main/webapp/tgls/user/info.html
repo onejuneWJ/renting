@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="http://localhost:8080/renting/css/user_info.css" type="text/css">
+
+
+    <!-- 公共样式 开始 -->
+    <link rel="stylesheet" type="text/css" href="../../css/base.css">
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont.css">
+    <script type="text/javascript" src="../../framework/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../layui/css/layui.css">
+    <script type="text/javascript" src="../../layui/layui.js"></script>
+    <!-- 滚动条插件 -->
+    <link rel="stylesheet" type="text/css" href="../../css/jquery.mCustomScrollbar.css">
+    <script src="../../framework/jquery-ui-1.10.4.min.js"></script>
+    <script src="../../framework/jquery.mousewheel.min.js"></script>
+    <script src="../../framework/jquery.mCustomScrollbar.min.js"></script>
+    <script src="../../framework/cframe.js"></script><!-- 仅供所有子页面使用 -->
+</head>
+<body>
+<div class="layui-tab layui-tab-card" lay-filter="house_tab" id="house_tab" lay-allowClose="true">
+    <ul class="layui-tab-title">
+        <li class="layui-this">修改密码</li>
+    </ul>
+    <div class="layui-tab-content">
+
+
+        <div class="profile">
+            <div class="profile-title">
+                <i class="iconfont"></i>
+                <span>基本账号资料</span>
+            </div>
+            <ul class="profile-list">
+                <li class="photo">
+                    <span class="key">头像</span>
+                    <img src="https://pic6.ajkimg.com/news/31de4d82b3bf178c703eeaf94a9c81ed?imageMogr2/format/png/thumbnail/140x140" alt="你的头像">
+                    <a href="/user/modifyPhoto" class="operate-btn">修改</a>
+                </li>
+                <li class="username">
+                    <span class="key">用户名</span>
+                    <span class="value">U15663851488475</span>
+                </li>
+                <li class="nickname">
+                    <span class="key">昵称</span>
+                    <span class="value">hES8SC</span>
+                    <button class="operate-btn">修改</button>
+                </li>
+                <li class="email">
+                    <span class="key">邮箱</span>
+                    <span class="value">暂无提供</span>
+                    <a class="operate-btn" href="/user/modifyEmail">绑定</a>
+                </li>
+                <li class="phone">
+                    <span class="key">手机</span>
+                    <span class="value">18227010296</span>
+                    <a class="operate-btn" href="/user/modifyPhone">修改</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

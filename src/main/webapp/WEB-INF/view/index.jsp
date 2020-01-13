@@ -34,9 +34,9 @@
 
                 <c:if test="${sessionScope.CURRENT_USER!= null}">
                     <a class="link"
-                       href=""
-                       rel="nofollow" title="用户名">${sessionScope.CURRENT_USER.username}</a>
-                    <a id="logoutLink" style="display: none" class="link"
+                       href="${pageContext.request.contextPath}/user/self"
+                       rel="nofollow" title="个人中心">${sessionScope.CURRENT_USER.username}</a>
+                    <a id="logoutLink" class="link"
                        href="${pageContext.request.contextPath}/user/logout">退出登录</a>
                 </c:if>
                 <!--未登录-->
