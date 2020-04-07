@@ -355,7 +355,7 @@ public class HouseController {
         return ResponseData.ok(requiresDao.selectByExample(null));
     }
 
-    @RequestMapping("/upload")
+    @PostMapping("/upload")
     @ResponseBody
     public ResponseData<?> upload(@RequestParam("img") MultipartFile multipartFile, HttpSession session) {
         if (multipartFile.isEmpty()) {

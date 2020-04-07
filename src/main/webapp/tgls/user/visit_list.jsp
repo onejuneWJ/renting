@@ -40,7 +40,7 @@
 <div>
     <div class="layui-tab layui-tab-card" lay-filter="house_tab" id="house_tab" lay-allowClose="true">
         <ul class="layui-tab-title">
-            <li class="layui-this">用户列表</li>
+            <li class="layui-this">看房请求</li>
         </ul>
         <div class="layui-tab-content">
             <!--列表tab开始-->

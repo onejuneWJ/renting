@@ -29,6 +29,31 @@
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/admin/**"/>
+            <mvc:exclude-mapping path="/admin/imageCode"/>
+            <mvc:exclude-mapping path="/admin/login"/>
+            <mvc:exclude-mapping path="/admin/checkVerifyCode"/>
+            <bean class="cn.edu.tf.interceptor.AdminInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/user/**"/>
+            <mvc:exclude-mapping path="/user/login"/>
+            <mvc:exclude-mapping path="/user/register"/>
+            <mvc:exclude-mapping path="/user/logout"/>
+            <mvc:exclude-mapping path="/user/cp"/>
+            <mvc:exclude-mapping path="/user/cu"/>
+            <bean class="cn.edu.tf.interceptor.UserInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/house/**"/>
+            <mvc:mapping path="/deal/**"/>
+            <mvc:mapping path="/visit/**"/>
+            <mvc:exclude-mapping path="/house/to/**"/>
+            <bean class="cn.edu.tf.interceptor.CommonInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
     <mvc:cors>
         <mvc:mapping path="/**"
                      allowed-origins="*"

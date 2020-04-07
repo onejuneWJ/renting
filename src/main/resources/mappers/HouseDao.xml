@@ -503,6 +503,7 @@
         <if test="house.plotName!=null and house.plotName!=''">
             AND p.plot_name like concat('%',#{house.plotName},'%')
         </if>
+        ORDER BY h.id
     </select>
 
     <update id="updateByExampleSelective" parameterType="map">
