@@ -2,10 +2,12 @@ package cn.edu.tf.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * house
- * @author 
+ *
+ * @author
  */
 public class House implements Serializable {
     /**
@@ -94,11 +96,6 @@ public class House implements Serializable {
     private Long imgBoxId;
 
     /**
-     * 联系人信息
-     */
-    private Long contactInformationId;
-
-    /**
      * 发布时间
      */
     private Date postTime;
@@ -107,6 +104,12 @@ public class House implements Serializable {
      * 状态('N':未租,'Y':已租)
      */
     private String status;
+
+    private Integer provinceId;
+    private Integer cityId;
+    private Integer locationId;
+    private String plotName;
+
 
     private static final long serialVersionUID = 1L;
 
@@ -246,13 +249,6 @@ public class House implements Serializable {
         this.imgBoxId = imgBoxId;
     }
 
-    public Long getContactInformationId() {
-        return contactInformationId;
-    }
-
-    public void setContactInformationId(Long contactInformationId) {
-        this.contactInformationId = contactInformationId;
-    }
 
     public Date getPostTime() {
         return postTime;
@@ -270,95 +266,70 @@ public class House implements Serializable {
         this.status = status;
     }
 
+    public Integer getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(Integer locationId) {
+        this.locationId = locationId;
+    }
+
+    public String getPlotName() {
+        return plotName;
+    }
+
+    public void setPlotName(String plotName) {
+        this.plotName = plotName;
+    }
+
+    public Integer getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(Integer provinceId) {
+        this.provinceId = provinceId;
+    }
+
+    public Integer getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
+    }
+
     @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        House other = (House) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
-            && (this.getPlotId() == null ? other.getPlotId() == null : this.getPlotId().equals(other.getPlotId()))
-            && (this.getHuxingShi() == null ? other.getHuxingShi() == null : this.getHuxingShi().equals(other.getHuxingShi()))
-            && (this.getHuxingTing() == null ? other.getHuxingTing() == null : this.getHuxingTing().equals(other.getHuxingTing()))
-            && (this.getHuxingWei() == null ? other.getHuxingWei() == null : this.getHuxingWei().equals(other.getHuxingWei()))
-            && (this.getArea() == null ? other.getArea() == null : this.getArea().equals(other.getArea()))
-            && (this.getCurrentFloor() == null ? other.getCurrentFloor() == null : this.getCurrentFloor().equals(other.getCurrentFloor()))
-            && (this.getTotalFloor() == null ? other.getTotalFloor() == null : this.getTotalFloor().equals(other.getTotalFloor()))
-            && (this.getTowardsId() == null ? other.getTowardsId() == null : this.getTowardsId().equals(other.getTowardsId()))
-            && (this.getRental() == null ? other.getRental() == null : this.getRental().equals(other.getRental()))
-            && (this.getPaymentId() == null ? other.getPaymentId() == null : this.getPaymentId().equals(other.getPaymentId()))
-            && (this.getRentalInclude() == null ? other.getRentalInclude() == null : this.getRentalInclude().equals(other.getRentalInclude()))
-            && (this.getHouseInclude() == null ? other.getHouseInclude() == null : this.getHouseInclude().equals(other.getHouseInclude()))
-            && (this.getRequire() == null ? other.getRequire() == null : this.getRequire().equals(other.getRequire()))
-            && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
-            && (this.getImgBoxId() == null ? other.getImgBoxId() == null : this.getImgBoxId().equals(other.getImgBoxId()))
-            && (this.getContactInformationId() == null ? other.getContactInformationId() == null : this.getContactInformationId().equals(other.getContactInformationId()))
-            && (this.getPostTime() == null ? other.getPostTime() == null : this.getPostTime().equals(other.getPostTime()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        House house = (House) o;
+        return Objects.equals(id, house.id) &&
+                Objects.equals(userId, house.userId) &&
+                Objects.equals(plotId, house.plotId) &&
+                Objects.equals(huxingShi, house.huxingShi) &&
+                Objects.equals(huxingTing, house.huxingTing) &&
+                Objects.equals(huxingWei, house.huxingWei) &&
+                Objects.equals(area, house.area) &&
+                Objects.equals(currentFloor, house.currentFloor) &&
+                Objects.equals(totalFloor, house.totalFloor) &&
+                Objects.equals(towardsId, house.towardsId) &&
+                Objects.equals(rental, house.rental) &&
+                Objects.equals(paymentId, house.paymentId) &&
+                Objects.equals(rentalInclude, house.rentalInclude) &&
+                Objects.equals(houseInclude, house.houseInclude) &&
+                Objects.equals(require, house.require) &&
+                Objects.equals(description, house.description) &&
+                Objects.equals(imgBoxId, house.imgBoxId) &&
+                Objects.equals(postTime, house.postTime) &&
+                Objects.equals(status, house.status) &&
+                Objects.equals(provinceId, house.provinceId) &&
+                Objects.equals(cityId, house.cityId) &&
+                Objects.equals(locationId, house.locationId) &&
+                Objects.equals(plotName, house.plotName);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
-        result = prime * result + ((getPlotId() == null) ? 0 : getPlotId().hashCode());
-        result = prime * result + ((getHuxingShi() == null) ? 0 : getHuxingShi().hashCode());
-        result = prime * result + ((getHuxingTing() == null) ? 0 : getHuxingTing().hashCode());
-        result = prime * result + ((getHuxingWei() == null) ? 0 : getHuxingWei().hashCode());
-        result = prime * result + ((getArea() == null) ? 0 : getArea().hashCode());
-        result = prime * result + ((getCurrentFloor() == null) ? 0 : getCurrentFloor().hashCode());
-        result = prime * result + ((getTotalFloor() == null) ? 0 : getTotalFloor().hashCode());
-        result = prime * result + ((getTowardsId() == null) ? 0 : getTowardsId().hashCode());
-        result = prime * result + ((getRental() == null) ? 0 : getRental().hashCode());
-        result = prime * result + ((getPaymentId() == null) ? 0 : getPaymentId().hashCode());
-        result = prime * result + ((getRentalInclude() == null) ? 0 : getRentalInclude().hashCode());
-        result = prime * result + ((getHouseInclude() == null) ? 0 : getHouseInclude().hashCode());
-        result = prime * result + ((getRequire() == null) ? 0 : getRequire().hashCode());
-        result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
-        result = prime * result + ((getImgBoxId() == null) ? 0 : getImgBoxId().hashCode());
-        result = prime * result + ((getContactInformationId() == null) ? 0 : getContactInformationId().hashCode());
-        result = prime * result + ((getPostTime() == null) ? 0 : getPostTime().hashCode());
-        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", userId=").append(userId);
-        sb.append(", plotId=").append(plotId);
-        sb.append(", huxingShi=").append(huxingShi);
-        sb.append(", huxingTing=").append(huxingTing);
-        sb.append(", huxingWei=").append(huxingWei);
-        sb.append(", area=").append(area);
-        sb.append(", currentFloor=").append(currentFloor);
-        sb.append(", totalFloor=").append(totalFloor);
-        sb.append(", towardsId=").append(towardsId);
-        sb.append(", rental=").append(rental);
-        sb.append(", paymentId=").append(paymentId);
-        sb.append(", rentalInclude=").append(rentalInclude);
-        sb.append(", houseInclude=").append(houseInclude);
-        sb.append(", require=").append(require);
-        sb.append(", description=").append(description);
-        sb.append(", imgBoxId=").append(imgBoxId);
-        sb.append(", contactInformationId=").append(contactInformationId);
-        sb.append(", postTime=").append(postTime);
-        sb.append(", status=").append(status);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return Objects.hash(id, userId, plotId, huxingShi, huxingTing, huxingWei, area, currentFloor, totalFloor, towardsId, rental, paymentId, rentalInclude, houseInclude, require, description, imgBoxId, postTime, status, provinceId, cityId, locationId, plotName);
     }
 }

@@ -32,7 +32,6 @@
 </head>
 
 <body>
-
 <div>
     <div class="layui-tab layui-tab-card" lay-filter="house_tab" id="house_tab" lay-allowClose="true">
         <ul class="layui-tab-title">
@@ -41,11 +40,45 @@
         <div class="layui-tab-content">
             <!--列表tab开始-->
             <div class="layui-tab-item layui-show">
-                <div class="layui-btn-group">
-                    <a class="layui-btn" onclick="add()">新增</a>
-                </div>
+                <form class="layui-form">
+                    <div class="layui-form-item">
 
-                <table class="layui-table" id="house_table" lay-filter="test"></table>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">省</label>
+                            <div class="layui-input-inline">
+                                <select lay-filter="province_select" name="id" id="province_select" autocomplete="off">
+                                    <option value="0"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">市</label>
+                            <div class="layui-input-inline">
+                                <select lay-filter="city_select" name="id" id="city_select" autocomplete="off">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">区</label>
+                            <div class="layui-input-inline">
+                                <select lay-filter="location_select" class="" name="id" id="location_select"
+                                        autocomplete="off">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">小区</label>
+                            <div class="layui-input-inline">
+                                <input class="layui-input" name="id" id="plot_input" autocomplete="off">
+                            </div>
+                        </div>
+                        <div id="search_btn" class="layui-btn" data-type="reload">搜索</div>
+                    </div>
+                </form>
+
+                <table class="layui-table" id="table" lay-filter="test"></table>
 
             </div>
             <!--列表tab结束-->
@@ -56,111 +89,139 @@
 
 </div>
 
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "http://localhost:8080/renting/province",
+            type: "get",
+            async: false,
+            success: function (res) {
+                if (res.msg === 'success') {
+                    var data = res.data;
+                    var html = "";
+                    for (var i = 0; i < data.length; i++) {
+                        html += "<option value=\"" + data[i].id + "\">" + data[i].name + "</option>";
+                    }
+                    $("#province_select").append(html);
+                }
+            }
+        });
+
+    });
+    layui.use('form', function () {
+        var form = layui.form;
+        form.on('select(province_select)', function (data) {
+            $("#city_select").html("");
+            $("#location_select").html("");
+            form.render();
+            $.ajax({
+                url: "http://localhost:8080/renting/city?provinceId=" + data.value,
+                type: "get",
+                success: function (res) {
+                    if (res.msg === 'success') {
+                        var data = res.data;
+                        var html = "";
+                        for (let i = 0; i < data.length; i++) {
+                            html += "<option value=\"" + data[i].id + "\">" + data[i].name + "</option>";
+                        }
+                        $("#city_select").append(html);
+                        form.render();
+                    }
+                }
+            });
+        });
+        form.on('select(city_select)', function (data) {
+
+            $("#location_select").html("");
+            form.render();
+            $.ajax({
+                url: "http://localhost:8080/renting/location?cityId=" + data.value,
+                type: "get",
+                success: function (res) {
+                    if (res.msg === 'success') {
+                        var data = res.data;
+                        var html = "";
+                        for (let i = 0; i < data.length; i++) {
+                            html += "<option value=\"" + data[i].id + "\">" + data[i].name + "</option>"
+                        }
+                        $("#location_select").append(html);
+                        form.render();
+                    }
+                }
+            });
+        });
+    });
+
+</script>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 <script>
-    function add() {
-        var element = layui.element;
-        element.tabDelete('house_tab', 'house_addTab');
-        element.tabAdd('house_tab', {
-            title: '新增房源',
-            content: '<iframe id="add_frame" width="100%" height="513px" src="house_add.html" scrolling="yes"></iframe>', //支持传入html
-            id: 'house_addTab'
-        });
-        element.tabChange('house_tab', 'house_addTab');
-    }
-</script>
-<script>
     layui.use('element', function () {
 
     });
-    layui.use(['upload', 'form'], function () {
-        var form = layui.form;
-        var upload = layui.upload;
-        var layer = layui.layer;
-        //监听提交
-        form.on('submit(submitBut)', function (data) {
-            return false;
-        });
-        form.verify({
-            //数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
-            ZHCheck: [
-                /^[\u0391-\uFFE5]+$/
-                , '只允许输入中文'
-            ]
-        });
-        //拖拽上传
-        upload.render({
-            elem: '#goodsPic',
-            url: '/upload/',
-            done: function (res) {
-                console.log(res)
-            }
-        });
-    });
     layui.use('table', function () {
         var table = layui.table;
-        var laypager = layui.layPage;
+        var layer=layui.layer;
         //第一个实例
-        table.render({
-            elem: '#house_table'
+        var houseTable = table.render({
+            elem: '#table'
             , height: 440
-            , url: 'http://localhost:8080/renting/test/list' //数据接口
+            , url: 'http://localhost:8080/renting/house/admin/list' //数据接口
             , page: true
             , cols: [[ //表头
                 {field: 'id', title: 'ID', width: 80, sort: true, fixed: 'left'}
-                , {field: 'batch', title: '批次', width: 120}
-                , {field: 'templateCode', title: '模板编码', width: 180}
-                , {field: 'dataStatus', title: '数据状态', width: 100}
-                , {field: 'sheetIndex', title: '页码', width: 80}
-                , {field: 'errorMsg', title: '错误信息', width: 180}
-                , {field: 'data', title: '数据', width: 180}
-                , {fixed: 'right', width: 150, align: 'center', toolbar: '#barDemo'}
+                , {field: 'plotName', title: '小区名称', width: 180}
+                , {field: 'plotAddress', title: '地址', width: 200}
+                , {field: 'huxingShi', title: '室', width: 100}
+                , {field: 'huxingTing', title: '厅', width: 100}
+                , {field: 'huxingWei', title: '卫', width: 100}
+                , {field: 'area', title: '面积', width: 100}
+                , {field: 'currentFloor', title: '楼层', width: 100}
+                , {field: 'rental', title: '租金', width: 120}
+                , {field: 'postTime', title: '发布时间', width: 120}
+                , {field: 'houseStatus', title: '状态', width: 100}
+                , {field: 'renterName', title: '租户', width: 100}
+                , {fixed: 'right', title: '操作', width: 150, align: 'center', toolbar: '#barDemo'}
             ]]
             , text: {
                 none: "暂无数据"
+            },
+            id: "h_tb",
+            where: {
+                cityId: $("#city_select").val(),
+                locationId: $("#location_select").val(),
+                plotName: $("#plot_input").val()
             }
 
         });
 
-        table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-            var data = obj.data; //获得当前行数据
-            console.log(data);
-            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            var tr = obj.tr; //获得当前行 tr 的DOM对象
-            var id = data.id;
-            switch (layEvent) {
-                case 'del':
-
-                    layer.confirm('真的删除行么', function (index) {
-
-                        //向服务端发送删除指令
-                        $.ajax({
-                            url: "http://localhost:8080/renting/test/" + id,
-                            type: "delete",
-                            success: function (data) {
-                                if (data.msg == "success") {
-                                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                                    layer.close(index);
-                                } else {
-                                    layer.msg("删除失败");
-                                }
-                            }
-                        })
-                    });
-                    break;
-                case 'edit':
-                    layer.msg(data.toString());
-                    //同步更新缓存对应的值
-                    obj.update({
-                        username: '123'
-                        , title: 'xxx'
-                    });
-                    break;
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'detail'){
+                layer.msg('ID：'+ data.id + ' 的查看操作');
+            } else if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                layer.alert('编辑行：<br>'+ JSON.stringify(data))
             }
-
+        });
+        $('#search_btn').on('click', function () {
+            houseTable.reload({
+                url: 'http://localhost:8080/renting/house/admin/list',
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                },
+                where: {
+                    cityId: $("#city_select").val(),
+                    locationId: $("#location_select").val(),
+                    plotName: $("#plot_input").val()
+                }
+            });
         });
     });
 </script>

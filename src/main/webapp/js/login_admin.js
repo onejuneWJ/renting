@@ -2,16 +2,23 @@ $(document).ready(function () {
     //点击登录按钮
     $("input.login-submit").click(function () {
         if (checkLoginName() && checkPassword() && checkVerifyCode()) {
-            var formData = new FormData($("#form_")[0]);
+            var account = $("input[name='loginName']").val();
+            var password = $("input[name='password']").val();
             //验证登录
-            /*$.ajax({
-                url:'',
-                type:'POST',
-                data:formData,
-                success:function (result) {
-
+            $.ajax({
+                url: 'http://localhost:8080/renting/admin/login',
+                type: 'POST',
+                data: JSON.stringify({account: account, password: password}),
+                contentType: "application/json",
+                success: function (res) {
+                    if (res.msg === "success") {
+                        location.href = "http://localhost:8080/renting/admin/index"
+                    } else {
+                        console.log("sss");
+                        $(".e_error").html(res.msg);
+                    }
                 }
-            });*/
+            });
         }
     });
 });
@@ -37,11 +44,27 @@ function checkPassword() {
 }
 
 function checkVerifyCode() {
-    if ($("input[name='verifyCode']").val() == "") {
+    var code = $("input[name='verifyCode']").val();
+    var flag = false;
+    if (code === "") {
         $(".e_verify").html('请输入图形验证码');
-        return false;
+        flag = false;
     } else {
-        $(".e_verify").html('');
-        return true;
+        $.ajax({
+            async: false,
+            url: "http://localhost:8080/renting/admin/checkVerifyCode?code=" + code,
+            type: "get",
+            success: function (res) {
+                if (res.msg === "success") {
+                    $(".e_verify").html('');
+                    flag = true;
+                } else {
+                    $(".e_verify").html('验证码输入错误');
+                    changeCode();
+                    flag = false;
+                }
+            }
+        });
     }
+    return flag;
 }

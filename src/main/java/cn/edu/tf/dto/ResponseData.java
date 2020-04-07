@@ -4,6 +4,7 @@ import cn.edu.tf.constant.Constant;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author onejune
@@ -53,6 +54,9 @@ public class ResponseData<T> {
     }
 
     public static <T> ResponseData<List<T>> pageOk(PageInfo<T> data) {
+        if(Objects.isNull(data)){
+            return ResponseData.ok(null);
+        }
         ResponseData<List<T>> responseData = new ResponseData<>();
         responseData.setData(data.getList());
         responseData.setCode(CODE_OK);

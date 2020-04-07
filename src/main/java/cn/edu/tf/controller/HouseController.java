@@ -71,8 +71,8 @@ public class HouseController {
      * 选择城市
      */
     @GetMapping("/{cityId}")
-    public String otherCity(@PathVariable int cityId, HttpSession session){
-        City city=cityDao.selectByPrimaryKey(cityId);
+    public String otherCity(@PathVariable int cityId, HttpSession session) {
+        City city = cityDao.selectByPrimaryKey(cityId);
         session.setAttribute("CITY", city);
         //清空session中的区域信息
         session.setAttribute("CURRENT_LOCATION", null);
@@ -99,7 +99,7 @@ public class HouseController {
             sort.setDirection(rentalSort);
             pageRequest.getSortList().add(sort);
             model.addAttribute("rentalSort", rentalSort);
-        } else{
+        } else {
             model.addAttribute("rentalSort", null);
         }
         if (!StringUtils.isEmpty(timeSort)) {
@@ -138,7 +138,7 @@ public class HouseController {
             sort.setDirection(rentalSort);
             pageRequest.getSortList().add(sort);
             model.addAttribute("rentalSort", rentalSort);
-        } else{
+        } else {
             model.addAttribute("rentalSort", null);
         }
         if (!StringUtils.isEmpty(timeSort)) {
@@ -157,7 +157,7 @@ public class HouseController {
             Constant.Rentals r = Constant.Rentals.values()[index];
             session.setAttribute("CURRENT_RENTAL", r);
         }
-        Page<HouseDTO> houseList=houseService.selectByCondition(session, pageRequest);
+        Page<HouseDTO> houseList = houseService.selectByCondition(session, pageRequest);
         model.addAttribute("houseList", houseList);
         model.addAttribute("count", houseList.getTotal());
         model.addAttribute("page", pageRequest.getPage());
@@ -181,7 +181,7 @@ public class HouseController {
             sort.setDirection(rentalSort);
             pageRequest.getSortList().add(sort);
             model.addAttribute("rentalSort", rentalSort);
-        } else{
+        } else {
             model.addAttribute("rentalSort", null);
         }
         if (!StringUtils.isEmpty(timeSort)) {
@@ -201,7 +201,7 @@ public class HouseController {
             Constant.HouseType f = Constant.HouseType.values()[index];
             session.setAttribute("CURRENT_HOUSE_TYPE", f);
         }
-        Page<HouseDTO> houseList=houseService.selectByCondition(session, pageRequest);
+        Page<HouseDTO> houseList = houseService.selectByCondition(session, pageRequest);
         model.addAttribute("houseList", houseList);
         model.addAttribute("count", houseList.getTotal());
         model.addAttribute("page", pageRequest.getPage());
@@ -223,7 +223,7 @@ public class HouseController {
             sort.setDirection(rentalSort);
             pageRequest.getSortList().add(sort);
             model.addAttribute("rentalSort", rentalSort);
-        } else{
+        } else {
             model.addAttribute("rentalSort", null);
         }
         if (!StringUtils.isEmpty(timeSort)) {
@@ -242,7 +242,7 @@ public class HouseController {
             Towards towards = towardsDao.selectByExample(null).get(index);
             session.setAttribute("CURRENT_TOWARDS", towards);
         }
-        Page<HouseDTO> houseList=houseService.selectByCondition(session, pageRequest);
+        Page<HouseDTO> houseList = houseService.selectByCondition(session, pageRequest);
         model.addAttribute("houseList", houseList);
         model.addAttribute("count", houseList.getTotal());
         model.addAttribute("page", pageRequest.getPage());
@@ -252,9 +252,9 @@ public class HouseController {
     }
 
     @GetMapping("/to/{houseId}")
-    public String detail(@PathVariable Integer houseId,Model model){
-        HouseDTO house=houseService.selectById(houseId);
-        model.addAttribute("house",house);
+    public String detail(@PathVariable Integer houseId, Model model) {
+        HouseDTO house = houseService.selectById(houseId);
+        model.addAttribute("house", house);
         return "house";
     }
 
@@ -267,7 +267,7 @@ public class HouseController {
     @PostMapping()
     @ResponseBody
     public ResponseData<?> addHouse(@RequestBody String body, HttpSession session) {
-        User user = (User)session.getAttribute("CURRENT_USER");
+        User user = (User) session.getAttribute("CURRENT_USER");
         if (null == user) {
             return new ResponseData<>(ResponseData.CODE_ERROR, "请先登录再发布房源", null);
         }
@@ -289,14 +289,14 @@ public class HouseController {
         house.setTowardsId(jsonObject.getInt("towardsId"));
         house.setDescription(jsonObject.getString("description"));
 
-        Long imgBoxId = (Long)session.getAttribute("IMG_BOX_ID");
-        if(Objects.isNull(imgBoxId)){
+        Long imgBoxId = (Long) session.getAttribute("IMG_BOX_ID");
+        if (Objects.isNull(imgBoxId)) {
             return new ResponseData<>(ResponseData.CODE_ERROR, "请上传至少一张房屋图片", null);
         }
         house.setImgBoxId(imgBoxId);
         house.setPostTime(new Date());
         houseDao.insertSelective(house);
-        session.setAttribute("IMG_BOX_ID",null);
+        session.setAttribute("IMG_BOX_ID", null);
         return ResponseData.ok(house, Constant.SUCCESS);
     }
 
@@ -377,4 +377,15 @@ public class HouseController {
         return ResponseData.ok(img);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public ResponseData<?> delete(@PathVariable Long id) {
+        return ResponseData.ok(null, houseService.delete(id));
+    }
+
+    @GetMapping("admin/list")
+    @ResponseBody
+    public ResponseData<List<HouseDTO>> listForAdmin(House house,PageRequest pageRequest){
+        return ResponseData.pageOk(houseService.listForAdmin(house,pageRequest));
+    }
 }

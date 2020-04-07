@@ -241,7 +241,7 @@
                          src="/upload/images/${house.avatar}"
                          title="王俊">
 
-                    <h2 class="broker-name" title="王俊">王俊</h2>
+                    <h2 class="broker-name" title="王俊">${house.contactName}</h2>
 
                     <div class="broker-level">
                         <div class="broker-level clearfix">
@@ -295,13 +295,13 @@
                     type: "post",
                     success: function (res) {
                         if (res.msg === 'success') {
-                            layer.msg("发起看房请求成功，等待房东的回复吧，您也可以直接联系房东噢",{
+                            layer.msg("发起看房请求成功，等待房东的回复吧，您也可以直接联系房东噢", {
                                 icon: 1,
                                 time: 10000,
-                                btn:['知道了']
+                                btn: ['知道了']
                             });
-                        }else {
-                            layer.msg(res.msg,{
+                        } else {
+                            layer.msg(res.msg, {
                                 icon: 0,
                                 time: 10000,
                                 btn: ['知道了']
@@ -310,7 +310,7 @@
 
                     },
                     error: function () {
-                        layer.msg("请求错误！",{
+                        layer.msg("请求错误！", {
                             icon: 2
                         });
                     }

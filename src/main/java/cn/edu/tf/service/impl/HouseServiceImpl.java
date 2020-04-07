@@ -9,6 +9,7 @@ import cn.edu.tf.service.HouseService;
 import cn.edu.tf.utils.StringUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
@@ -105,6 +106,31 @@ public class HouseServiceImpl implements HouseService {
         HouseDTO houseDTO=houseDao.selectById(houseId);
         loadHouseInfo(houseDTO);
         return houseDTO;
+    }
+
+    @Override
+    public PageInfo<HouseDTO> myPost(Long userId, Integer page, Integer limit) {
+        return PageHelper.startPage(page,limit,true).doSelectPageInfo(()->{
+            houseDao.myPost(userId);
+        });
+    }
+
+    @Override
+    public String delete(Long id) {
+        House house=houseDao.selectByPrimaryKey(id);
+        String status=house.getStatus();
+        if(Constant.houseStatus.Y.equals(status)){
+            return "房源在租中，无法删除";
+        }
+        houseDao.deleteByPrimaryKey(id);
+        return Constant.SUCCESS;
+    }
+
+    @Override
+    public PageInfo<HouseDTO> listForAdmin(House house, PageRequest pageRequest) {
+        return PageHelper.startPage(pageRequest.getPage(),pageRequest.getLimit()).doSelectPageInfo(()->{
+            houseDao.listForAdmin(house);
+        });
     }
 
     private void loadHouseInfo(HouseDTO houseDTO) {

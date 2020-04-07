@@ -11,7 +11,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>租房管理后台</title>
+    <title>个人中心</title>
     <!-- 公共样式 开始 -->
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/favicon.ico"/>
     <link rel="bookmark" href="${pageContext.request.contextPath}/images/favicon.ico"/>
@@ -54,19 +54,19 @@
         <ul>
             <li>
                 <a id="initA" class="menuFA" href="javascript:void(0)"
-                   onclick="menuCAClick('${pageContext.request.contextPath}/tgls/admin/house_list.html',this)">
+                   onclick="menuCAClick('${pageContext.request.contextPath}/tgls/user/house_list.jsp',this)">
                     <i class="iconfont icon-shouye left"></i>我的发布</a>
             </li>
 
             <li>
                 <a class="menuFA" href="javascript:void(0)"
-                   onclick="menuCAClick('${pageContext.request.contextPath}/tgls/admin/trade_list.html',this)">
-                    <i class="iconfont icon-yijiedan left"></i>我的合同</a>
+                   onclick="menuCAClick('${pageContext.request.contextPath}/tgls/user/trade_list.jsp',this)">
+                    <i class="iconfont icon-yijiedan left"></i>我的交易</a>
             </li>
             <li>
                 <a class="menuFA" href="javascript:void(0)"
-                   onclick="menuCAClick('${pageContext.request.contextPath}/tgls/admin/user_list.html',this)">
-                    <i class="iconfont icon-yonghu1 left"></i>用户管理</a>
+                   onclick="menuCAClick('${pageContext.request.contextPath}/tgls/user/visit_list.jsp',this)">
+                    <i class="iconfont icon-yonghu1 left"></i>看房请求</a>
             </li>
 
         </ul>
@@ -82,7 +82,7 @@
             <ul>
                 <li><a href="javascript:void(0)" onclick="menuCAClick('${pageContext.request.contextPath}/user/info',this)"><i
                         class="iconfont icon-yonghu1"></i>个人信息</a></li>
-                <li><a href="javascript:void(0)" onclick="menuCAClick('${pageContext.request.contextPath}/tgls/admin/modify_password.html',this)"><i
+                <li><a href="javascript:void(0)" onclick="menuCAClick('${pageContext.request.contextPath}/tgls/user/modify_password.html',this)"><i
                         class="iconfont icon-xiugaimima"></i>修改密码</a></li>
                 <li><a href="${pageContext.request.contextPath}/user/logout"><i class="iconfont icon-084tuichu"></i>注销</a></li>
             </ul>
@@ -93,7 +93,7 @@
     <!-- 核心区域 - 开始 -->
     <div class="frameMain">
         <div class="con">
-            <iframe id="mainIframe" src="${pageContext.request.contextPath}/tgls/admin/house_list.html" scrolling="yes"></iframe>
+            <iframe id="mainIframe" src="${pageContext.request.contextPath}/tgls/user/house_list.jsp" scrolling="yes"></iframe>
         </div>
     </div>
     <!-- 核心区域 - 结束 -->

@@ -1,6 +1,7 @@
 package cn.edu.tf.service;
 
 import cn.edu.tf.pojo.User;
+import com.github.pagehelper.PageInfo;
 
 import java.util.Map;
 
@@ -23,4 +24,18 @@ public interface UserService {
      * @return 注册结果
      */
     String register(User user);
+
+    PageInfo<User> list(Integer page, Integer limit);
+
+    Map<String, Object> sendVerifyCode(String email, String type);
+
+    String changeEmail(User user, String email);
+
+    String changePhone(User user, String phone);
+
+    String changeNickname(User user, String nickname);
+
+    String checkPhone(String phone);
+
+    String checkUsername(String username);
 }

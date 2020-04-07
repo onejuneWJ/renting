@@ -49,10 +49,37 @@
         <div class="layui-tab-content">
             <!--列表tab开始-->
             <div class="layui-tab-item layui-show">
-                <div class="console">
+                <form class="layui-form">
+                    <div class="layui-form-item">
 
-                </div>
-                <table class="layui-table" id="house_table" lay-filter="test"></table>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">出租人</label>
+                            <div class="layui-input-inline">
+                                <input class="layui-input" name="id" id="leaser_input" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">租客</label>
+                            <div class="layui-input-inline">
+                                <input class="layui-input" name="id" id="renter_input" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">交易状态</label>
+                            <div class="layui-input-inline">
+                                <select class="layui-input" name="id" id="status_select" autocomplete="off">
+                                    <option value=""></option>
+                                    <option value="ONGOING">进行中</option>
+                                    <option value="SUCCESS">交易完成</option>
+                                    <option value="FAILED">交易失败</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="search_btn" class="layui-btn" data-type="reload">搜索</div>
+                    </div>
+                </form>
+
+                <table class="layui-table" id="deal_table" lay-filter="test"></table>
             </div>
             <!--列表tab结束-->
         </div>
@@ -72,53 +99,29 @@
     layui.use('element', function () {
 
     });
-    layui.use(['upload', 'form'], function () {
-        var form = layui.form;
-        var upload = layui.upload;
-        var layer = layui.layer;
-        //监听提交
-        form.on('submit(submitBut)', function (data) {
-            return false;
-        });
-        form.verify({
-            //数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
-            ZHCheck: [
-                /^[\u0391-\uFFE5]+$/
-                , '只允许输入中文'
-            ]
-        });
-        //拖拽上传
-        upload.render({
-            elem: '#goodsPic',
-            url: '/upload/',
-            done: function (res) {
-                console.log(res)
-            }
-        });
-    });
+
     layui.use('table', function () {
         var table = layui.table;
         var laypager = layui.layPage;
-        //第一个实例
-        table.render({
-            elem: '#house_table'
+        var layer=layui.layer;
+        var deal_table=table.render({
+            elem: '#deal_table'
             , height: 450
-            , url: 'http://localhost:8080/renting/test/list' //数据接口
+            , url: 'http://localhost:8080/renting/deal' //数据接口
             , page: true
             , cols: [[ //表头
                 {field: 'id', title: 'ID', width: 80, sort: true, fixed: 'left'}
-                , {field: 'batch', title: '批次', width: 120}
-                , {field: 'templateCode', title: '模板编码', width: 180}
-                , {field: 'dataStatus', title: '数据状态', width: 100}
-                , {field: 'sheetIndex', title: '页码', width: 80}
-                , {field: 'errorMsg', title: '错误信息', width: 180}
-                , {field: 'data', title: '数据', width: 180}
-                , {fixed: 'right', width: 150, align: 'center', toolbar: '#barDemo'}
+                , {field: 'renterName', title: '租户', width: 120}
+                , {field: 'leaserName', title: '出租人', width: 120}
+                , {field: 'houseInfo', title: '租房信息', width: 280}
+                , {field: 'createTime', title: '创建时间', width: 180}
+                , {field: 'status', title: '状态', width: 100}
+                , {field: 'completeTime', title: '完成时间', width: 180}
+                , {fixed: 'right', title: '操作', width: 200, align: 'center', templet: '#barTpl'}
             ]]
             , text: {
                 none: "暂无数据"
             }
-
         });
 
         table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
@@ -157,6 +160,19 @@
                     break;
             }
 
+        });
+        $('#search_btn').on('click', function () {
+            deal_table.reload({
+                url: 'http://localhost:8080/renting/deal',
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                },
+                where: {
+                    renterName: $("#renter_input").val(),
+                    leaserName: $("#leaser_input").val(),
+                    status: $("#status_select").val()
+                }
+            });
         });
     });
 </script>

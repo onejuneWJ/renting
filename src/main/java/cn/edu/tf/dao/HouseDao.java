@@ -41,4 +41,8 @@ public interface HouseDao {
                                      @Param("towards")Towards towards);
 
     HouseDTO selectById(Integer houseId);
+
+    List<HouseDTO> myPost(@Param("userId") Long userId);
+
+    List<HouseDTO> listForAdmin(@Param("house") House house);
 }

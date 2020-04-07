@@ -81,6 +81,11 @@ public class IndexController {
         return "index";
     }
 
+    /**
+     * 筛选条件信息
+     * @param session
+     * @return
+     */
     @GetMapping("/query-data")
     @ResponseBody
     public String queryData(HttpSession session) {

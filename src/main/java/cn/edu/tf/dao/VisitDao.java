@@ -27,4 +27,6 @@ public interface VisitDao {
     int updateByPrimaryKeySelective(Visit record);
 
     int updateByPrimaryKey(Visit record);
+
+    List<Visit> list(@Param(value="userId")Long userId);
 }

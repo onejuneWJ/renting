@@ -25,7 +25,8 @@
                 </div>
                 <div class="login-wrap">
                     <div class="login-title">欢迎登录</div>
-                    <form method="post" id="form_" class="form">
+                    <div class="error-tip e_error" ></div>
+                    <form method="post" id="form_login" class="form">
                         <div class="login-name login-item">
                             <i class="iconfont login-name__icon"></i>
                             <input name="loginName" type="text" class="txt username" placeholder="请输入账号">
@@ -40,8 +41,8 @@
                             <div class="login-verifycode">
                                 <input name="verifyCode" type="text" class="txt verify" placeholder="请输入验证码">
                             </div>
-                            <img class="login-verifyimg" src="http://localhost:8080/imagecode/" alt="">
-                            <i class="iconfont login-verifyimg__icon"></i>
+                            <img id="codeImage" class="login-verifyimg" src="http://localhost:8080/renting/admin/imageCode" alt="">
+                            <i onclick="changeCode()" class="iconfont login-verifyimg__icon"></i>
                         </div>
                         <span class="error-tip e_verify"></span>
                         <input class="login-submit" type="button" value="登录">
@@ -55,5 +56,10 @@
 
 </div>
 
+<script type="text/javascript">
+    function changeCode(){
+        $('#codeImage').attr('src','http://localhost:8080/renting/admin/imageCode?sd='+Math.random());//链接后添加Math.random，确保每次产生新的验证码，避免缓存问题。
+    }
+</script>
 </body>
 </html>

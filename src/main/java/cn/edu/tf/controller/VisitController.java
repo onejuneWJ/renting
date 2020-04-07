@@ -5,11 +5,10 @@ import cn.edu.tf.dto.ResponseData;
 import cn.edu.tf.pojo.User;
 import cn.edu.tf.pojo.Visit;
 import cn.edu.tf.pojo.VisitExample;
+import cn.edu.tf.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -24,7 +23,8 @@ import java.util.List;
 public class VisitController {
     @Autowired
     private VisitDao visitDao;
-
+    @Autowired
+    private VisitService visitService;
     @PostMapping
     @ResponseBody
     public ResponseData<?> see(HttpSession session, Long houseId) {
@@ -47,5 +47,17 @@ public class VisitController {
         visit.setRequestTime(new Date());
         visitDao.insertSelective(visit);
         return ResponseData.ok(houseId, "success");
+    }
+
+    @GetMapping
+    @ResponseBody
+    public ResponseData<List<Visit>> list(Long userId, Integer page, Integer limit){
+        return ResponseData.pageOk(visitService.list(userId, page, limit));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public ResponseData<?> delete(@PathVariable Long id){
+        return ResponseData.ok(null,visitService.delete(id));
     }
 }

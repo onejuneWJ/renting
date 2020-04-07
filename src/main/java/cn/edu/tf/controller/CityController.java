@@ -2,9 +2,11 @@ package cn.edu.tf.controller;
 
 import cn.edu.tf.dao.CityDao;
 import cn.edu.tf.dao.ProvinceDao;
+import cn.edu.tf.dto.ResponseData;
 import cn.edu.tf.pojo.City;
 import cn.edu.tf.pojo.CityExample;
 import cn.edu.tf.pojo.Province;
+import cn.edu.tf.service.CityService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,15 @@ public class CityController {
     private CityDao cityDao;
     @Autowired
     private ProvinceDao provinceDao;
+    @Autowired
+    private CityService cityService;
+
+    @GetMapping
+    @ResponseBody
+    public ResponseData<List<City>> list(City city){
+        return ResponseData.ok(cityService.list(city));
+    }
+
 
     /**
      * 设置城市信息到session中

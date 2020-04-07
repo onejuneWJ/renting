@@ -5,11 +5,22 @@ package cn.edu.tf.constant;
  * @date : 2019/9/29 9:42
  **/
 public class Constant {
-    public static String SUCCESS = "success";
-    public static String FAILED="failed";
+    public static final String CURRENT_USER = "CURRENT_USER";
+    public static final String SUCCESS = "success";
+    public static final String FAILED="failed";
 
-    public interface status{
-        String IN_RENT="IN_RENT";
+    public interface houseStatus{
+        String Y="Y";
+        String N="N";
+    }
+    public interface dealStatus{
+        String ONGOING="ONGOING";
+        String SUCCESS="SUCCESS";
+        String FAILED="FAILED";
+    }
+    public interface sendType{
+        String P="P";
+        String E="E";
     }
     public interface QueryType{
         String ZJ="ZJ";

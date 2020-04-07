@@ -47,6 +47,7 @@ $(document).ready(function () {
             data[key] = value
         });
         $.ajax({
+            async: false,
             url: "http://localhost:8080/renting/user/register",
             type: "POST",
             data: JSON.stringify(data),
@@ -73,16 +74,22 @@ function checkPhone(p) {
     var phone = p.val();
     if (phone.match(mobile)) {
         p.siblings('.msg').css({display: 'none'});
-        var flag = true;
+        var flag = false;
         //判断手机号是否已经注册
-        /* $.get('localhost:8080/renting/user/cp/' + phone, function (data) {
-             //如果已存在
-             if (data.msg.exist) {
-                 p.siblings('.msg').children('span').text('此手机号码已经被注册');
-                 p.siblings('.msg').css({display: 'block'});
-                 flag = false;
-             }
-         });*/
+        $.ajax({
+            async: false,
+            url: 'http://localhost:8080/renting/user/cp?phone=' + phone,
+            type: "get",
+            success: function (res) {
+                if (res.msg === 'exist') {
+                    p.siblings('.msg').children('span').text('此手机号码已经被注册');
+                    p.siblings('.msg').css({display: 'block'});
+                    flag = false;
+                } else {
+                    flag = true;
+                }
+            }
+        });
         return flag;
     } else {
         p.siblings('.msg').children('span').text('请输入正确的手机号码');
@@ -98,13 +105,17 @@ function checkUsername(u) {
         u.siblings('.msg').css({display: 'none'});
         //判断用户名是否已经存在
         var flag = true;
-        /*$.get('localhost:8080/renting/user/cu/' + username, function (data) {
-            if (data.msg.exist) {
-                u.siblings('.msg').children('span').text('用户名已存在');
-                u.siblings('.msg').css({display: 'block'});
-                flag = false;
+        $.ajax({
+            url: 'http://localhost:8080/renting/user/cu?username=' + username,
+            type: "get",
+            success: function (res) {
+                if (res.msg === 'exist') {
+                    u.siblings('.msg').children('span').text('用户名已存在');
+                    u.siblings('.msg').css({display: 'block'});
+                    flag = false;
+                }
             }
-        });*/
+        });
         return flag;
     } else {
         u.siblings('.msg').children('span').text('用户名长度4~16位，可包含大小写字母数字_-');

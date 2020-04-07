@@ -10,7 +10,7 @@ import java.util.Properties;
  */
 public final class MailUtil {
     private static final String USER = "1595890874@qq.com"; // 发件人称号，同邮箱地址
-    private static final String PASSWORD = "fqcyjpldlgdjghih"; // 如果是qq邮箱可以使户端授权码，或者登录密码
+    private static final String PASSWORD = "mocrgaliiovdfedf"; // 如果是qq邮箱可以使户端授权码，或者登录密码
 
     /**
      *
@@ -68,7 +68,7 @@ public final class MailUtil {
     }
 
     public static void main(String[] args) { // 做测试用
-        MailUtil.sendMail("1411136373@qq.com","测试偷家","测试邮件");
+        MailUtil.sendMail("1595890874@qq.com","测试邮件内容","测试邮件");
         System.out.println("发送成功");
     }
 

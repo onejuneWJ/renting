@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author : 王俊
@@ -21,6 +22,16 @@ public class LocationServiceImpl implements LocationService {
     public List<Location> selectByCityId(Integer id) {
         LocationExample locationExample=new LocationExample();
         locationExample.createCriteria().andCityIdEqualTo(id);
+        return locationDao.selectByExample(locationExample);
+    }
+
+    @Override
+    public List<Location> list(Location location) {
+        LocationExample locationExample=new LocationExample();
+        LocationExample.Criteria criteria = locationExample.createCriteria();
+        if(!Objects.isNull(location.getCityId())){
+            criteria.andCityIdEqualTo(location.getCityId());
+        }
         return locationDao.selectByExample(locationExample);
     }
 }

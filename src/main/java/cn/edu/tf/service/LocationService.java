@@ -10,4 +10,6 @@ import java.util.List;
  **/
 public interface LocationService {
     List<Location> selectByCityId(Integer id);
+
+    List<Location> list(Location location);
 }

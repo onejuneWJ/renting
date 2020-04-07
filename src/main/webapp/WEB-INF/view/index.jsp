@@ -34,6 +34,7 @@
 
                 <c:if test="${sessionScope.CURRENT_USER!= null}">
                     <a class="link"
+                       target="_blank"
                        href="${pageContext.request.contextPath}/user/self"
                        rel="nofollow" title="个人中心">${sessionScope.CURRENT_USER.username}</a>
                     <a id="logoutLink" class="link"

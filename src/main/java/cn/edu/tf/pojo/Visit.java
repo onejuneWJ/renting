@@ -1,5 +1,7 @@
 package cn.edu.tf.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -26,7 +28,14 @@ public class Visit implements Serializable {
     /**
      * 发起时间
      */
+    @JsonFormat(pattern = "YYYY/MM/DD")
     private Date requestTime;
+
+    private String requestName;
+
+    private String houseInfo;
+
+    private Long leaserId;
 
     private static final long serialVersionUID = 1L;
 
@@ -62,47 +71,27 @@ public class Visit implements Serializable {
         this.requestTime = requestTime;
     }
 
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        Visit other = (Visit) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
-            && (this.getHouseId() == null ? other.getHouseId() == null : this.getHouseId().equals(other.getHouseId()))
-            && (this.getRequestTime() == null ? other.getRequestTime() == null : this.getRequestTime().equals(other.getRequestTime()));
+    public String getRequestName() {
+        return requestName;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
-        result = prime * result + ((getHouseId() == null) ? 0 : getHouseId().hashCode());
-        result = prime * result + ((getRequestTime() == null) ? 0 : getRequestTime().hashCode());
-        return result;
+    public void setRequestName(String requestName) {
+        this.requestName = requestName;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", userId=").append(userId);
-        sb.append(", houseId=").append(houseId);
-        sb.append(", requestTime=").append(requestTime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+    public String getHouseInfo() {
+        return houseInfo;
+    }
+
+    public void setHouseInfo(String houseInfo) {
+        this.houseInfo = houseInfo;
+    }
+
+    public Long getLeaserId() {
+        return leaserId;
+    }
+
+    public void setLeaserId(Long leaserId) {
+        this.leaserId = leaserId;
     }
 }

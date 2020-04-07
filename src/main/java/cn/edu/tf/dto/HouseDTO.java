@@ -107,6 +107,21 @@ public class HouseDTO {
 
     private String contactPhone;
 
+    /**
+     * 小区地址
+     */
+    private String plotAddress;
+
+    /**
+     * 房屋状态
+     */
+    private String houseStatus;
+
+    /**
+     * 承租人姓名
+     */
+    private String renterName;
+
     public Long getId() {
         return id;
     }
@@ -339,38 +354,27 @@ public class HouseDTO {
         this.postTime = postTime;
     }
 
-    @Override
-    public String toString() {
-        return "HouseDTO{" +
-            "id=" + id +
-            ", huxingShi=" + huxingShi +
-            ", huxingTing=" + huxingTing +
-            ", huxingWei=" + huxingWei +
-            ", area=" + area +
-            ", currentFloor=" + currentFloor +
-            ", totalFloor=" + totalFloor +
-            ", rental=" + rental +
-            ", rentalInclude='" + rentalInclude + '\'' +
-            ", rentalIncludeList=" + rentalIncludeList +
-            ", houseInclude='" + houseInclude + '\'' +
-            ", houseIncludeList=" + houseIncludeList +
-            ", require='" + require + '\'' +
-            ", requiresList=" + requiresList +
-            ", description='" + description + '\'' +
-            ", imgBoxId=" + imgBoxId +
-            ", postTime=" + postTime +
-            ", status='" + status + '\'' +
-            ", imgList=" + imgList +
-            ", payment='" + payment + '\'' +
-            ", towards='" + towards + '\'' +
-            ", plotName='" + plotName + '\'' +
-            ", address='" + address + '\'' +
-            ", userId=" + userId +
-            ", email='" + email + '\'' +
-            ", avatar='" + avatar + '\'' +
-            ", contactName='" + contactName + '\'' +
-            ", contactGender=" + contactGender +
-            ", contactPhone='" + contactPhone + '\'' +
-            '}';
+    public String getPlotAddress() {
+        return plotAddress;
+    }
+
+    public void setPlotAddress(String plotAddress) {
+        this.plotAddress = plotAddress;
+    }
+
+    public String getHouseStatus() {
+        return houseStatus;
+    }
+
+    public void setHouseStatus(String houseStatus) {
+        this.houseStatus = houseStatus;
+    }
+
+    public String getRenterName() {
+        return renterName;
+    }
+
+    public void setRenterName(String renterName) {
+        this.renterName = renterName;
     }
 }
