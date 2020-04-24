@@ -17,9 +17,8 @@ public class UserInterceptor implements HandlerInterceptor {
 
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
-        Admin admin = (Admin) session.getAttribute("CURRENT_ADMIN");
+        Admin admin = (Admin) session.getAttribute(Constant.CURRENT_ADMIN);
         String uri = httpServletRequest.getRequestURI();
-        System.out.println(uri);
         if (user == null) {
             if (admin != null) {
                 //如果当前登录的是管理员，可访问user下除了个人信息页面接口的其他

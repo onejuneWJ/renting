@@ -216,8 +216,7 @@
 
                 <div class="zu-itemmod" link="${pageContext.request.contextPath}/house/to/${house.id}">
                     <a data-company="" class="img" data-sign="true"
-                       href="${pageContext.request.contextPath}/house/to/${house.id}"
-                       target="_blank">
+                       href="${pageContext.request.contextPath}/house/to/${house.id}">
                         <img class="thumbnail"
                              src="/upload/images/${house.imgList.get(0).imgName}"
                              width="180" height="135">

@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ch">
 
@@ -44,7 +45,12 @@
 <!-- 左侧菜单 - 开始 -->
 <div class="frameMenu">
     <div class="logo">
-        <img src="/upload/images/${sessionScope.CURRENT_USER.avatar}"/>
+        <c:if test="${sessionScope.CURRENT_USER.avatar==null}">
+            <img src="${pageContext.request.contextPath}/images/user.jpg"/>
+        </c:if>
+        <c:if test="${sessionScope.CURRENT_USER.avatar!=null}">
+            <img src="/upload/images/${sessionScope.CURRENT_USER.avatar}"/>
+        </c:if>
         <div class="logoText">
             <h1>个人中心</h1>
             <p>user self</p>
@@ -80,11 +86,14 @@
         <img class="jt" src="${pageContext.request.contextPath}/images/top_jt.png"/>
         <div class="topMenu">
             <ul>
-                <li><a href="javascript:void(0)" onclick="menuCAClick('${pageContext.request.contextPath}/user/info',this)"><i
+                <li><a href="javascript:void(0)"
+                       onclick="menuCAClick('${pageContext.request.contextPath}/user/info',this)"><i
                         class="iconfont icon-yonghu1"></i>个人信息</a></li>
-                <li><a href="javascript:void(0)" onclick="menuCAClick('${pageContext.request.contextPath}/tgls/user/modify_password.html',this)"><i
+                <li><a href="javascript:void(0)"
+                       onclick="menuCAClick('${pageContext.request.contextPath}/tgls/user/modify_password.html',this)"><i
                         class="iconfont icon-xiugaimima"></i>修改密码</a></li>
-                <li><a href="${pageContext.request.contextPath}/user/logout"><i class="iconfont icon-084tuichu"></i>注销</a></li>
+                <li><a href="${pageContext.request.contextPath}/user/logout"><i
+                        class="iconfont icon-084tuichu"></i>注销</a></li>
             </ul>
         </div>
     </div>
@@ -93,7 +102,8 @@
     <!-- 核心区域 - 开始 -->
     <div class="frameMain">
         <div class="con">
-            <iframe id="mainIframe" src="${pageContext.request.contextPath}/tgls/user/house_list.jsp" scrolling="yes"></iframe>
+            <iframe id="mainIframe" src="${pageContext.request.contextPath}/tgls/user/house_list.jsp"
+                    scrolling="yes"></iframe>
         </div>
     </div>
     <!-- 核心区域 - 结束 -->

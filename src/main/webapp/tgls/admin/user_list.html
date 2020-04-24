@@ -56,7 +56,6 @@
 </div>
 
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 <script>
@@ -76,11 +75,12 @@
             , url: 'http://localhost:8080/renting/user' //数据接口
             , page: true
             , cols: [[ //表头
-                {field: 'id', title: 'ID', width: 80, sort: true, fixed: 'left'}
+                {field: 'id', title: 'ID', width: 60, sort: true, fixed: 'left'}
                 , {field: 'username', title: '用户名', width: 120}
-                , {field: 'nickname', title: '昵称', width: 180, edit: 'text'}
-                , {field: 'email', title: '邮箱', width: 100}
-                , {field: 'avatar', title: '头像', width: 80}
+                , {field: 'nickname', title: '昵称', width: 120, edit: 'text'}
+                , {field: 'phone', title: '手机号码', width: 120}
+                , {field: 'email', title: '邮箱', width: 180}
+                , {field: 'avatar', title: '操作', width: 100, toolbar:"#barDemo"}
             ]]
             , text: {
                 none: "暂无数据"
@@ -92,9 +92,21 @@
             var value = obj.value; //得到修改后的值
             var data = obj.data; //得到所在行所有键值
             var field = obj.field; //得到字段
-            layer.msg('[ID: ' + data.id + '] ' + field + ' 字段更改为：' + value);
+            console.log(JSON.stringify(data));
+            console.log('[ID: ' + data.id + '] ' + field + ' 字段更改为：' + value);
             $.ajax({
-                url:"http://localhost:8080/renting/user"
+                url:"http://localhost:8080/renting/user",
+                type: "put",
+                contentType: "application/json; charset=utf-8",
+                data:JSON.stringify({id:data.id,nickname:data.nickname}),
+                success:function (res) {
+                    if(res.msg==='success'){
+                        layer.msg("修改成功");
+                    }
+                },
+                error: function () {
+                    layer.msg("系统错误");
+                }
             });
         });
         table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
@@ -110,7 +122,7 @@
 
                         //向服务端发送删除指令
                         $.ajax({
-                            url: "http://localhost:8080/renting/test/" + id,
+                            url: "http://localhost:8080/renting/user/" + id,
                             type: "delete",
                             success: function (data) {
                                 if (data.msg == "success") {

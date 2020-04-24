@@ -16,7 +16,7 @@ public class CommonInterceptor implements HandlerInterceptor {
 
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
-        Admin admin = (Admin) session.getAttribute("CURRENT_ADMIN");
+        Admin admin = (Admin) session.getAttribute(Constant.CURRENT_ADMIN);
         String uri=httpServletRequest.getRequestURI();
         String method=httpServletRequest.getMethod();
         if(user==null&&admin==null){

@@ -298,6 +298,7 @@
                  LEFT JOIN payment pm ON pm.id = house.payment_id
                  LEFT JOIN towards tw ON tw.id = house.towards_id
         WHERE plot.id = house.plot_id
+          AND house.user_id IN(select id from user)
           AND location.id = plot.location_id
           AND location.city_id = #{cityId}
           AND house.status = 'N'
@@ -334,6 +335,7 @@
                  LEFT JOIN payment pm ON pm.id = house.payment_id
                  LEFT JOIN towards tw ON tw.id = house.towards_id
         WHERE plot.id = house.plot_id
+          AND house.user_id IN(select id from user)
           and plot.location_id = #{locationId}
           AND house.status = 'N'
     </select>
@@ -373,6 +375,7 @@
         LEFT JOIN towards tw ON tw.id = house.towards_id
         WHERE plot.id = house.plot_id
         AND house.status='N'
+        AND house.user_id IN(select id from user)
         <if test="location!=null">
             AND plot.location_id = #{location.id}
         </if>
@@ -491,6 +494,7 @@
         LEFT JOIN city c on c.id=l.city_id
         LEFT JOIN province pr on pr.id=c.province_id
         where 1=1
+        AND h.user_id IN(select id from user)
         <if test="house.provinceId!=null">
             AND pr.id=#{house.provinceId}
         </if>

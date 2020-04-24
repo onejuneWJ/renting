@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
                 flag = MailUtil.sendMail(num, "尊敬的万家租房用户：\n\t您好，您的验证码为" + code, "万家安全邮箱验证");
                 break;
             case Constant.sendType.P:
-                flag = HttpUtils.sendCode(code,num);
+                flag = HttpUtils.sendCode(code, num);
                 break;
         }
         if (flag) {
@@ -125,7 +125,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String changeNickname(User user, String nickname) {
-        if(StringUtils.isEmpty(nickname)){
+        if (StringUtils.isEmpty(nickname)) {
             return "昵称不能为空";
         }
         user.setNickname(nickname);
@@ -135,17 +135,37 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String checkPhone(String phone) {
-        UserExample userExample=new UserExample();
+        UserExample userExample = new UserExample();
         userExample.createCriteria().andPhoneEqualTo(phone);
-        List<User> users=userDao.selectByExample(userExample);
-        return users.size()>0?"exist":"not exist";
+        List<User> users = userDao.selectByExample(userExample);
+        return users.size() > 0 ? "exist" : "not exist";
     }
 
     @Override
     public String checkUsername(String username) {
-        UserExample userExample=new UserExample();
+        UserExample userExample = new UserExample();
         userExample.createCriteria().andUsernameEqualTo(username);
-        List<User> users=userDao.selectByExample(userExample);
-        return users.size()>0?"exist":"not exist";
+        List<User> users = userDao.selectByExample(userExample);
+        return users.size() > 0 ? "exist" : "not exist";
+    }
+
+    @Override
+    public String update(User user) {
+        try {
+            userDao.updateByPrimaryKeySelective(user);
+        } catch (Exception e) {
+            return Constant.FAILED;
+        }
+        return Constant.SUCCESS;
+    }
+
+    @Override
+    public String delete(Long id) {
+        try {
+            userDao.deleteByPrimaryKey(id);
+        } catch (Exception e) {
+            return Constant.FAILED;
+        }
+        return Constant.SUCCESS;
     }
 }

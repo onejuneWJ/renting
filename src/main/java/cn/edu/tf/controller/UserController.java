@@ -132,10 +132,39 @@ public class UserController {
         return ResponseData.ok(null, Constant.SUCCESS);
     }
 
+    /**
+     * 用户列表
+     * @param page
+     * @param limit
+     * @return
+     */
     @GetMapping
     @ResponseBody
     public ResponseData<List<User>> list(Integer page, Integer limit) {
         return ResponseData.pageOk(userService.list(page, limit));
+    }
+
+    /**
+     * 修改用户信息
+     * @param user
+     * @return
+     */
+    @PutMapping
+    @ResponseBody
+    public ResponseData<?> update(@RequestBody User user){
+        System.out.println(user);
+        String msg=userService.update(user);
+        return ResponseData.ok(null,msg);
+    }
+
+    /**
+     * 删除用户
+     */
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public ResponseData<?> delete(@PathVariable Long id){
+        String msg=userService.delete(id);
+        return ResponseData.ok(null,msg);
     }
 
     /**

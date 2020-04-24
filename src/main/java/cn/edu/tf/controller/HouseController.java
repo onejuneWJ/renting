@@ -40,10 +40,9 @@ public class HouseController {
     private RequiresDao requiresDao;
     private LocationDao locationDao;
     private ImgService imgService;
-    private ContactInformationDao contactInformationDao;
     private CityDao cityDao;
 
-    public HouseController(HouseDao houseDao, TowardsDao towardsDao, RentalIncludeDao rentalIncludeDao, PaymentDao paymentDao, HouseIncludeDao houseIncludeDao, HouseService houseService, RequiresDao requiresDao, LocationDao locationDao, ImgService imgService, ContactInformationDao contactInformationDao, CityDao cityDao) {
+    public HouseController(HouseDao houseDao, TowardsDao towardsDao, RentalIncludeDao rentalIncludeDao, PaymentDao paymentDao, HouseIncludeDao houseIncludeDao, HouseService houseService, RequiresDao requiresDao, LocationDao locationDao, ImgService imgService, CityDao cityDao) {
         this.houseDao = houseDao;
         this.towardsDao = towardsDao;
         this.rentalIncludeDao = rentalIncludeDao;
@@ -53,7 +52,6 @@ public class HouseController {
         this.requiresDao = requiresDao;
         this.locationDao = locationDao;
         this.imgService = imgService;
-        this.contactInformationDao = contactInformationDao;
         this.cityDao = cityDao;
     }
 

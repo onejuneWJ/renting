@@ -50,7 +50,7 @@ public class AdminController {
         //产生4个随机验证码，12Ey
         String checkCode = StringUtil.getCheckCode();
         //将验证码放入HttpSession中
-        request.getSession().setAttribute("ADMIN_LOGIN_CODE", checkCode);
+        request.getSession().setAttribute(Constant.ADMIN_LOGIN_CODE, checkCode);
 
         //设置画笔颜色为黄色
         g.setColor(Color.YELLOW);
@@ -68,8 +68,8 @@ public class AdminController {
 
     @GetMapping("/checkVerifyCode")
     @ResponseBody
-    public ResponseData<?> checkVerifyCode(String code, HttpSession session) {
-        String loginCode = (String) session.getAttribute("ADMIN_LOGIN_CODE");
+    public ResponseData<?> checkVerifyCode(String code, HttpServletRequest request) {
+        String loginCode = (String) request.getSession().getAttribute(Constant.ADMIN_LOGIN_CODE);
         return loginCode.toLowerCase().equals(code.toLowerCase()) ? ResponseData.ok(null, Constant.SUCCESS) : ResponseData.ok(null, Constant.FAILED);
     }
 
@@ -79,13 +79,18 @@ public class AdminController {
         Map<String, Object> map = adminService.login(admin);
         String result = (String) map.get("msg");
         if (Constant.SUCCESS.equals(result)) {
-            session.setAttribute("CURRENT_ADMIN", map.get("admin"));
+            session.setAttribute(Constant.CURRENT_ADMIN, map.get("admin"));
             return ResponseData.ok(null, Constant.SUCCESS);
         } else {
             return ResponseData.ok(null, result);
         }
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.setAttribute(Constant.CURRENT_ADMIN,null);
+        return "redirect:/admin_login.html";
+    }
     @GetMapping("/index")
     public String toIndex() {
         return "admin/index";

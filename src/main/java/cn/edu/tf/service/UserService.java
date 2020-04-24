@@ -38,4 +38,8 @@ public interface UserService {
     String checkPhone(String phone);
 
     String checkUsername(String username);
+
+    String update(User user);
+
+    String delete(Long id);
 }

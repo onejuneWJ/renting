@@ -289,10 +289,8 @@
             layui.use('layer', function () {
                 var layer = layui.layer;
                 $.ajax({
-                    url: "${pageContext.request.contextPath}/visit",
-                    data: {"houseId": houseId},
-                    contentType: "application/x-www-form-urlencoded",
-                    type: "post",
+                    url: "${pageContext.request.contextPath}/visit/request?houseId="+houseId,
+                    type: "get",
                     success: function (res) {
                         if (res.msg === 'success') {
                             layer.msg("发起看房请求成功，等待房东的回复吧，您也可以直接联系房东噢", {

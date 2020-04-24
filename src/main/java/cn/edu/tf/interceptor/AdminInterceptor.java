@@ -14,7 +14,7 @@ public class AdminInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         HttpSession session=httpServletRequest.getSession();
-        Admin admin= (Admin) session.getAttribute("CURRENT_ADMIN");
+        Admin admin= (Admin) session.getAttribute(Constant.CURRENT_ADMIN);
 
         if (admin==null){
             httpServletResponse.sendRedirect("http://localhost:8080/renting/admin_login.html");

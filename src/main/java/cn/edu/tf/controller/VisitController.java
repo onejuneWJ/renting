@@ -25,25 +25,26 @@ public class VisitController {
     private VisitDao visitDao;
     @Autowired
     private VisitService visitService;
-    @PostMapping
+
+    @GetMapping("/request")
     @ResponseBody
-    public ResponseData<?> see(HttpSession session, Long houseId) {
-        User user = (User)session.getAttribute("CURRENT_USER");
+    public ResponseData<?> visit(String houseId, HttpSession session) {
+        User user = (User) session.getAttribute("CURRENT_USER");
         System.out.println(houseId);
         if (user == null) {
             return ResponseData.ok(null, "请先登录，再发起看房请求噢");
         }
         VisitExample visitExample = new VisitExample();
         visitExample.createCriteria()
-            .andUserIdEqualTo(user.getId())
-            .andHouseIdEqualTo(houseId);
+                .andUserIdEqualTo(user.getId())
+                .andHouseIdEqualTo(Long.valueOf(houseId));
         List<Visit> visitList = visitDao.selectByExample(visitExample);
         if (visitList.size() > 0) {
             return ResponseData.ok(null, "您已发起过看房请求了，请耐心等待房东的回复，或者直接联系房东噢");
         }
         Visit visit = new Visit();
         visit.setUserId(user.getId());
-        visit.setHouseId(houseId);
+        visit.setHouseId(Long.valueOf(houseId));
         visit.setRequestTime(new Date());
         visitDao.insertSelective(visit);
         return ResponseData.ok(houseId, "success");
@@ -51,13 +52,13 @@ public class VisitController {
 
     @GetMapping
     @ResponseBody
-    public ResponseData<List<Visit>> list(Long userId, Integer page, Integer limit){
+    public ResponseData<List<Visit>> list(Long userId, Integer page, Integer limit) {
         return ResponseData.pageOk(visitService.list(userId, page, limit));
     }
 
     @DeleteMapping("/{id}")
     @ResponseBody
-    public ResponseData<?> delete(@PathVariable Long id){
-        return ResponseData.ok(null,visitService.delete(id));
+    public ResponseData<?> delete(@PathVariable Long id) {
+        return ResponseData.ok(null, visitService.delete(id));
     }
 }

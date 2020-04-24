@@ -207,7 +207,7 @@
 
                     //向服务端发送删除指令
                     $.ajax({
-                        url: "http://localhost:8080/renting/house/" + id,
+                        url: "http://localhost:8080/renting/house/" + data.id,
                         type: "delete",
                         success: function (data) {
                             if (data.msg === "success") {

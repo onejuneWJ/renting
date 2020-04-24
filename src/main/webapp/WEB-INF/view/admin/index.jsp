@@ -69,7 +69,7 @@
             <ul>
                 <li><a href="javascript:void(0)"><i
                         class="iconfont icon-yonghu1"></i>管理员</a></li>
-                <li><a href=""><i class="iconfont icon-084tuichu"></i>注销</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/logout"><i class="iconfont icon-084tuichu"></i>注销</a></li>
             </ul>
         </div>
     </div>

@@ -6,9 +6,10 @@ package cn.edu.tf.constant;
  **/
 public class Constant {
     public static final String CURRENT_USER = "CURRENT_USER";
+    public static final String CURRENT_ADMIN="CURRENT_ADMIN";
     public static final String SUCCESS = "success";
     public static final String FAILED="failed";
-
+    public static final String ADMIN_LOGIN_CODE="ADMIN_LOGIN_CODE";
     public interface houseStatus{
         String Y="Y";
         String N="N";
